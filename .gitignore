@@ -43,3 +43,29 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter / Dart
+.dart_tool/
+.buildlog/
+.packages
+pubspec.lock
+build/
+coverage/
+
+# Android / iOS klucze
+android/app/*.keystore
+android/key.properties
+ios/Runner/GoogleService-Info.plist
+**/*.jks
+**/*.p12
+**/*.pem
+
+# VS Code / system
+.vscode/
+*.code-workspace
+.DS_Store
+
+# Twoje sekrety/konfy
+**/appsettings*.json
+*.env
+secrets.json
