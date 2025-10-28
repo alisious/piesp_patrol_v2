@@ -63,6 +63,7 @@ class _PiespAppState extends State<PiespApp> {
         useMaterial3: true,
         colorSchemeSeed: const Color(0xFF0AA37A),
         brightness: Brightness.dark,
+        fontFamily: 'Roboto',
       ),
       routes: {
         // Root: zależnie od stanu auth pokazujemy Login lub Home
