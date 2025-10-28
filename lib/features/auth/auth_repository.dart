@@ -37,6 +37,7 @@ class AuthRepository {
       // ignorer â€” wylogowanie ma byÄ‡ â€žbest effortâ€ť
     }
   }
+  
 }
 
 class AuthException implements Exception {

@@ -13,7 +13,11 @@ class AuthController extends ChangeNotifier {
 
   bool _isAuthenticated = false;
   bool get isAuthenticated => _isAuthenticated;
-  MeProfile? profile;
+  
+  /// Pełny profil z /piesp/Auth/me (do UI)
+  MeProfile? meProfile;
+  /// Zredukowany profil z JWT (GUID, ew. nazwisko/rola jeśli są w tokenie)
+  TokenProfile? tokenProfile;
 
   Future<void> bootstrap() async {
     final token = await storage.readAccessToken();
@@ -24,24 +28,31 @@ class AuthController extends ChangeNotifier {
     }
     _isAuthenticated = true;
     try {
-      profile = await repo.me();
+      meProfile = await repo.me();
     } catch (_) {}
     notifyListeners();
   }
 
   Future<void> login(String badge, String pin) async {
+    // 1) Logowanie
     final res = await repo.login(badgeNumber: badge, pin: pin);
-    await storage.saveTokens(
-      accessToken: res.accessToken,
-      refreshToken: res.refreshToken,
-      userId: res.userId,
-    );
-    _isAuthenticated = true;
-    try {
-      profile = await repo.me();
-    } catch (_) {
-      profile = null;
+    
+    final access = res.accessToken ?? '';
+    final refresh = res.refreshToken;
+    
+    if (access.isEmpty) {
+      throw Exception('Brak wymaganych danych po logowaniu (JWT).');
     }
+    // 2) Zapisz tokeny do storage (używane przez ApiClient i interceptory)
+    await storage.saveTokens(
+      accessToken: access,
+      refreshToken: refresh
+    );
+
+    // 4) Dociągnij pełny profil z /piesp/Auth/me
+    meProfile = await repo.me();
+
+    _isAuthenticated = true;
     notifyListeners();
   }
 
@@ -52,7 +63,7 @@ class AuthController extends ChangeNotifier {
     } catch (_) {}
     await storage.clear();
     _isAuthenticated = false;
-    profile = null;
+    tokenProfile = null;
     notifyListeners();
   }
 }
