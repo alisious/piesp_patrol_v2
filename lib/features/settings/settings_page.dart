@@ -1,8 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/api_config.dart';
 
-/// Ekran ustawień jako osobna strona (Scaffold + AppBar).
-/// Działa jak dotychczas, ale wewnątrz używa SettingsBody, żeby logika była wspólna.
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.config});
   static const route = '/settings';
@@ -23,9 +21,6 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-/// Ten widget renderuje **samą treść** ustawień (bez Scaffold/AppBar).
-/// Dzięki temu można go wstawić "pomiędzy AppBar i NavBar"
-/// bez dublowania nagłówków (np. w OtherTab).
 class SettingsBody extends StatefulWidget {
   const SettingsBody({super.key, required this.config});
   final ApiConfig config;
@@ -44,8 +39,25 @@ class _SettingsBodyState extends State<SettingsBody> {
   late final TextEditingController _pinsCtrl =
       TextEditingController(text: widget.config.pinnedSpki.join(','));
 
+  // OBSŁUGIWANE TRYBY TLS
+  static const Set<String> _allowedTlsModes = {
+    'systemOnly',
+    'assetCa',
+    'pinned',
+    'systemThenAssetFallback',
+  };
+
   late String _tlsMode = widget.config.tlsMode;
   bool _saved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Normalizacja wartości spoza listy (na wypadek starych zapisów)
+    if (!_allowedTlsModes.contains(_tlsMode)) {
+      _tlsMode = 'systemOnly';
+    }
+  }
 
   @override
   void dispose() {
@@ -77,10 +89,13 @@ class _SettingsBodyState extends State<SettingsBody> {
     setState(() => _saved = true);
   }
 
+  bool get _needsPem =>
+      _tlsMode == 'assetCa' || _tlsMode == 'systemThenAssetFallback';
+
   @override
   Widget build(BuildContext context) {
-    // Ten ListView można osadzić wszędzie – jako pełny ekran (przez SettingsPage)
-    // albo jako treść między AppBar/NavBar (np. w OtherTab).
+    
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -111,12 +126,7 @@ class _SettingsBodyState extends State<SettingsBody> {
               items: const [
                 DropdownMenuItem(
                   value: 'systemOnly',
-                  child: Text(
-                    'systemOnly (MDM + network_security_config)',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    softWrap: false,
-                  ),
+                  child: Text('systemOnly (MDM + network_security_config)'),
                 ),
                 DropdownMenuItem(
                   value: 'assetCa',
@@ -125,6 +135,10 @@ class _SettingsBodyState extends State<SettingsBody> {
                 DropdownMenuItem(
                   value: 'pinned',
                   child: Text('pinned (SPKI pinning)'),
+                ),
+                DropdownMenuItem(
+                  value: 'systemThenAssetFallback',
+                  child: Text('systemThenAssetFallback (najpierw system, potem asset)'),
                 ),
               ],
               onChanged: (v) => setState(() => _tlsMode = v ?? _tlsMode),
@@ -135,23 +149,26 @@ class _SettingsBodyState extends State<SettingsBody> {
             ),
             const SizedBox(height: 12),
 
-            // Ścieżka PEM (gdy assetCa)
-            TextField(
-              controller: _pemCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Ścieżka PEM (asset)',
-                helperText: 'Np. assets/certs/kacper_ca.pem',
-                prefixIcon: Icon(Icons.description_outlined),
+            // Ścieżka PEM – wymagane dla assetCa i systemThenAssetFallback
+            if (_needsPem) ...[
+              TextField(
+                controller: _pemCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'Ścieżka PEM (asset)',
+                  helperText: 'Np. assets/certs/kacper_ca.pem',
+                  prefixIcon: Icon(Icons.description_outlined),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
+            ],
 
             // Dozwolone hosty
             TextField(
               controller: _hostsCtrl,
               decoration: const InputDecoration(
                 labelText: 'Dozwolone hosty',
-                helperText: 'Lista rozdzielana przecinkami (np. api.kacper.zw.int, portal.kacper.zw.int)',
+                helperText:
+                    'Lista rozdzielana przecinkami (np. api.kacper.zw.int, portal.kacper.zw.int)',
                 prefixIcon: Icon(Icons.dns_outlined),
               ),
             ),
@@ -171,7 +188,6 @@ class _SettingsBodyState extends State<SettingsBody> {
         ),
         const SizedBox(height: 16),
 
-        // Zapisz
         FilledButton.icon(
           onPressed: _save,
           icon: const Icon(Icons.save),
