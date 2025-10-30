@@ -50,7 +50,7 @@ class ServicesTab extends StatelessWidget {
               Icon(Icons.directions_car, color: cs.onSurface),
               const SizedBox(width: 8),
               Text(
-                'Kierowca i pojazdy',
+                'Kierowca i pojazd',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,

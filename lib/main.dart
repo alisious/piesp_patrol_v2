@@ -41,8 +41,8 @@ class PiespApp extends StatelessWidget {
       title: 'PIESP Patrol',
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.light,
-        colorSchemeSeed: Colors.lightBlue,
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.indigo,
       ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
