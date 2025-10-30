@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
 
 class ServicesTab extends StatelessWidget {
@@ -64,7 +65,10 @@ class ServicesTab extends StatelessWidget {
           const SizedBox(height: 12),
           ArrowButton(title: 'Sprawdź pojazd', onTap: () {}),
           const SizedBox(height: 12),
-          ArrowButton(title: 'Sprawdź pojazd wojskowy', onTap: () {}),
+          ArrowButton(
+            title: 'Sprawdź pojazd wojskowy', 
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.wpmSearch),
+          ),
           const SizedBox(height: 12),
           ArrowButton(title: 'Sprawdź uprawnienia kierowcy', onTap: () {}),
           const SizedBox(height: 12),

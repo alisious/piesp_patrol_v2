@@ -5,7 +5,6 @@ import 'package:piesp_patrol/features/auth/auth_controller.dart';
 import 'package:piesp_patrol/features/auth/login_page.dart';
 import 'package:piesp_patrol/features/auth/token_storage.dart';
 import 'package:piesp_patrol/features/home/home_page.dart';
-import 'package:piesp_patrol/features/settings/settings_page.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_api.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_page.dart';
@@ -24,40 +23,17 @@ Future<void> main() async {
   runApp(PiespApp(config: config, auth: auth, vehiclesApi: vehiclesApi));
 }
 
-class PiespApp extends StatefulWidget {
+class PiespApp extends StatelessWidget {
   const PiespApp({
     super.key,
-    required this.auth,
     required this.config,
+    required this.auth,
     required this.vehiclesApi,
   });
 
-  final AuthController auth;
   final ApiConfig config;
+  final AuthController auth;
   final VehiclesApi vehiclesApi;
-
-  @override
-  State<PiespApp> createState() => _PiespAppState();
-}
-
-class _PiespAppState extends State<PiespApp> {
-  @override
-  void initState() {
-    super.initState();
-    // Reakcja UI na zmianę konfiguracji (np. Base URL)
-    widget.config.addListener(_onCfgChanged);
-  }
-
-  @override
-  void dispose() {
-    widget.config.removeListener(_onCfgChanged);
-    super.dispose();
-  }
-
-  void _onCfgChanged() {
-    // np. po zapisie ustawień odśwież UI (baseUrl pokazywany na ekranach)
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,46 +41,30 @@ class _PiespAppState extends State<PiespApp> {
       title: 'PIESP Patrol',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: const Color(0xFF0AA37A),
-        brightness: Brightness.dark,
-        fontFamily: 'Roboto',
+        brightness: Brightness.light,
+        colorSchemeSeed: Colors.lightBlue,
       ),
-      //routes: {
-        // Root: zależnie od stanu auth pokazujemy Login lub Home
-      //  '/': (_) => AnimatedBuilder(
-      //        animation: widget.auth,
-      //        builder: (context, _) {
-       //         return widget.auth.isAuthenticated
-      //              ? HomePage(auth: widget.auth, config: widget.config)
-       //             : LoginPage(auth: widget.auth, config: widget.config);
-      //        },
-      //      ),
-      //  SettingsPage.route: (_) => SettingsPage(config: widget.config),
-     //},
-     onGenerateRoute: (settings) {
+      onGenerateRoute: (settings) {
         switch (settings.name) {
-          // Strona WPM (pojazd wojskowy) z wstrzyknięciem zależności:
           case AppRoutes.wpmSearch:
-           return MaterialPageRoute(
-              builder: (_) => WpmSearchPage(vehiclesApi: widget.vehiclesApi),
-              settings: settings,
-            );
-          // (opcjonalnie) zachowujemy istniejącą trasę do SettingsPage:
-          case SettingsPage.route:
             return MaterialPageRoute(
-              builder: (_) => SettingsPage(config: widget.config),
+              builder: (_) => WpmSearchPage(vehiclesApi: vehiclesApi),
               settings: settings,
             );
-
-          // Domyślnie: root – tak jak dotąd AnimatedBuilder przełącza Login/Home
           default:
+            // REAKTYWNOŚĆ: przebudowa na zmianę ustawień i stanu logowania
             return MaterialPageRoute(
               builder: (_) => AnimatedBuilder(
-                animation: widget.auth,
+                animation: config, // <- reaguj na zmiany w Settings (Base URL, TLS, itp.)
                 builder: (context, __) {
-                  return widget.auth.isAuthenticated
-                      ? HomePage(auth: widget.auth, config: widget.config)
-                      : LoginPage(auth: widget.auth, config: widget.config);
+                  return AnimatedBuilder(
+                    animation: auth, // <- reaguj na login/logout
+                    builder: (context, ___) {
+                      return auth.isAuthenticated
+                          ? HomePage(auth: auth, config: config)
+                          : LoginPage(auth: auth,config: config);
+                    },
+                  );
                 },
               ),
               settings: settings,
@@ -112,7 +72,6 @@ class _PiespAppState extends State<PiespApp> {
         }
       },
       initialRoute: '/',
-      
     );
   }
 }
