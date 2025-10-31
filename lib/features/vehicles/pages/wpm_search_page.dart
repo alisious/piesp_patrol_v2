@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_api.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_result_page.dart';
+import 'package:piesp_patrol/widgets/responsive.dart';
 
 class WpmSearchPage extends StatefulWidget {
   const WpmSearchPage({super.key, required this.vehiclesApi});
@@ -18,7 +19,7 @@ class _WpmSearchPageState extends State<WpmSearchPage> {
   final _serSilnikaCtrl = TextEditingController();
 
   bool _loading = false;
-  
+
   @override
   void dispose() {
     _nrRejCtrl.dispose();
@@ -28,47 +29,57 @@ class _WpmSearchPageState extends State<WpmSearchPage> {
     super.dispose();
   }
 
+  void _showSnack(String message) {
+    final s = ScaffoldMessenger.of(context);
+    s.hideCurrentSnackBar();
+    s.showSnackBar(SnackBar(content: Text(message)));
+  }
+
   Future<void> _search() async {
+    FocusScope.of(context).unfocus();
+
     final nrRej = _nrRejCtrl.text.trim();
     final vin = _vinCtrl.text.trim();
     final serProd = _serProdCtrl.text.trim();
     final serSilnika = _serSilnikaCtrl.text.trim();
 
-    setState(() {
-      _loading = true;
-    });
+    if (nrRej.isEmpty && vin.isEmpty && serProd.isEmpty && serSilnika.isEmpty) {
+      _showSnack('Podaj przynajmniej jedno kryterium wyszukiwania.');
+      return;
+    }
 
-    final res = await widget.vehiclesApi.searchWpm(
-      nrRejestracyjny: nrRej.isEmpty ? null : nrRej,
-      numerPodwozia: vin.isEmpty ? null : vin,
-      nrSerProducenta: serProd.isEmpty ? null : serProd,
-      nrSerSilnika: serSilnika.isEmpty ? null : serSilnika,
-    );
+    setState(() => _loading = true);
+    try {
+      // ⬇⬇⬇ WYWOŁANIE I NAZWY PARAMETRÓW — BEZ ZMIAN ⬇⬇⬇
+      final res = await widget.vehiclesApi.searchWpm(
+        nrRejestracyjny: nrRej.isEmpty ? null : nrRej,
+        numerPodwozia: vin.isEmpty ? null : vin,
+        nrSerProducenta: serProd.isEmpty ? null : serProd,
+        nrSerSilnika: serSilnika.isEmpty ? null : serSilnika,
+      );
 
- if (res.isOk) {
-  final rows = res.value;
-  setState(() => _loading = false);
-  if (!mounted) return;
-  await Navigator.of(context).push(
-    MaterialPageRoute(builder: (_) => WpmSearchResultPage(rows: rows)),
-  );
-} else {
-  setState(() => _loading = false);
-  _showSnack(res.error.message.isNotEmpty
-      ? res.error.message
-      : 'Wystąpił błąd podczas wyszukiwania.');
-}
+      if (!mounted) return;
 
+      if (res.isOk) {
+        final rows = res.value;
+        setState(() => _loading = false);
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => WpmSearchResultPage(rows: rows)),
+        );
+      } else {
+        setState(() => _loading = false);
+        _showSnack(
+          res.error.message.isNotEmpty
+              ? res.error.message
+              : 'Wystąpił błąd podczas wyszukiwania.',
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _loading = false);
+      _showSnack('Błąd wyszukiwania: $e');
+    }
   }
-
-  void _showSnack(String message) {
-    if (!mounted) return;
-    final s = ScaffoldMessenger.of(context);
-    s.hideCurrentSnackBar();
-    s.showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-}
 
   @override
   Widget build(BuildContext context) {
@@ -82,70 +93,78 @@ class _WpmSearchPageState extends State<WpmSearchPage> {
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Podaj przynajmniej jedno kryterium wyszukiwania.',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: cs.onSurfaceVariant,
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            TextField(
-              controller: _nrRejCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Nr rejestracyjny',
-              ),
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              controller: _vinCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Numer podwozia (VIN)',
-              ),
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              controller: _serProdCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Nr ser. producenta',
-              ),
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              controller: _serSilnikaCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Nr ser. silnika',
-              ),
-              onSubmitted: (_) => _loading ? null : _search(),
-            ),
-            const SizedBox(height: 12),
-
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: _loading ? null : _search,
-                    icon: const Icon(Icons.search),
-                    label: const Text('Szukaj'),
+      body: SingleChildScrollView(
+        child: ResponsiveCenter(
+          maxContentWidth: 720, // ograniczenie szerokości dla WEB
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Podaj przynajmniej jedno kryterium wyszukiwania.',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: cs.onSurfaceVariant,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 12),
-           
-            if (_loading) const LinearProgressIndicator(),
-            const SizedBox(height: 8),
+              ),
+              const SizedBox(height: 12),
+
+              // Zwężenie samych pól formularza dla lepszego wyglądu w przeglądarce
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 540),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _nrRejCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'Nr rejestracyjny',
+                      ),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _vinCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'Numer podwozia (VIN)',
+                      ),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _serProdCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'Nr ser. producenta',
+                      ),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _serSilnikaCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'Nr ser. silnika',
+                      ),
+                      onSubmitted: (_) => _loading ? null : _search(),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                onPressed: _loading ? null : _search,
+                icon: const Icon(Icons.search),
+                label: const Text('Szukaj'),
+              ),
+              const SizedBox(height: 12),
+
+              if (_loading) const LinearProgressIndicator(),
+              const SizedBox(height: 8),
             ],
+          ),
         ),
       ),
     );
   }
-  
 }
