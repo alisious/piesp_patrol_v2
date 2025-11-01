@@ -8,6 +8,8 @@ import 'package:piesp_patrol/features/home/home_page.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_api.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_page.dart';
+import 'package:piesp_patrol/features/srp/data/srp_api.dart';
+import 'package:piesp_patrol/features/srp/pages/persons_search_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,10 +19,18 @@ Future<void> main() async {
   final storage = SecureTokenStorage();
   final apiClient = await ApiClient.create(config: config, storage: storage);
   final vehiclesApi = VehiclesApi(apiClient);
+  final srpApi = SrpApi(apiClient);
   final auth = AuthController(client: apiClient, storage: storage);
   await auth.bootstrap();
 
-  runApp(PiespApp(config: config, auth: auth, vehiclesApi: vehiclesApi));
+  runApp(
+    PiespApp(
+      config: config, 
+      auth: auth, 
+      vehiclesApi: vehiclesApi,
+      srpApi: srpApi,
+    )
+  );
 }
 
 class PiespApp extends StatelessWidget {
@@ -29,11 +39,13 @@ class PiespApp extends StatelessWidget {
     required this.config,
     required this.auth,
     required this.vehiclesApi,
+    required this.srpApi,
   });
 
   final ApiConfig config;
   final AuthController auth;
   final VehiclesApi vehiclesApi;
+  final SrpApi srpApi;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +61,11 @@ class PiespApp extends StatelessWidget {
           case AppRoutes.wpmSearch:
             return MaterialPageRoute(
               builder: (_) => WpmSearchPage(vehiclesApi: vehiclesApi),
+              settings: settings,
+            );
+            case AppRoutes.personSearch:
+            return MaterialPageRoute(
+              builder: (_) => PersonsSearchPage(srpApi: srpApi),
               settings: settings,
             );
           default:

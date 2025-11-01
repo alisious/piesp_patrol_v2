@@ -38,7 +38,10 @@ class ServicesTab extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          ArrowButton(title: 'Szukaj osoby', onTap: () {}),
+          ArrowButton(
+            title: 'Szukaj osoby', 
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.personSearch),
+          ),
           const SizedBox(height: 12),
           ArrowButton(title: 'Dane osoby', onTap: () {}),
           const SizedBox(height: 12),
