@@ -40,7 +40,9 @@ class ServicesTab extends StatelessWidget {
 
           ArrowButton(
             title: 'Szukaj osoby', 
-            onTap: () => Navigator.of(context).pushNamed(AppRoutes.personSearch),
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.srpPersonsSearch),
           ),
           const SizedBox(height: 12),
           ArrowButton(title: 'Dane osoby', onTap: () {}),
@@ -76,7 +78,10 @@ class ServicesTab extends StatelessWidget {
           const SizedBox(height: 12),
           ArrowButton(
             title: 'Sprawdź pojazd wojskowy', 
-            onTap: () => Navigator.of(context).pushNamed(AppRoutes.wpmSearch),
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.wpmSearch
+              ),
           ),
           const SizedBox(height: 12),
           ArrowButton(title: 'Sprawdź uprawnienia kierowcy', onTap: () {}),

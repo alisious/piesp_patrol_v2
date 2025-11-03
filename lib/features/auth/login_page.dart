@@ -2,6 +2,7 @@
 import 'package:flutter/services.dart';
 // dopasuj ścieżki importów do swoich plików:
 import 'package:piesp_patrol/core/api_config.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       if (!mounted) return;
       // nawigacja po sukcesie – jeśli masz route na stronę główną:
-      Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(context).pushReplacementNamed(AppRoutes.homePage);
     } catch (e) {
       setState(() => _error = e.toString());
     } finally {
@@ -65,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
           IconButton(
             tooltip: 'Ustawienia',
             icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.of(context).pushNamed('/settings'),
+            onPressed: () => Navigator.of(context).pushNamed(AppRoutes.settingsPage),
           ),
         ],
       ),

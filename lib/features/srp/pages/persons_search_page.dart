@@ -1,14 +1,14 @@
 // lib/features/srp/pages/persons_search_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
-import 'package:piesp_patrol/features/srp/pages/persons_search_result_page.dart';
 import 'package:piesp_patrol/widgets/responsive.dart'; // ResponsiveCenter
 
 class PersonsSearchPage extends StatefulWidget {
-  const PersonsSearchPage({super.key, required this.srpApi});
-  final SrpApi srpApi;
+  const PersonsSearchPage({super.key});
 
   @override
   State<PersonsSearchPage> createState() => _PersonsSearchPageState();
@@ -81,7 +81,8 @@ class _PersonsSearchPageState extends State<PersonsSearchPage> {
       czyZyje: _czyZyje,
     );
 
-    final res = await widget.srpApi.searchPerson(request: req);
+    final srpApi = AppScope.of(context).srpApi as SrpApi;
+    final res = await srpApi.searchPerson(request: req);
 
     if (!mounted) return;
 
@@ -92,13 +93,11 @@ class _PersonsSearchPageState extends State<PersonsSearchPage> {
         _showSnack('Nie znaleziono osób spełniających kryteria.');
         return;
       }
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => PersonsSearchResultPage(
-              results: list
-            ),
-        ),
-      );
+      Navigator.pushNamed(
+        context, 
+        AppRoutes.srpPersonsSearchResults,
+        arguments: SrpPersonsSearchResultsArgs(results: list)
+        );
     } else {
       setState(() => _loading = false);
       _showSnack(

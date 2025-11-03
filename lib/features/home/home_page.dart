@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/api_config.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
 
 // Zakładki:
@@ -54,7 +55,11 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               final navigator = Navigator.of(context);
               await widget.auth.logout();
-              navigator.maybePop();
+              if (!mounted) return;
+              navigator.pushNamedAndRemoveUntil(
+                AppRoutes.login,
+                (route) => false,
+              ); 
             },
           ),
         ],

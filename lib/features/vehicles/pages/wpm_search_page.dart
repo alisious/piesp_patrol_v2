@@ -1,12 +1,13 @@
 // lib/features/vehicles/pages/wpm_search_page.dart
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_api.dart';
-import 'package:piesp_patrol/features/vehicles/pages/wpm_search_result_page.dart';
 import 'package:piesp_patrol/widgets/responsive.dart';
 
 class WpmSearchPage extends StatefulWidget {
-  const WpmSearchPage({super.key, required this.vehiclesApi});
-  final VehiclesApi vehiclesApi;
+  const WpmSearchPage({super.key});
+  
 
   @override
   State<WpmSearchPage> createState() => _WpmSearchPageState();
@@ -51,7 +52,8 @@ class _WpmSearchPageState extends State<WpmSearchPage> {
     setState(() => _loading = true);
     try {
       // ⬇⬇⬇ WYWOŁANIE I NAZWY PARAMETRÓW — BEZ ZMIAN ⬇⬇⬇
-      final res = await widget.vehiclesApi.searchWpm(
+      final VehiclesApi vehiclesApi = AppScope.of(context).vehiclesApi as VehiclesApi;
+      final res = await vehiclesApi.searchWpm(
         nrRejestracyjny: nrRej.isEmpty ? null : nrRej,
         numerPodwozia: vin.isEmpty ? null : vin,
         nrSerProducenta: serProd.isEmpty ? null : serProd,
@@ -63,9 +65,11 @@ class _WpmSearchPageState extends State<WpmSearchPage> {
       if (res.isOk) {
         final rows = res.value;
         setState(() => _loading = false);
-        await Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => WpmSearchResultPage(rows: rows)),
-        );
+        await Navigator.pushNamed(
+          context, 
+          AppRoutes.wpmSearchResults,
+          arguments: WpmVehicleArgs(wpmList: rows),
+        ); 
       } else {
         setState(() => _loading = false);
         _showSnack(

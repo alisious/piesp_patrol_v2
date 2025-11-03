@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/api_config.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/settings/settings_page.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart'; // ← nowy import
 
@@ -66,9 +67,13 @@ class _OtherTabState extends State<OtherTab> {
         ArrowButton(
           title: 'Wyloguj',
           onTap: () async {
-            final navigator = Navigator.of(context); // bezpiecznie przed await
+            final navigator = Navigator.of(context);// bezpiecznie przed await
             await widget.onLogout();
-            navigator.maybePop();
+            if (!mounted) return;
+            navigator.pushNamedAndRemoveUntil(
+              AppRoutes.login,
+              (route) => false,
+            ); 
           },
         ),
       ],
