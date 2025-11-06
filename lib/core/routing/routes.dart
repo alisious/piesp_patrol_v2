@@ -78,7 +78,7 @@ class AppRoutes {
               // Niezalogowany → wróć do loginu
               return LoginPage(auth: auth, config: cfg);
             }
-            return HomePage(auth: auth, config: cfg);
+            return HomePage();
           },
           settings: settings,
         );

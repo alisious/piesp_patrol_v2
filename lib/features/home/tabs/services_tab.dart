@@ -4,9 +4,8 @@ import 'package:piesp_patrol/widgets/arrow_button.dart';
 
 
 class ServicesTab extends StatelessWidget {
-  const ServicesTab({super.key, required this.baseUrl});
-  final String baseUrl;
-
+  const ServicesTab({super.key});
+  
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
@@ -90,15 +89,7 @@ class ServicesTab extends StatelessWidget {
           ArrowButton(title: 'Zarejestruj MRD5', onTap: () {}),
 
           const SizedBox(height: 24),
-
-          // Informacyjnie
-          Text(
-            'API: $baseUrl',
-            style: TextStyle(
-              fontSize: 12,
-              color: cs.onSurfaceVariant,
-            ),
-          ),
+         
         ],
       ),
     ),

@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/api_config.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
 
@@ -9,10 +10,9 @@ import 'package:piesp_patrol/features/home/tabs/services_tab.dart';
 import 'package:piesp_patrol/features/home/tabs/other_tab.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.auth, required this.config});
-
-  final AuthController auth;
-  final ApiConfig config;
+  const HomePage({super.key});
+ 
+  
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final me = widget.auth.meProfile; // pełny profil z /piesp/Auth/me
+    final authController = AppScope.of(context).authController as AuthController;
+    final me = authController.meProfile; // pełny profil z /piesp/Auth/me
 
     final badge = me?.badgeNumber ?? '—';
     final name  = me?.userName ?? 'Nie zalogowano';
@@ -54,7 +55,8 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               final navigator = Navigator.of(context);//bezpiecznie przed await
-              await widget.auth.logout();
+              final auth = AppScope.of(context).authController as AuthController;
+              await auth.logout();
               if (!mounted) return;
               navigator.pushNamedAndRemoveUntil(AppRoutes.login,(route) => false); 
             },
@@ -100,8 +102,8 @@ class _HomePageState extends State<HomePage> {
         index: _index,
         children: [
           DutyTab(unitName: me?.unitName),
-          ServicesTab(baseUrl: widget.config.baseUrl),
-          OtherTab(onLogout: widget.auth.logout, config: widget.config),
+          ServicesTab(),
+          OtherTab(),
         ],
       ),
 
