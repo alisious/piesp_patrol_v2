@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_api.dart';
-import 'package:piesp_patrol/widgets/responsive.dart';
 
 class WpmSearchPage extends StatefulWidget {
   const WpmSearchPage({super.key});
@@ -98,8 +97,7 @@ class _WpmSearchPageState extends State<WpmSearchPage> {
         foregroundColor: cs.onPrimaryContainer,
       ),
       body: SingleChildScrollView(
-        child: ResponsiveCenter(
-          maxContentWidth: 720, // ograniczenie szerokości dla WEB
+        child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

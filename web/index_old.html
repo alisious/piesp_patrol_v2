@@ -16,5 +16,21 @@
 <body>
   <script src="flutter_bootstrap.js" async></script>
   
+  <script src="flutter.js" defer></script>
+  <script>
+    window.addEventListener('load', function () {
+      _flutter.loader.loadEntrypoint({
+        onEntrypointLoaded: async (engineInitializer) => {
+          const appRunner = await engineInitializer.initializeEngine({
+            renderer: 'canvaskit',
+            // offline/IIS: Flutter buduje katalog build/web/canvaskit — trzymając go w tej samej lokalizacji,
+            // ścieżka poniżej będzie poprawna:
+            canvasKitBaseUrl: '/canvaskit/'
+          });
+          await appRunner.runApp();
+        }
+      });
+    });
+  </script>
 </body>
 </html>

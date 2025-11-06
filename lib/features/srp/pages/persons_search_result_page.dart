@@ -29,8 +29,7 @@ class PersonsSearchResultPage extends StatelessWidget {
         foregroundColor: cs.onSurface,
         surfaceTintColor: cs.surfaceTint,
       ),
-      body: ResponsiveCenter(
-        maxContentWidth: 480,
+      body: Padding(
         padding: const EdgeInsets.all(12),
         child: results.isEmpty
             ? Center(

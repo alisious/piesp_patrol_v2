@@ -95,7 +95,10 @@ class PersonDetailsResultPage extends StatelessWidget {
                   }),
                   if (person.daneStanuCywilnego?.wspolmalzonek != null) ...[
                     const SizedBox(height: 8),
-                    Text('Współmałżonek', style: Theme.of(context).textTheme.titleMedium),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Współmałżonek', style: Theme.of(context).textTheme.titleMedium)
+                    ),
                     const SizedBox(height: 6),
                     ..._rows({
                       'Imię': person.daneStanuCywilnego?.wspolmalzonek?.imie,
@@ -109,7 +112,10 @@ class PersonDetailsResultPage extends StatelessWidget {
                 context,
                 title: 'Dokumenty',
                 children: [
-                  Text('Dowód osobisty', style: Theme.of(context).textTheme.titleMedium),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Dowód osobisty', style: Theme.of(context).textTheme.titleMedium),
+                  ),
                   const SizedBox(height: 6),
                   ..._rows({
                     'Seria i numer': person.daneDowoduOsobistego?.seriaINumer,
@@ -202,6 +208,8 @@ class PersonDetailsResultPage extends StatelessWidget {
         title: Text(title),
         initiallyExpanded: initiallyExpanded,
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        expandedAlignment: Alignment.centerLeft,
+        expandedCrossAxisAlignment: CrossAxisAlignment.start,
         children: children,
       ),
     );

@@ -258,8 +258,8 @@ class WspolmalzonekDto {
 
     return WspolmalzonekDto(
       imie: s('imie'),
-      nazwisko: s('nazwisko'),
-      pesel: s('pesel'),
+      nazwisko: s('nazwiskoRodowe'),
+      pesel: s('numerPesel'),
     );
   }
 }

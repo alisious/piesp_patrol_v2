@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
-import 'package:piesp_patrol/widgets/responsive.dart';
+
 
 class ServicesTab extends StatelessWidget {
   const ServicesTab({super.key, required this.baseUrl});
@@ -13,8 +13,7 @@ class ServicesTab extends StatelessWidget {
 
     // === Ograniczenie szerokości na web ===
     return SingleChildScrollView(
-      child: ResponsiveCenter(
-        maxContentWidth: 880,
+      child: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
       padding: const EdgeInsets.all(16),

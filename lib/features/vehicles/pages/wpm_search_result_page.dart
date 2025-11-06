@@ -1,7 +1,7 @@
 // lib/features/vehicles/pages/wpm_search_result_page.dart
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_dtos.dart';
-import 'package:piesp_patrol/widgets/responsive.dart';
+
 
 /// Strona wyników WPM – wyświetlaj ją wyłącznie po sukcesie (HTTP 200 i status == 0).
 class WpmSearchResultPage extends StatelessWidget {
@@ -25,8 +25,7 @@ class WpmSearchResultPage extends StatelessWidget {
         surfaceTintColor: cs.surfaceTint,
       ),
       // Bez SingleChildScrollView — ListView ma własny scroll
-      body: ResponsiveCenter(
-        maxContentWidth: 1024, // ograniczenie szerokości dla WEB
+      body: Padding(
         padding: const EdgeInsets.all(16),
         child: rows.isEmpty
             ? _EmptyState(color: cs.onSurfaceVariant)

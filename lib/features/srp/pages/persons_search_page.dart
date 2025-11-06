@@ -5,7 +5,6 @@ import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
-import 'package:piesp_patrol/widgets/responsive.dart'; // ResponsiveCenter
 
 class PersonsSearchPage extends StatefulWidget {
   const PersonsSearchPage({super.key});
@@ -122,8 +121,7 @@ class _PersonsSearchPageState extends State<PersonsSearchPage> {
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
       ),
-      body: ResponsiveCenter(
-        maxContentWidth: 720, // schludnie w web
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: ListView(
           children: [
