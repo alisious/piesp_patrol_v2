@@ -53,13 +53,10 @@ class _HomePageState extends State<HomePage> {
             tooltip: 'Wyloguj',
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              final navigator = Navigator.of(context);
+              final navigator = Navigator.of(context);//bezpiecznie przed await
               await widget.auth.logout();
               if (!mounted) return;
-              navigator.pushNamedAndRemoveUntil(
-                AppRoutes.login,
-                (route) => false,
-              ); 
+              navigator.pushNamedAndRemoveUntil(AppRoutes.login,(route) => false); 
             },
           ),
         ],

@@ -2,9 +2,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
+import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart';
 import 'package:piesp_patrol/widgets/responsive.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 
 
 
@@ -12,9 +16,11 @@ class PersonsSearchResultPage extends StatelessWidget {
   const PersonsSearchResultPage({super.key, required this.results});
   final List<OsobaZnalezionaDto> results;
 
+  
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -179,10 +185,35 @@ class _PersonCard extends StatelessWidget {
                   title: 'Więcej informacji',
                   onTap: () async { 
                     final s = ScaffoldMessenger.of(context);
+                    final navigator = Navigator.of(context);
+                    
                     s.hideCurrentSnackBar();
-                    s.showSnackBar(
-                      SnackBar(content: Text('Więcej informacji: ${shortPersonLabel()}')),
-                    );},
+                    s.showSnackBar(const SnackBar(content: Text('Pobieram dane osoby ...')));
+
+                     try {
+                      final srpApi = AppScope.of(context).srpApi as SrpApi;
+                      final result = await srpApi.getPersonByPesel(
+                        request: GetPersonByPeselRequestDto(pesel: person.pesel),
+                      );
+
+                      if (result.isOk && result.value != null) {
+                        final details = result.value!;
+                        navigator.pushNamed(
+                          AppRoutes.srpPersonDetails,
+                          arguments: PersonDataArgs(person: details),
+                        );
+                      } else {
+                        final msg = result.isErr
+                                      ? result.error.message
+                                      : 'Nie udało się pobrać szczegółów osoby.';
+                        s.hideCurrentSnackBar();
+                        s.showSnackBar(SnackBar(content: Text(msg)));
+                      }
+                    } catch (e) {
+                      s.hideCurrentSnackBar();
+                      s.showSnackBar(SnackBar(content: Text('Błąd: $e')));
+                    }
+                  },
                 ),
                 const SizedBox(height: 8),
                 ArrowButton(
@@ -193,6 +224,7 @@ class _PersonCard extends StatelessWidget {
                     s.showSnackBar(
                       SnackBar(content: Text('Dowód osobisty: ${shortPersonLabel()}')),
                     );
+                                      
                   },
                 ),
               ],
@@ -222,4 +254,9 @@ class _PersonCard extends StatelessWidget {
       ),
     );
   }
+
+
+
+
+
 }

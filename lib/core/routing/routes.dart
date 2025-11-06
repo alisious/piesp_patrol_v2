@@ -19,7 +19,7 @@ import 'package:piesp_patrol/features/vehicles/data/vehicles_dtos.dart' show Wpm
 // ===== SRP =====
 import 'package:piesp_patrol/features/srp/pages/persons_search_page.dart';
 import 'package:piesp_patrol/features/srp/pages/persons_search_result_page.dart';
-import 'package:piesp_patrol/features/srp/pages/person_data_result_page.dart';
+import 'package:piesp_patrol/features/srp/pages/person_details_result_page.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart' show OsobaZnalezionaDto;
 import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart' show OsobaFullDto;
 
@@ -39,7 +39,7 @@ class AppRoutes {
   // === SRP ===
   static const String srpPersonsSearch = '/srp/persons-search';
   static const String srpPersonsSearchResults = '/srp/persons-search-results';
-  static const String srpPersonData = '/srp/person-data';
+  static const String srpPersonDetails = '/srp/person-details';
 
   // === Vehicles ===
   static const String wpmSearch = '/vehicles/wpm-search';
@@ -112,11 +112,11 @@ class AppRoutes {
         return _badArgs(settings, 'Wymagany argument: SrpPersonsSearchResultsArgs');
       }
 
-      case srpPersonData: {
+      case srpPersonDetails: {
         final args = settings.arguments;
         if (args is PersonDataArgs) {
           return MaterialPageRoute(
-            builder: (_) => PersonDataResultPage(person: args.person),
+            builder: (_) => PersonDetailsResultPage(person: args.person),
             settings: settings,
           );
         }

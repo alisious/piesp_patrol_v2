@@ -1,55 +1,48 @@
 // lib/features/srp/data/srp_person_by_pesel_dtos.dart
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart' show ProxyResponseDto;
 
-/* ========= MODELE dla /SRP/get-person-by-pesel ========= */
+/* ========= REQ/RESP dla /SRP/get-person-by-pesel ========= */
 
 class GetPersonByPeselRequestDto {
   final String? pesel;
   const GetPersonByPeselRequestDto({required this.pesel});
-
   Map<String, dynamic> toJson() => {'pesel': pesel};
 }
 
 class GetPersonByPeselResponseDto {
   final OsobaFullDto? daneOsoby;
-
   const GetPersonByPeselResponseDto({required this.daneOsoby});
 
   factory GetPersonByPeselResponseDto.fromJson(Map<String, dynamic> json) {
-    final d = json['daneOsoby'] as Map<String, dynamic>?;
     return GetPersonByPeselResponseDto(
-      daneOsoby: d == null ? null : OsobaFullDto.fromJson(d),
+      daneOsoby: json['daneOsoby'] == null
+          ? null
+          : OsobaFullDto.fromJson(json['daneOsoby'] as Map<String, dynamic>),
     );
   }
 }
 
-/// Parsowanie ProxyResponse dla get-person-by-pesel (trzymamy poza srp_dtos.dart)
-ProxyResponseDto<GetPersonByPeselResponseDto> proxyGetPersonByPeselFromJson(
-  Map<String, dynamic> json,
-) {
-  final d = json['data'] as Map<String, dynamic>?;
-  return ProxyResponseDto<GetPersonByPeselResponseDto>(
-    data: d == null ? null : GetPersonByPeselResponseDto.fromJson(d),
-    status: (json['status'] as num?)?.toInt(),
-    message: json['message']?.toString(),
-    source: json['source']?.toString(),
-    sourceStatusCode: json['sourceStatusCode']?.toString(),
-    requestId: json['requestId']?.toString(),
-  );
-}
-
-/* ========= Struktura szczegółowych danych osoby ========= */
+/* ==================== OSOBA ==================== */
 
 class OsobaFullDto {
   final bool? czyAnulowano;
+
   final DaneDowoduOsobistegoDto? daneDowoduOsobistego;
   final DaneImionDto? daneImion;
   final DaneNazwiskaDto? daneNazwiska;
-  final DaneObywatelstwaDto? daneObywatelstwa;
-  final DanePeselDto? danePesel;
+
+  // W swaggerze: string (nie obiekt)
+  final String? daneObywatelstwa;
+
   final DaneUrodzeniaDto? daneUrodzenia;
-  final DaneZgonuDto? daneZgonu;
-  final DanePobytuDto? danePobytu;
+  final DaneStanuCywilnegoDto? daneStanuCywilnego;
+  final DanePaszportuDto? danePaszportu;
+
+  // W swaggerze: danePobytuStalego / danePobytuCzasowego
+  final DanePobytuDto? danePobytuStalego;
+  final DanePobytuDto? danePobytuCzasowego;
+
+  final DaneKrajowZamieszkaniaDto? daneKrajowZamieszkania;
 
   final String? dataAktualizacji;
   final String? idOsoby;
@@ -61,39 +54,233 @@ class OsobaFullDto {
     required this.daneImion,
     required this.daneNazwiska,
     required this.daneObywatelstwa,
-    required this.danePesel,
     required this.daneUrodzenia,
-    required this.daneZgonu,
-    required this.danePobytu,
+    required this.daneStanuCywilnego,
+    required this.danePaszportu,
+    required this.danePobytuStalego,
+    required this.danePobytuCzasowego,
+    required this.daneKrajowZamieszkania,
     required this.dataAktualizacji,
     required this.idOsoby,
     required this.numerPesel,
   });
 
   factory OsobaFullDto.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic>? m(String k) =>
-        json[k] is Map<String, dynamic> ? json[k] as Map<String, dynamic> : null;
-    bool? b(String k) => json[k] is bool ? json[k] as bool? : null;
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
+    T? mapObj<T>(String key, T Function(Map<String, dynamic>) f) {
+      final v = json[key];
+      if (v is Map<String, dynamic>) return f(v);
+      return null;
+    }
+
+    String? s(String key) {
+      final v = json[key];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
 
     return OsobaFullDto(
-      czyAnulowano: b('czyAnulowano'),
-      daneDowoduOsobistego: m('daneDowoduOsobistego') == null
-          ? null
-          : DaneDowoduOsobistegoDto.fromJson(m('daneDowoduOsobistego')!),
-      daneImion: m('daneImion') == null ? null : DaneImionDto.fromJson(m('daneImion')!),
-      daneNazwiska: m('daneNazwiska') == null ? null : DaneNazwiskaDto.fromJson(m('daneNazwiska')!),
-      daneObywatelstwa: m('daneObywatelstwa') == null
-          ? null
-          : DaneObywatelstwaDto.fromJson(m('daneObywatelstwa')!),
-      danePesel: m('danePESEL') == null ? null : DanePeselDto.fromJson(m('danePESEL')!),
-      daneUrodzenia: m('daneUrodzenia') == null ? null : DaneUrodzeniaDto.fromJson(m('daneUrodzenia')!),
-      daneZgonu: m('daneZgonu') == null ? null : DaneZgonuDto.fromJson(m('daneZgonu')!),
-      danePobytu: m('danePobytu') == null ? null : DanePobytuDto.fromJson(m('danePobytu')!),
+      czyAnulowano: json['czyAnulowano'] as bool?,
+      daneDowoduOsobistego:
+          mapObj('daneDowoduOsobistego', DaneDowoduOsobistegoDto.fromJson),
+      daneImion: mapObj('daneImion', DaneImionDto.fromJson),
+      daneNazwiska: mapObj('daneNazwiska', DaneNazwiskaDto.fromJson),
+      daneObywatelstwa: s('daneObywatelstwa'),
+      daneUrodzenia: mapObj('daneUrodzenia', DaneUrodzeniaDto.fromJson),
+      daneStanuCywilnego:
+          mapObj('daneStanuCywilnego', DaneStanuCywilnegoDto.fromJson),
+      danePaszportu: mapObj('danePaszportu', DanePaszportuDto.fromJson),
+      danePobytuStalego: mapObj('danePobytuStalego', DanePobytuDto.fromJson),
+      danePobytuCzasowego:
+          mapObj('danePobytuCzasowego', DanePobytuDto.fromJson),
+      daneKrajowZamieszkania: mapObj(
+          'daneKrajowZamieszkania', DaneKrajowZamieszkaniaDto.fromJson),
       dataAktualizacji: s('dataAktualizacji'),
       idOsoby: s('idOsoby'),
       numerPesel: s('numerPesel'),
+    );
+  }
+}
+
+/* ==================== GNIAZDA ==================== */
+
+class DaneImionDto {
+  final String? imiePierwsze;
+  final String? imieDrugie;
+
+  const DaneImionDto({required this.imiePierwsze, required this.imieDrugie});
+
+  factory DaneImionDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return DaneImionDto(
+      imiePierwsze: s('imiePierwsze'),
+      imieDrugie: s('imieDrugie'),
+    );
+  }
+}
+
+class DaneNazwiskaDto {
+  final String? nazwisko;
+  final String? nazwiskoRodowe;
+
+  const DaneNazwiskaDto({required this.nazwisko, required this.nazwiskoRodowe});
+
+  factory DaneNazwiskaDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return DaneNazwiskaDto(
+      nazwisko: s('nazwisko'),
+      nazwiskoRodowe: s('nazwiskoRodowe'),
+    );
+  }
+}
+
+class DaneUrodzeniaDto {
+  final String? dataUrodzenia;
+  final String? imieMatki;
+  final String? imieOjca;
+  final String? krajUrodzenia;
+  final String? miejscowoscUrodzenia;
+  final String? nazwaUSCW;
+  final String? kodTerc;
+  final String? kodSimc;
+  final String? nazwaPowiat;
+  final String? nazwaGmina;
+  final String? nazwiskoRodoweMatki;
+  final String? nazwiskoRodoweOjca;
+  final String? numerAktu;
+  final String? plec;
+
+  const DaneUrodzeniaDto({
+    required this.dataUrodzenia,
+    required this.imieMatki,
+    required this.imieOjca,
+    required this.krajUrodzenia,
+    required this.miejscowoscUrodzenia,
+    required this.nazwaUSCW,
+    required this.kodTerc,
+    required this.kodSimc,
+    required this.nazwaPowiat,
+    required this.nazwaGmina,
+    required this.nazwiskoRodoweMatki,
+    required this.nazwiskoRodoweOjca,
+    required this.numerAktu,
+    required this.plec,
+  });
+
+  factory DaneUrodzeniaDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return DaneUrodzeniaDto(
+      dataUrodzenia: s('dataUrodzenia'),
+      imieMatki: s('imieMatki'),
+      imieOjca: s('imieOjca'),
+      krajUrodzenia: s('krajUrodzenia'),
+      miejscowoscUrodzenia: s('miejscowoscUrodzenia'),
+      nazwaUSCW: s('nazwaUSCW'),
+      kodTerc: s('kodTerc'),
+      kodSimc: s('kodSimc'),
+      nazwaPowiat: s('nazwaPowiat'),
+      nazwaGmina: s('nazwaGmina'),
+      nazwiskoRodoweMatki: s('nazwiskoRodoweMatki'),
+      nazwiskoRodoweOjca: s('nazwiskoRodoweOjca'),
+      numerAktu: s('numerAktu'),
+      plec: s('plec'),
+    );
+  }
+}
+
+class DaneStanuCywilnegoDto {
+  final String? dataZawarcia;
+  final String? stanCywilny;
+  final String? numerAktu;
+  final WspolmalzonekDto? wspolmalzonek;
+  final bool? czyZmienianoPlec;
+
+  const DaneStanuCywilnegoDto({
+    required this.dataZawarcia,
+    required this.stanCywilny,
+    required this.numerAktu,
+    required this.wspolmalzonek,
+    required this.czyZmienianoPlec,
+  });
+
+  factory DaneStanuCywilnegoDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return DaneStanuCywilnegoDto(
+      dataZawarcia: s('dataZawarcia'),
+      stanCywilny: s('stanCywilny'),
+      numerAktu: s('numerAktu'),
+      wspolmalzonek: json['wspolmalzonek'] is Map<String, dynamic>
+          ? WspolmalzonekDto.fromJson(json['wspolmalzonek'])
+          : null,
+      czyZmienianoPlec: json['czyZmienianoPlec'] as bool?,
+    );
+  }
+}
+
+class WspolmalzonekDto {
+  final String? imie;
+  final String? nazwisko;
+  final String? pesel;
+
+  const WspolmalzonekDto({this.imie, this.nazwisko, this.pesel});
+
+  factory WspolmalzonekDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return WspolmalzonekDto(
+      imie: s('imie'),
+      nazwisko: s('nazwisko'),
+      pesel: s('pesel'),
+    );
+  }
+}
+
+class DanePaszportuDto {
+  final String? dataWaznosci;
+  final String? seriaINumer;
+
+  const DanePaszportuDto({required this.dataWaznosci, required this.seriaINumer});
+
+  factory DanePaszportuDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return DanePaszportuDto(
+      dataWaznosci: s('dataWaznosci'),
+      seriaINumer: s('seriaINumer'),
     );
   }
 }
@@ -110,132 +297,135 @@ class DaneDowoduOsobistegoDto {
   });
 
   factory DaneDowoduOsobistegoDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    Map<String, dynamic>? m(String k) =>
-        json[k] is Map<String, dynamic> ? json[k] as Map<String, dynamic> : null;
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
 
     return DaneDowoduOsobistegoDto(
       dataWaznosci: s('dataWaznosci'),
       seriaINumer: s('seriaINumer'),
-      wystawca: m('wystawca') == null ? null : OrganDto.fromJson(m('wystawca')!),
+      wystawca:
+          json['wystawca'] is Map<String, dynamic> ? OrganDto.fromJson(json['wystawca']) : null,
     );
   }
 }
 
 class OrganDto {
-  final String? kodTerytorialny;
-  final String? rodzajOrganu;
+  final String? idOrganu;
+  final String? nazwaOrganu;
 
-  const OrganDto({required this.kodTerytorialny, required this.rodzajOrganu});
+  const OrganDto({required this.idOrganu, required this.nazwaOrganu});
 
   factory OrganDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
     return OrganDto(
-      kodTerytorialny: s('kodTerytorialny'),
-      rodzajOrganu: s('rodzajOrganu'),
+      idOrganu: s('idOrganu'),
+      nazwaOrganu: s('nazwaOrganu'),
     );
-  }
-}
-
-class DaneImionDto {
-  final String? pierwsze;
-  final String? drugie;
-
-  const DaneImionDto({required this.pierwsze, required this.drugie});
-
-  factory DaneImionDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    return DaneImionDto(pierwsze: s('pierwsze'), drugie: s('drugie'));
-  }
-}
-
-class DaneNazwiskaDto {
-  final String? nazwisko;
-  const DaneNazwiskaDto({required this.nazwisko});
-
-  factory DaneNazwiskaDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    return DaneNazwiskaDto(nazwisko: s('nazwisko'));
-  }
-}
-
-class DaneObywatelstwaDto {
-  final String? obywatelstwo;
-  const DaneObywatelstwaDto({required this.obywatelstwo});
-
-  factory DaneObywatelstwaDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    return DaneObywatelstwaDto(obywatelstwo: s('obywatelstwo'));
-  }
-}
-
-class DanePeselDto {
-  final String? numer;
-  final bool? czyAnulowano;
-
-  const DanePeselDto({required this.numer, required this.czyAnulowano});
-
-  factory DanePeselDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    bool? b(String k) => json[k] is bool ? json[k] as bool? : null;
-    return DanePeselDto(
-      numer: s('numer'),
-      czyAnulowano: b('czyAnulowano'),
-    );
-  }
-}
-
-class DaneUrodzeniaDto {
-  final String? data;
-  final String? miejsce;
-
-  const DaneUrodzeniaDto({required this.data, required this.miejsce});
-
-  factory DaneUrodzeniaDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    return DaneUrodzeniaDto(
-      data: s('data'),
-      miejsce: s('miejsce'),
-    );
-  }
-}
-
-class DaneZgonuDto {
-  final String? data;
-  const DaneZgonuDto({required this.data});
-
-  factory DaneZgonuDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
-    return DaneZgonuDto(data: s('data'));
   }
 }
 
 class DanePobytuDto {
-  final String? kraj;
+  final String? adresZameldowaniaId;
+  final String? numerDomu;
+  final String? numerLokalu;
+  final String? gmina;
+  final String? powiat;
+  final String? miejscowosc;
+  final String? ulicaCecha;
+  final String? ulicaNazwa;
   final String? wojewodztwo;
+  final String? kodPocztowy;
   final String? dataOd;
 
   const DanePobytuDto({
-    required this.kraj,
+    required this.adresZameldowaniaId,
+    required this.numerDomu,
+    required this.numerLokalu,
+    required this.gmina,
+    required this.powiat,
+    required this.miejscowosc,
+    required this.ulicaCecha,
+    required this.ulicaNazwa,
     required this.wojewodztwo,
+    required this.kodPocztowy,
     required this.dataOd,
   });
 
   factory DanePobytuDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) =>
-        (json[k] == null || json[k].toString().isEmpty) ? null : json[k].toString();
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
     return DanePobytuDto(
-      kraj: s('kraj'),
+      adresZameldowaniaId: s('adresZameldowaniaId'),
+      numerDomu: s('numerDomu'),
+      numerLokalu: s('numerLokalu'),
+      gmina: s('gmina'),
+      powiat: s('powiat'),
+      miejscowosc: s('miejscowosc'),
+      ulicaCecha: s('ulicaCecha'),
+      ulicaNazwa: s('ulicaNazwa'),
       wojewodztwo: s('wojewodztwo'),
+      kodPocztowy: s('kodPocztowy'),
       dataOd: s('dataOd'),
     );
   }
+}
+
+class DaneKrajowZamieszkaniaDto {
+  final String? krajZamieszkania;
+  final String? kod;
+
+  const DaneKrajowZamieszkaniaDto({required this.krajZamieszkania, required this.kod});
+
+  factory DaneKrajowZamieszkaniaDto.fromJson(Map<String, dynamic> json) {
+    String? s(String k) {
+      final v = json[k];
+      if (v == null) return null;
+      final str = v.toString();
+      return str.isEmpty ? null : str;
+    }
+
+    return DaneKrajowZamieszkaniaDto(
+      krajZamieszkania: s('krajZamieszkania'),
+      kod: s('kod'),
+    );
+  }
+}
+
+/* ====== Pomocnicze ====== */
+
+OsobaFullDto? parseOsobaFromProxy(ProxyResponseDto proxy) {
+  // zakładam, że warstwę ProxyResponse masz już obsłużoną (status, message itp.)
+  if (proxy.data == null) return null;
+  final map = proxy.data as Map<String, dynamic>;
+  return GetPersonByPeselResponseDto.fromJson(map).daneOsoby;
+}
+
+// Parsowanie koperty ProxyResponse dla /SRP/get-person-by-pesel
+ProxyResponseDto<GetPersonByPeselResponseDto> proxyGetPersonByPeselFromJson(
+  Map<String, dynamic> json,
+) {
+  final d = json['data'] as Map<String, dynamic>?;
+  return ProxyResponseDto<GetPersonByPeselResponseDto>(
+    data: d == null ? null : GetPersonByPeselResponseDto.fromJson(d),
+    status: (json['status'] as num?)?.toInt(),
+    message: json['message']?.toString(),
+    source: json['source']?.toString(),
+    sourceStatusCode: json['sourceStatusCode']?.toString(),
+    requestId: json['requestId']?.toString(),
+  );
 }

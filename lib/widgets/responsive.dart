@@ -31,3 +31,29 @@ class ResponsiveCenter extends StatelessWidget {
     );
   }
 }
+
+// --- helpers do wykrywania szerokości ekranu ---
+class Responsive {
+  static double width(BuildContext context) =>
+      MediaQuery.sizeOf(context).width;
+
+  static bool isMobile(BuildContext context) => width(context) < 600;
+
+  static bool isTablet(BuildContext context) =>
+      width(context) >= 600 && width(context) < 1024;
+
+  static bool isDesktop(BuildContext context) => width(context) >= 1024;
+
+  /// Zwraca wartość zależnie od typu urządzenia (opcjonalnie tablet/desktop).
+  static T value<T>(
+    BuildContext context, {
+    required T mobile,
+    T? tablet,
+    T? desktop,
+  }) {
+    if (isDesktop(context)) return desktop ?? tablet ?? mobile;
+    if (isTablet(context)) return tablet ?? mobile;
+    return mobile;
+  }
+}
+

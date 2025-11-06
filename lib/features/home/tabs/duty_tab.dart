@@ -9,7 +9,7 @@ class DutyTab extends StatelessWidget {
  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: ResponsiveCenter(
-        maxContentWidth: 920, // jeżeli masz karty/listę z większą ilością treści
+        maxContentWidth: 420, // jeżeli masz karty/listę z większą ilością treści
         padding: const EdgeInsets.all(16),
         child: Center(
       child: Column(

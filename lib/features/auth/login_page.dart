@@ -61,8 +61,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text(''),
-        actions: [
+         title: const Text(''),
+         automaticallyImplyLeading: false, //nie rysuj strzałki na loginie
+         actions: [
           IconButton(
             tooltip: 'Ustawienia',
             icon: const Icon(Icons.settings),
