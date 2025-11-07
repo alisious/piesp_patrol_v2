@@ -9,21 +9,11 @@ class PersonDetailsResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imiona = [
-      person.daneImion?.imiePierwsze,
-      person.daneImion?.imieDrugie,
-    ].where((e) => (e ?? '').isNotEmpty).join(' ');
-
-    final tytul = [imiona, person.daneNazwiska?.nazwisko]
-        .where((e) => (e ?? '').isNotEmpty)
-        .join(' ')
-        .trim();
-
     //final isWide = Responsive.isDesktop(context) || Responsive.isTablet(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(tytul.isEmpty ? 'Szczegóły osoby' : tytul),
+        title: Text('Szczegóły osoby'),
       ),
       body: Align(
         alignment: Alignment.topCenter,
@@ -32,14 +22,11 @@ class PersonDetailsResultPage extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              _headerCard(context, tytul),
-              const SizedBox(height: 12),
-              _section(
+               _section(
                 context,
                 title: 'Tożsamość',
                 children: _rows({
                   'PESEL': person.numerPesel,
-                  'ID w rejestrze': person.idOsoby,
                   'Data aktualizacji': person.dataAktualizacji,
                   'Czy anulowano': person.czyAnulowano == null
                       ? null
@@ -120,7 +107,6 @@ class PersonDetailsResultPage extends StatelessWidget {
                   ..._rows({
                     'Seria i numer': person.daneDowoduOsobistego?.seriaINumer,
                     'Data ważności': person.daneDowoduOsobistego?.dataWaznosci,
-                    'Wystawca (ID)': person.daneDowoduOsobistego?.wystawca?.idOrganu,
                     'Wystawca (nazwa)': person.daneDowoduOsobistego?.wystawca?.nazwaOrganu,
                   }),
                   const Divider(height: 20),
@@ -158,40 +144,7 @@ class PersonDetailsResultPage extends StatelessWidget {
     );
   }
 
-  Widget _headerCard(BuildContext context, String titleText) {
-    final subtitle = [
-      if ((person.numerPesel ?? '').isNotEmpty) 'PESEL: ${person.numerPesel}',
-      if ((person.idOsoby ?? '').isNotEmpty) 'ID: ${person.idOsoby}',
-      if ((person.dataAktualizacji ?? '').isNotEmpty)
-        'Aktualizacja: ${person.dataAktualizacji}',
-    ].join(' • ');
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(Icons.person, size: 36),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(titleText.isEmpty ? 'Osoba' : titleText,
-                      style: Theme.of(context).textTheme.titleLarge),
-                  if (subtitle.isNotEmpty) ...[
-                    const SizedBox(height: 6),
-                    Text(subtitle),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  
 
   Widget _section(
     BuildContext context, {
@@ -249,7 +202,7 @@ class PersonDetailsResultPage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 220, child: Text(label)),
+          SizedBox(width: 130, child: Text(label)),
           const SizedBox(width: 8),
           Expanded(child: Text(value)),
         ],

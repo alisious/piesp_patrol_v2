@@ -43,8 +43,6 @@ class ServicesTab extends StatelessWidget {
               AppRoutes.srpPersonsSearch),
           ),
           const SizedBox(height: 12),
-          ArrowButton(title: 'Dane osoby', onTap: () {}),
-          const SizedBox(height: 12),
           ArrowButton(title: 'Dowód osobisty', onTap: () {}),
           const SizedBox(height: 12),
           ArrowButton(title: 'Czy żołnierz?', onTap: () {}),

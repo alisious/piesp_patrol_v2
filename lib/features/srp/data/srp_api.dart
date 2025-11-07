@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:piesp_patrol/core/api_client.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
 import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart';
+import 'package:piesp_patrol/features/srp/data/person_id_dtos.dart';
 
 class Result<T, E> {
   final T? _ok;
@@ -135,4 +136,95 @@ class SrpApi {
       return Result.err(ApiError(ApiErrorType.parse, e.toString()));
     }
   }
+
+ /// /SRP/get-current-id — pobiera aktualny dowód osobisty po PESEL
+  Future<ProxyResponseDto<GetCurrentIdByPeselResponseDto>> getCurrentPersonIdByPesel({
+    required String pesel,
+  }) async {
+    try {
+      final req = GetCurrentIdByPeselRequestDto(pesel: pesel).toJson();
+      final httpResp = await apiClient.postJson(
+        '/SRP/get-current-id',
+        req,
+        auth: true,
+      );
+
+      // typowy bezpiecznik HTTP
+      final isOk = (httpResp.statusCode ?? 0) == 200 && httpResp.data != null;
+      if (!isOk) {
+        return ProxyResponseDto<GetCurrentIdByPeselResponseDto>(
+          data: null,
+          status: -1,
+          message: 'Błąd HTTP podczas pobierania danych dowodu (status=${httpResp.statusCode}).',
+          source: null,
+          sourceStatusCode: null,
+          requestId: null,
+        );
+      }
+
+      // parser proxy -> payload
+      final proxy = proxyGetCurrentIdFromJson(httpResp.data as Map<String, dynamic>);
+      return proxy;
+    } catch (e) {
+      return ProxyResponseDto<GetCurrentIdByPeselResponseDto>(
+        data: null,
+        status: -1,
+        message: 'Wyjątek podczas pobierania danych dowodu: $e',
+        source: null,
+        sourceStatusCode: null,
+        requestId: null,
+      );
+    }
+  }
+
+  /// /ZW/poszukiwani/check — sprawdza, czy PESEL figuruje jako poszukiwany.
+  /// Zwraca Result (bool, ApiError); true = poszukiwany.
+  Future<Result<bool, ApiError>> checkIfWanted({required String pesel}) async {
+    final p = pesel.trim();
+    if (p.isEmpty) {
+      return Result.err(
+        ApiError(ApiErrorType.validation, 'PESEL nie może być pusty.'),
+      );
+    }
+
+    // bezpieczne kodowanie querystringu (na przyszłość, nawet jeśli to same cyfry)
+    final qp = Uri.encodeQueryComponent(p);
+    final path = '/ZW/poszukiwani/check?pesel=$qp';
+
+    try {
+      // UŻYCIE getJson Z api_client.dart (ustawia Accept: application/json)
+      final Response<dynamic> resp = await apiClient.getJson(path, auth: true);
+
+      if (resp.statusCode != 200 || resp.data == null) {
+        return Result.err(ApiError(
+          ApiErrorType.http,
+          'Błędny status HTTP: ${resp.statusCode ?? 'brak'}',
+          statusCode: resp.statusCode,
+        ));
+      }
+
+      final Map<String, dynamic> json = resp.data as Map<String, dynamic>;
+      final int status = (json['status'] as num?)?.toInt() ?? -1;
+
+      if (status == 0) {
+        final bool value = (json['data'] == true);
+        return Result.ok(value);
+      } else {
+        final String msg = (json['message']?.toString().isNotEmpty ?? false)
+            ? json['message'].toString()
+            : 'Błąd proxy podczas sprawdzania poszukiwania.';
+        return Result.err(ApiError(ApiErrorType.proxy, msg));
+      }
+    } on DioException catch (e) {
+      return Result.err(ApiError(
+        ApiErrorType.transport,
+        e.message ?? 'Błąd transportu/DNS/TLS.',
+      ));
+    } catch (e) {
+      return Result.err(ApiError(ApiErrorType.parse, e.toString()));
+    }
+  }
+
+
+
 }

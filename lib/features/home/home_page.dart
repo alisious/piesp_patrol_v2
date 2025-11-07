@@ -1,69 +1,137 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
 
-// Zakładki:
-import 'package:piesp_patrol/features/home/tabs/duty_tab.dart';
+// zakładki
 import 'package:piesp_patrol/features/home/tabs/services_tab.dart';
+import 'package:piesp_patrol/features/home/tabs/duty_tab.dart';
 import 'package:piesp_patrol/features/home/tabs/other_tab.dart';
 
+// Uwaga: korzystamy z Twojego responsive.dart z metodami Responsive.isDesktop / isTablet
+import 'package:piesp_patrol/widgets/responsive.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
- 
-  
+  const HomePage({
+    super.key
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _index = 0; // domyślnie: Służba
+  int _index = 0;
+
+  // Kontener ograniczający szerokość tylko na większych ekranach (web/desktop/tablet)
+  Widget _responsiveShell(BuildContext context, Widget child) {
+    final isWide = Responsive.isDesktop(context) || Responsive.isTablet(context);
+
+    // Na mobile (Android) – pełna szerokość
+    if (!isWide) {
+      return child;
+    }
+
+    // Na web/desktop/tablet – wyśrodkowany, ograniczony maxWidth
+    final maxWidth = Responsive.isDesktop(context) ? 460.0 : 460.0;
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxWidth),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  List<Widget> get _tabs => const [
+        DutyTab(),
+        ServicesTab(),
+        OtherTab(),
+      ];
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final authController = AppScope.of(context).authController as AuthController;
-    final me = authController.meProfile; // pełny profil z /piesp/Auth/me
-
-    final badge = me?.badgeNumber ?? '—';
-    final name  = me?.userName ?? 'Nie zalogowano';
-
-    final (title, icon) = _titleAndIconFor(_index);
-
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: kToolbarHeight * 0.8, // ~20% niższy AppBar
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        backgroundColor: cs.primaryContainer,
-        foregroundColor: cs.onPrimaryContainer,
-
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-          Icon(icon, size: 20, color: cs.onPrimaryContainer), // było 22
-          const SizedBox(width: 6), // było 8
-          Text(title, style: TextStyle(color: cs.onPrimaryContainer)),
-          ],
-        ),
-
-        actions: [
-          IconButton(
-            tooltip: 'Wyloguj',
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              final navigator = Navigator.of(context);//bezpiecznie przed await
-              final auth = AppScope.of(context).authController as AuthController;
-              await auth.logout();
-              if (!mounted) return;
-              navigator.pushNamedAndRemoveUntil(AppRoutes.login,(route) => false); 
-            },
+    final auth = AppScope.of(context).authController as AuthController;
+    final badge = auth.meProfile?.badgeNumber ?? '---';
+    final name = auth.meProfile?.userName ?? '---';
+       
+    return Theme(
+      // nie zmieniamy globalnego stylu, tylko dopieszczamy AppBar/NavBar
+      data: Theme.of(context).copyWith(
+        appBarTheme: AppBarTheme(
+          backgroundColor: cs.primaryContainer,
+          foregroundColor: cs.onPrimaryContainer,
+          elevation: 0,
+          centerTitle: false,
+          scrolledUnderElevation: 0,
+          titleTextStyle: TextStyle(
+            color: cs.onPrimaryContainer,
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
-        ],
-
-        bottom: PreferredSize(
+          iconTheme: IconThemeData(color: cs.onPrimaryContainer),
+          actionsIconTheme: IconThemeData(color: cs.onPrimaryContainer),
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          height: 56,
+          backgroundColor: cs.surfaceContainerHigh,
+          indicatorColor: cs.primaryContainer.withValues(alpha: 0.6),
+          iconTheme: WidgetStateProperty.resolveWith(
+            (states) => IconThemeData(
+              size: 22,
+              color: states.contains(WidgetState.selected)
+                  ? cs.onPrimaryContainer
+                  : cs.onSurfaceVariant,
+            ),
+          ),
+          labelTextStyle: WidgetStateProperty.resolveWith(
+            (states) => TextStyle(
+              fontSize: 12,
+              fontWeight: states.contains(WidgetState.selected)
+                  ? FontWeight.w600
+                  : FontWeight.w400,
+              color: states.contains(WidgetState.selected)
+                  ? cs.onSurface
+                  : cs.onSurfaceVariant,
+            ),
+          ),
+        ),
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 12,
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(width: 10),
+              Text('PIESP Patrol'),
+              const SizedBox(width: 8),
+            
+            ],
+          ),
+          actions: [
+            IconButton(
+              tooltip: 'Wyloguj',
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                // bezpiecznie – bierzemy navigator przed await
+                final navigator = Navigator.of(context);
+                final auth = AppScope.of(context).authController as AuthController;
+                await auth.logout();
+                if (!mounted) return;
+                navigator.pushNamedAndRemoveUntil(
+                  AppRoutes.login,
+                  (_) => false,
+                );
+              },
+            ),
+            const SizedBox(width: 8),
+          ],
+          bottom: PreferredSize(
     preferredSize: const Size.fromHeight(45), // było 56
     child: Container(
       width: double.infinity,
@@ -87,7 +155,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(width: 10), // było 12
-          _IconOnlyChip(
+          _ChipIcon(
             bg: cs.surfaceContainerHighest,
             fg: cs.onSurfaceVariant,
             icon: Icons.shield_outlined,
@@ -96,77 +164,71 @@ class _HomePageState extends State<HomePage> {
       ),
     ),
   ),
-),
+        ),
 
-      body: IndexedStack(
-        index: _index,
-        children: [
-          DutyTab(unitName: me?.unitName),
-          ServicesTab(),
-          OtherTab(),
-        ],
-      ),
-
-      bottomNavigationBar: Theme(
-  data: Theme.of(context).copyWith(
-    navigationBarTheme: NavigationBarThemeData(
-      height: 52, // było domyślnie ~80; kompaktowy pasek
-      backgroundColor: cs.surfaceContainerHigh,
-      indicatorColor: cs.primaryContainer,
-      iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
-        (states) => IconThemeData(
-          size: 20, // mniejsze ikony
-          color: states.contains(WidgetState.selected)
-              ? cs.onPrimaryContainer
-              : cs.onSurfaceVariant,
+        body: SafeArea(
+          child: _responsiveShell(
+            context,
+            // Dajemy lekkie przewijanie – ale nie psuje układu mobilnego
+            ClipRect(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                switchInCurve: Curves.easeOut,
+                switchOutCurve: Curves.easeIn,
+                child: _tabs[_index],
+              ),
+            ),
+          ),
+        ),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: _index,
+          onDestinationSelected: (i) => setState(() => _index = i),
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.shield_moon),
+              selectedIcon: Icon(Icons.shield_moon),
+              label: 'Służba',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.edit_document),
+              selectedIcon: Icon(Icons.edit_document),
+              label: 'Usługi',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.more_horiz_outlined),
+              selectedIcon: Icon(Icons.more_horiz),
+              label: 'Inne',
+            ),
+          ],
         ),
       ),
-      labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
-        (states) => TextStyle(
-          fontSize: 11, // mniejsza czcionka etykiet
-          fontWeight: FontWeight.w600,
-          color: states.contains(WidgetState.selected)
-              ? cs.onPrimaryContainer
-              : cs.onSurfaceVariant,
-        ),
-      ),
-    ),
-  ),
-  child: NavigationBar(
-    selectedIndex: _index,
-    onDestinationSelected: (i) => setState(() => _index = i),
-    destinations: const [
-      NavigationDestination(
-        icon: Icon(Icons.shield_moon_outlined),
-        selectedIcon: Icon(Icons.shield_moon),
-        label: 'Służba',
-      ),
-      NavigationDestination(
-        icon: Icon(Icons.edit_document),
-        selectedIcon: Icon(Icons.edit_document),
-        label: 'Usługi',
-      ),
-      NavigationDestination(
-        icon: Icon(Icons.more_horiz),
-        selectedIcon: Icon(Icons.more_horiz),
-        label: 'Inne',
-      ),
-    ],
-  ),
-),
-
     );
   }
+}
 
-  (String, IconData) _titleAndIconFor(int i) {
-    switch (i) {
-      case 0:
-        return ('Służba', Icons.shield_moon);
-      case 1:
-        return ('Usługi', Icons.edit_document);
-      default:
-        return ('Inne', Icons.more_horiz);
-    }
+class _ChipIcon extends StatelessWidget {
+  const _ChipIcon({
+    required this.bg,
+    required this.fg,
+    required this.icon,
+  });
+
+  final Color bg;
+  final Color fg;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 36,
+      width: 36,
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      alignment: Alignment.center,
+      child: Icon(icon, size: 18, color: fg),
+    );
   }
 }
 
@@ -201,26 +263,6 @@ class _InfoChip extends StatelessWidget {
           Text(label, style: TextStyle(color: fg)),
         ],
       ),
-    );
-  }
-}
-
-class _IconOnlyChip extends StatelessWidget {
-  const _IconOnlyChip({required this.bg, required this.fg, required this.icon});
-  final Color bg;
-  final Color fg;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 36,
-      width: 36,
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Icon(icon, size: 18, color: fg),
     );
   }
 }

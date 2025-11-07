@@ -20,8 +20,10 @@ import 'package:piesp_patrol/features/vehicles/data/vehicles_dtos.dart' show Wpm
 import 'package:piesp_patrol/features/srp/pages/persons_search_page.dart';
 import 'package:piesp_patrol/features/srp/pages/persons_search_result_page.dart';
 import 'package:piesp_patrol/features/srp/pages/person_details_result_page.dart';
+import 'package:piesp_patrol/features/srp/pages/person_id_result_page.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart' show OsobaZnalezionaDto;
 import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart' show OsobaFullDto;
+import 'package:piesp_patrol/features/srp/data/person_id_dtos.dart' show DowodOsobistyDto;
 
 class AppRoutes {
   // Wejścia bazowe (np. z paska adresu w web/IIS)
@@ -40,6 +42,7 @@ class AppRoutes {
   static const String srpPersonsSearch = '/srp/persons-search';
   static const String srpPersonsSearchResults = '/srp/persons-search-results';
   static const String srpPersonDetails = '/srp/person-details';
+  static const String srpPersonId = '/srp/person-id';
 
   // === Vehicles ===
   static const String wpmSearch = '/vehicles/wpm-search';
@@ -123,6 +126,17 @@ class AppRoutes {
         return _badArgs(settings, 'Wymagany argument: PersonDataArgs');
       }
 
+      case srpPersonId: {
+        final args = settings.arguments;
+        if (args is PersonIdArgs) {
+          return MaterialPageRoute(
+            builder: (_) => PersonIdResultPage(dowod: args.dowod),
+            settings: settings,
+          );
+        }
+        return _badArgs(settings, 'Wymagany argument: PersonIdArgs');
+      }
+
       // ===== Vehicles =====
       case wpmSearch:
         return MaterialPageRoute(
@@ -198,6 +212,10 @@ class PersonDataArgs {
   const PersonDataArgs({required this.person});
 }
 
+class PersonIdArgs {
+  final DowodOsobistyDto dowod;
+  const PersonIdArgs({required this.dowod});
+}
 class WpmVehicleArgs {
   final List<WpmVehicleDto> wpmList;
   const WpmVehicleArgs({required this.wpmList});

@@ -240,6 +240,7 @@ class _PersonsSearchPageState extends State<PersonsSearchPage> {
               icon: const Icon(Icons.search),
               label: const Text('Wyszukaj'),
             ),
+            
             const SizedBox(height: 8),
 
             if (_loading) const LinearProgressIndicator(),
