@@ -4,6 +4,7 @@ import 'package:piesp_patrol/core/api_client.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
 import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart';
 import 'package:piesp_patrol/features/srp/data/person_id_dtos.dart';
+import 'package:piesp_patrol/core/proxy_response_dto.dart';
 
 class Result<T, E> {
   final T? _ok;
@@ -69,8 +70,7 @@ class SrpApi {
         ));
       }
 
-      final proxy =
-          ProxyResponseDto.fromSearchPersonJson(resp.data as Map<String, dynamic>);
+      final proxy = fromSearchPersonJson(resp.data as Map<String, dynamic>);
 
       if ((proxy.status ?? -1) == 0) {
         final items =

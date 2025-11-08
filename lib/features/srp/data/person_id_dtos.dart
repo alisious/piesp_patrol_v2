@@ -1,5 +1,5 @@
 // lib/features/srp/data/person_id_dtos.dart
-import 'package:piesp_patrol/features/srp/data/srp_dtos.dart' show ProxyResponseDto;
+import 'package:piesp_patrol/core/proxy_response_dto.dart' show ProxyResponseDto;
 
 /* ===== /SRP/get-current-id ===== */
 

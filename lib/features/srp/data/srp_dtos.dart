@@ -1,4 +1,5 @@
 // lib/features/srp/data/srp_dtos.dart
+import 'package:piesp_patrol/core/proxy_response_dto.dart';
 
 /// Żądanie do /SRP/search-person
 class SearchPersonRequestDto {
@@ -127,25 +128,8 @@ class SearchPersonResponseDto {
   }
 }
 
-/// Opakowanie Proxy z backendu (status, message, source itp.)
-class ProxyResponseDto<T> {
-  final T? data;
-  final int? status; // 0 = OK
-  final String? message;
-  final String? source;
-  final String? sourceStatusCode;
-  final String? requestId;
 
-  const ProxyResponseDto({
-    required this.data,
-    required this.status,
-    required this.message,
-    required this.source,
-    required this.sourceStatusCode,
-    required this.requestId,
-  });
-
-  static ProxyResponseDto<SearchPersonResponseDto> fromSearchPersonJson(
+ProxyResponseDto<SearchPersonResponseDto> fromSearchPersonJson(
       Map<String, dynamic> json) {
     final d = json['data'] as Map<String, dynamic>?;
     return ProxyResponseDto<SearchPersonResponseDto>(
@@ -157,4 +141,4 @@ class ProxyResponseDto<T> {
       requestId: json['requestId']?.toString(),
     );
   }
-}
+

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/api_client.dart';
+import 'package:piesp_patrol/features/cep/data/cep_api.dart';
+import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart'; // ← nowy import
 
@@ -30,8 +34,13 @@ class _OtherTabState extends State<OtherTab> {
           onTap: () => Navigator.of(context).pushNamed(AppRoutes.settingsPage),
         ),
         const SizedBox(height: 12),
+         ArrowButton(
+          title: 'CEP - Aktualizuj słowniki',
+          onTap: () => updateCepDictionaries(context),
+        ),
+        const SizedBox(height: 12),
         ArrowButton(
-          title: 'Inne',
+          title: 'Wyloguj',
           onTap: () async {
             final navigator = Navigator.of(context);// bezpiecznie przed await
             //await widget.onLogout();
@@ -43,6 +52,27 @@ class _OtherTabState extends State<OtherTab> {
           },
         ),
       ],
+    );
+  }
+}
+
+Future<void> updateCepDictionaries(BuildContext context) async {
+  final messenger = ScaffoldMessenger.of(context); // bezpiecznie przed await
+  try {
+    final scope = AppScope.of(context);
+    final apiClient = scope.apiClient as ApiClient; // dopasuj do swojego AppScope
+    final service = CepDictionaryService(CepApi(apiClient));
+
+    final res = await service.refreshVehicleDocumentTypes();
+
+    final text = (res.status == 0)
+        ? (res.message ?? 'Zaktualizowano słowniki CEP.')
+        : (res.message ?? 'Błąd aktualizacji słowników CEP.');
+
+    messenger.showSnackBar(SnackBar(content: Text(text)));
+  } catch (_) {
+    messenger.showSnackBar(
+      const SnackBar(content: Text('Błąd aktualizacji słowników CEP.')),
     );
   }
 }

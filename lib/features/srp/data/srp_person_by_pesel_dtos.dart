@@ -1,5 +1,5 @@
 // lib/features/srp/data/srp_person_by_pesel_dtos.dart
-import 'package:piesp_patrol/features/srp/data/srp_dtos.dart' show ProxyResponseDto;
+import 'package:piesp_patrol/core/proxy_response_dto.dart' show ProxyResponseDto;
 
 /* ========= REQ/RESP dla /SRP/get-person-by-pesel ========= */
 
