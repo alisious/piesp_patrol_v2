@@ -67,10 +67,14 @@ class ServicesTab extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-
-          ArrowButton(title: 'Szukaj pojazdu', onTap: () {}),
-          const SizedBox(height: 12),
-          ArrowButton(title: 'Sprawdź pojazd', onTap: () {}),
+         
+          ArrowButton(
+            title: 'Sprawdź pojazd', 
+            onTap: ( )=> Navigator.pushNamed(
+              context,
+              AppRoutes.vehicleQuestionExtendedPage
+              ),
+          ),
           const SizedBox(height: 12),
           ArrowButton(
             title: 'Sprawdź pojazd wojskowy', 

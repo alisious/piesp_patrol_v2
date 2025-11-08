@@ -28,6 +28,8 @@ class Services {
     required this.vehiclesApi,
     required this.apiConfig,
     required this.authController,
+    required this.cepApi,
+    required this.cepDictionaryService,
     // np. required this.vehiclesApi, required this.anprsApi, ...
   });
 
@@ -36,4 +38,6 @@ class Services {
   final Object vehiclesApi;
   final Object apiConfig;
   final Object authController;
+  final Object cepApi;
+  final Object cepDictionaryService;
 }

@@ -6,6 +6,8 @@ import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/core/api_client.dart';
 import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_api.dart';
+import 'package:piesp_patrol/features/cep/data/cep_api.dart';
+import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 
 import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
@@ -22,6 +24,8 @@ Future<void> main() async {
   final vehiclesApi = VehiclesApi(apiClient);
   final srpApi = SrpApi(apiClient);
   final auth = AuthController(client: apiClient, storage: storage);
+  final cepApi = CepApi(apiClient);
+  final cepDictionaryService = CepDictionaryService(cepApi);
   await auth.bootstrap();
 
   runApp(
@@ -32,6 +36,8 @@ Future<void> main() async {
         vehiclesApi: vehiclesApi,
         apiConfig: config,
         authController: auth,
+        cepApi: cepApi,
+        cepDictionaryService: cepDictionaryService,
       ), 
       child: PiespApp(
       )

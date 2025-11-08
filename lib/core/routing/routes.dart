@@ -12,6 +12,7 @@ import 'package:piesp_patrol/features/home/home_page.dart';
 import 'package:piesp_patrol/features/settings/settings_page.dart';
 
 // ===== Vehicles =====
+import 'package:piesp_patrol/features/cep/pages/vehicle_question_extended_page.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_page.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_result_page.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_dtos.dart' show WpmVehicleDto;
@@ -45,6 +46,7 @@ class AppRoutes {
   static const String srpPersonId = '/srp/person-id';
 
   // === Vehicles ===
+  static const String vehicleQuestionExtendedPage = '/vehicles/vehicle-question-extended';
   static const String wpmSearch = '/vehicles/wpm-search';
   static const String wpmSearchResults = '/vehicles/wpm-search-results';
 
@@ -138,6 +140,13 @@ class AppRoutes {
       }
 
       // ===== Vehicles =====
+      // ===== SRP =====
+      case vehicleQuestionExtendedPage:
+        return MaterialPageRoute(
+          builder: (_) => const VehicleQuestionExtendedPage(),
+          settings: settings,
+        );
+
       case wpmSearch:
         return MaterialPageRoute(
           builder: (_) => const WpmSearchPage(),

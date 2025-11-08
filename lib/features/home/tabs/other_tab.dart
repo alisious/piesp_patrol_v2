@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
-import 'package:piesp_patrol/core/api_client.dart';
-import 'package:piesp_patrol/features/cep/data/cep_api.dart';
 import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart'; // ← nowy import
@@ -60,8 +58,7 @@ Future<void> updateCepDictionaries(BuildContext context) async {
   final messenger = ScaffoldMessenger.of(context); // bezpiecznie przed await
   try {
     final scope = AppScope.of(context);
-    final apiClient = scope.apiClient as ApiClient; // dopasuj do swojego AppScope
-    final service = CepDictionaryService(CepApi(apiClient));
+    final service = scope.cepDictionaryService as CepDictionaryService;
 
     final res = await service.refreshVehicleDocumentTypes();
 
