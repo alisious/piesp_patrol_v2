@@ -1,11 +1,15 @@
 // lib/features/cep/pages/vehicle_question_extended_page.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/features/cep/data/cep_api.dart';
 import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/features/cep/data/cep_pojazd_dtos.dart';
 import 'package:piesp_patrol/features/cep/data/cep_slowniki_dtos.dart';
+import 'package:piesp_patrol/widgets/dropdown_box.dart';
+import 'package:piesp_patrol/widgets/input_box.dart';
+import 'package:piesp_patrol/widgets/common_params.dart';
+import 'package:piesp_patrol/widgets/button_search.dart';
+import 'package:piesp_patrol/widgets/common_appbar.dart';
 
 class VehicleQuestionExtendedPage extends StatefulWidget {
   const VehicleQuestionExtendedPage({super.key});
@@ -21,8 +25,9 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
   final _vinCtrl = TextEditingController();
 
   String? _typDokumentu; // kod słownikowy
+  CepVehicleDocTypeLite ? _selectedDocType; 
   final String _defaultDocTypeCode = 'DICT155_DR' ; // "Dowód rejestracyjny"
-  bool _loading = false;
+ 
   bool _depsInit = false;
   List<CepVehicleDocTypeLite> _docTypes = const [];
 
@@ -83,7 +88,7 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
   }
 
   Future<void> _onSearch() async {
-    setState(() => _loading = true);
+    
     try {
       final cepApi = AppScope.of(context).cepApi as CepApi;
       final req = _buildRequest();
@@ -113,21 +118,18 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
       // Tu ewentualnie: nawigacja do strony wynikowej, gdy dodasz widok szczegółów pojazdu.
       // if (status == 0 && resp.data?.pojazdRozszerzone != null) { ... }
     } finally {
-      if (mounted) setState(() => _loading = false);
+      // ewentualne czyszczenie stanu ładowania itp.
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ddItems = _docTypes
-        .map((e) => DropdownMenuItem<String>(
-              value: e.kod,
-              child: Text('${e.wartoscOpisowa}'),
-            ))
-        .toList();
-
+   
     return Scaffold(
-      appBar: AppBar(title: const Text('Sprawdź pojazd')),
+      appBar: const CommonAppBar(
+      title: 'Sprawdź pojazd',
+      showBack: true,
+    ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: AutofillGroup(
@@ -142,83 +144,77 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
                 '• VIN (nie łączyć z innymi).',
               ),
               const SizedBox(height: 16),
-
               // typDokumentu
-              InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Typ dokumentu',
-                  border: OutlineInputBorder(),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: _typDokumentu,
-                    isExpanded: true,
-                    items: ddItems,
-                    onChanged: (v) => setState(() => _typDokumentu = v),
-                  ),
-                ),
+              DropdownBox<CepVehicleDocTypeLite>(
+                label: 'Typ dokumentu',
+                items: _docTypes,
+                itemLabel: (e) => e.wartoscOpisowa!,
+                value: _selectedDocType,
+                onChanged: (v) => setState(() => _selectedDocType = v),
+                hint: 'Wybierz typ dokumentu',
+                borderStyle: InputBorderStyle.underline,
+                allowClear: true,
               ),
+             
               const SizedBox(height: 12),
 
               // dokumentSeriaNumer
-              TextField(
-                controller: _dokumentSeriaNumerCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Dokument – seria i numer',
-                  border: OutlineInputBorder(),
-                ),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9/-]'))],
+              InputBox(
+               controller: _dokumentSeriaNumerCtrl,
+               label: 'Seria i numer dokumentu',
+               preset: InputPreset.text,
+               uppercase: true,
+               maxLength: 50,
               ),
               const SizedBox(height: 12),
 
               // numerRejestracyjny
-              TextField(
-                controller: _nrRejCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Numer rejestracyjny (PL)',
-                  border: OutlineInputBorder(),
-                ),
-                textCapitalization: TextCapitalization.characters,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9]'))],
+               InputBox(
+               controller: _nrRejCtrl,
+               label: 'Numer rejestracyjny (PL)',
+               preset: InputPreset.text,
+               uppercase: true,
+               maxLength: 50,
               ),
               const SizedBox(height: 12),
 
               // numerRejestracyjnyZagraniczny
-              TextField(
-                controller: _nrRejZagrCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Numer rejestracyjny (zagraniczny)',
-                  border: OutlineInputBorder(),
-                ),
-                textCapitalization: TextCapitalization.characters,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9]'))],
+              InputBox(
+               controller: _nrRejZagrCtrl,
+               label: 'Numer rejestracyjny (zagraniczny)',
+               preset: InputPreset.text,
+               uppercase: true,
+               maxLength: 50,
               ),
               const SizedBox(height: 12),
 
               // VIN
-              TextField(
-                controller: _vinCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Numer podwozia/nadwozia/ramy (VIN)',
-                  border: OutlineInputBorder(),
-                ),
-                textCapitalization: TextCapitalization.characters,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9]'))],
+              InputBox(
+               controller: _vinCtrl,
+               label: 'Numer podwozia/nadwozia/ramy (VIN)',
+               preset: InputPreset.text,
+               uppercase: true,
+               maxLength: 60,
               ),
 
               const SizedBox(height: 20),
 
-              Align(
-                alignment: Alignment.centerRight,
-                child: FilledButton.icon(
-                  onPressed: _loading ? null : _onSearch,
-                  icon: _loading
-                      ? const SizedBox(
-                          width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Icon(Icons.search),
-                  label: const Text('Wyszukaj'),
-                ),
+              ButtonSearch(
+                onPressedAsync: () async {
+                // tu Twoja logika: walidacja + wywołanie API
+                // final valid = _formKey.currentState?.validate() ?? false;
+                // if (!valid) throw Exception('Uzupełnij wymagane pola.');
+                 await _onSearch();
+                },
+                enabled: true,        // np. (_formKey.currentState?.validate() ?? false)
+                fullWidth: true,      // albo false, jeśli w Row obok innych przycisków
+                label: 'Wyszukaj',
+                icon: Icons.search,    // opcjonalnie: Icons.manage_search
+                // showErrorSnackBar: false, // jeśli chcesz obsłużyć błędy sam
+                // errorToMessage: (e) => mapuj sobie wyjątek na ładny komunikat,
               ),
+
+              
             ],
           ),
         ),

@@ -1,0 +1,1 @@
+enum InputBorderStyle { outline, underline }

@@ -50,14 +50,40 @@ class PiespApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lightScheme = ColorScheme.fromSeed(
+       seedColor: Colors.indigo, // <-- Twój seedColor (zostaje!)
+       brightness: Brightness.light,
+    );
+    final darkScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFF0B57D0),
+      brightness: Brightness.dark,
+    );
+
+
     return MaterialApp(
       title: 'PIESP Patrol',
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
-        colorSchemeSeed: Colors.indigo,
+        colorScheme: lightScheme,
+        appBarTheme: AppBarTheme(
+         backgroundColor: lightScheme.primary,     // <-- wymuszamy primary
+         foregroundColor: lightScheme.onPrimary,   // tekst/ikony
+         surfaceTintColor: Colors.transparent,     // bez „przebijania” przy scrolu
+         scrolledUnderElevation: 4,
+        ),
       ),
+      darkTheme: ThemeData(
+       useMaterial3: true,
+       colorScheme: darkScheme,
+        appBarTheme: AppBarTheme(
+         backgroundColor: darkScheme.primary,
+         foregroundColor: darkScheme.onPrimary,
+         surfaceTintColor: Colors.transparent,
+         scrolledUnderElevation: 4,
+      ),
+  ),
       onGenerateRoute: AppRoutes.onGenerateRoute, 
       initialRoute: AppRoutes.login,
     );
