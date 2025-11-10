@@ -2,6 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const String kSwaggerJsonUrl = 'https://api.trentum.pl/swagger/v1/swagger.json';
+
 class ApiConfig extends ChangeNotifier {
   ApiConfig({
     required this.baseUrl,

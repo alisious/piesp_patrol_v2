@@ -8,6 +8,7 @@ import 'package:piesp_patrol/features/auth/auth_controller.dart';
 
 // ===== Strony główne =====
 import 'package:piesp_patrol/features/auth/login_page.dart';
+import 'package:piesp_patrol/features/auth/reset_pin_page.dart';
 import 'package:piesp_patrol/features/home/home_page.dart';
 import 'package:piesp_patrol/features/settings/settings_page.dart';
 
@@ -38,6 +39,7 @@ class AppRoutes {
   // === Strony główne ===
   static const String homePage = '/home';
   static const String settingsPage = '/settings';
+  static const String resetPinPage = '/auth/reset-pin';
 
   // === SRP ===
   static const String srpPersonsSearch = '/srp/persons-search';
@@ -96,6 +98,13 @@ class AppRoutes {
             final cfg = s.apiConfig as ApiConfig;
             return SettingsPage(config: cfg);
           },
+          settings: settings,
+        );
+
+      // ===== AUTH =====
+      case resetPinPage:
+        return MaterialPageRoute(
+          builder: (_) => const ResetPinPage(),
           settings: settings,
         );
 

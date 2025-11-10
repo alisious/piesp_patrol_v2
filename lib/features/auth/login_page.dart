@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () => Navigator.of(context).pushNamed('/reset-pin'),
+                        onPressed: () => Navigator.of(context).pushNamed(AppRoutes.resetPinPage),
                         child: const Text('Reset PIN'),
                       ),
                     ),
