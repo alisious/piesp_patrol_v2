@@ -66,4 +66,16 @@ class AuthController extends ChangeNotifier {
     tokenProfile = null;
     notifyListeners();
   }
+
+  Future<String> resetPIN({
+    required String badgeNumber,
+    required String securityCode,
+    required String newPin,
+  }) async {
+    return await repo.resetPin(
+      badgeNumber: badgeNumber,
+      securityCode: securityCode,
+      newPin: newPin,
+    );
+  }
 }

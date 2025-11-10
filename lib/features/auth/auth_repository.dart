@@ -1,6 +1,7 @@
 ﻿import 'package:dio/dio.dart';
 import 'package:piesp_patrol/core/api_client.dart';
 import 'package:piesp_patrol/features/auth/models.dart';
+import 'package:piesp_patrol/features/auth/data/reset_pin_dtos.dart';
 
 class AuthRepository {
   AuthRepository(this._client);
@@ -34,8 +35,31 @@ class AuthRepository {
         if (refreshToken != null) 'refreshToken': refreshToken,
       }, auth: true);
     } on DioException {
-      // ignorer â€” wylogowanie ma byÄ‡ â€žbest effortâ€ť
+      // ignorer â€" wylogowanie ma byÄ‡ â€žbest effortâ€ť
     }
+  }
+
+  Future<String> resetPin({
+    required String badgeNumber,
+    required String securityCode,
+    required String newPin,
+  }) async {
+    final requestDto = ResetPinRequestDto(
+      badgeNumber: badgeNumber,
+      securityCode: securityCode,
+      newPin: newPin,
+    );
+    final resp = await _client.postJson('/piesp/Auth/reset-pin', requestDto.toJson(), auth: false);
+    if (resp.statusCode != 200) {
+      throw AuthException('Nie udało się zresetować PIN (${resp.statusCode}).');
+    }
+    if (resp.data is String) {
+      return resp.data as String;
+    }
+    if (resp.data is Map && (resp.data as Map).containsKey('message')) {
+      return (resp.data as Map<String, dynamic>)['message'] as String;
+    }
+    throw AuthException('Nieprawidłowy format odpowiedzi z serwera.');
   }
   
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:piesp_patrol/widgets/input_box.dart';
 import 'package:piesp_patrol/widgets/common_params.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/features/auth/auth_controller.dart';
 
 class ResetPinPage extends StatefulWidget {
   const ResetPinPage({super.key});
@@ -12,6 +14,7 @@ class ResetPinPage extends StatefulWidget {
 
 class _ResetPinPageState extends State<ResetPinPage> {
   final _formKey = GlobalKey<FormState>();
+  final _badgeNumberCtrl = TextEditingController();
   final _newPinCtrl = TextEditingController();
   final _confirmPinCtrl = TextEditingController();
   final _securityCodeCtrl = TextEditingController();
@@ -20,10 +23,22 @@ class _ResetPinPageState extends State<ResetPinPage> {
 
   @override
   void dispose() {
+    _badgeNumberCtrl.dispose();
     _newPinCtrl.dispose();
     _confirmPinCtrl.dispose();
     _securityCodeCtrl.dispose();
     super.dispose();
+  }
+
+  String? _validateBadgeNumber(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Podaj numer odznaki';
+    }
+       
+    if (value.length < 4) {
+      return 'Numer odznaki musi mieć co najmniej 4 cyfry';
+    }
+    return null;
   }
 
   String? _validatePin(String? value) {
@@ -60,8 +75,14 @@ class _ResetPinPageState extends State<ResetPinPage> {
       _error = null;
     });
     try {
-      // TODO: Implementacja resetu PIN
-      await Future.delayed(const Duration(seconds: 1)); // placeholder
+      /// Implementacja resetu PIN
+      /// pobierz auth z AppScope
+      final auth = AppScope.of(context).authController as AuthController;
+      await auth.resetPIN(
+        badgeNumber: _badgeNumberCtrl.text,
+        securityCode: _securityCodeCtrl.text,
+        newPin: _newPinCtrl.text,
+      );
       if (!mounted) return;
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -96,6 +117,22 @@ class _ResetPinPageState extends State<ResetPinPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        // Numer odznaki
+                        TextFormField(
+                          controller: _badgeNumberCtrl,
+                          decoration: const InputDecoration(
+                            labelText: 'Numer odznaki',
+                            prefixIcon: Icon(Icons.badge_outlined),
+                            border: UnderlineInputBorder(),
+                          ),
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          validator: _validateBadgeNumber,
+                          maxLength: 4, 
+                        ),
                         // Nowy PIN
                         TextFormField(
                           controller: _newPinCtrl,
