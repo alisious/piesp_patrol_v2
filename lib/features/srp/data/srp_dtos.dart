@@ -60,7 +60,7 @@ class OsobaZnalezionaDto {
   final bool? czyZyje;
   final bool? czyPeselAnulowany;
   final String? zdjecie; // zazwyczaj base64 lub url – spec mówi string
-  bool czyPoszukiwana;
+  bool? czyPoszukiwana; // null = nie sprawdzono, false = sprawdzono i nie poszukiwana, true = sprawdzono i poszukiwana
 
   OsobaZnalezionaDto({
     required this.idOsoby,
@@ -75,7 +75,7 @@ class OsobaZnalezionaDto {
     required this.czyZyje,
     required this.czyPeselAnulowany,
     required this.zdjecie,
-    this.czyPoszukiwana = false,
+    this.czyPoszukiwana,
   });
 
   factory OsobaZnalezionaDto.fromJson(Map<String, dynamic> json) {
@@ -97,7 +97,7 @@ class OsobaZnalezionaDto {
       czyZyje: b('czyZyje'),
       czyPeselAnulowany: b('czyPeselAnulowany'),
       zdjecie: s('zdjecie'),
-      czyPoszukiwana: b('czyPoszukiwana') ?? false
+      czyPoszukiwana: b('czyPoszukiwana'), // null jeśli nie ma w odpowiedzi API
     );
   }
 }

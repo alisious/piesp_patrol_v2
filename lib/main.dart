@@ -12,6 +12,8 @@ import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
 import 'package:piesp_patrol/features/auth/token_storage.dart';
+import 'package:piesp_patrol/features/srp/data/person_controller.dart';
+import 'package:piesp_patrol/features/vehicles/data/vehicle_controller.dart';
 
 
 Future<void> main() async {
@@ -26,6 +28,8 @@ Future<void> main() async {
   final auth = AuthController(client: apiClient, storage: storage);
   final cepApi = CepApi(apiClient);
   final cepDictionaryService = CepDictionaryService(cepApi);
+  final personController = PersonController();
+  final vehicleController = VehicleController();
   await auth.bootstrap();
 
   runApp(
@@ -38,6 +42,8 @@ Future<void> main() async {
         authController: auth,
         cepApi: cepApi,
         cepDictionaryService: cepDictionaryService,
+        personController: personController,
+        vehicleController: vehicleController,
       ), 
       child: PiespApp(
       )

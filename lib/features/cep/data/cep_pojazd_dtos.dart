@@ -235,7 +235,7 @@ class CepOrganDto {
   final String? nazwa;
   final String? numerEwidencyjny;
   final String? identyfikatorREGON;
-  final String? REGON;
+  final String? regon;
   final String? nazwaOrganuWydajacego;
   final CepWartoscSlownikowaDto? typ;
 
@@ -247,7 +247,7 @@ class CepOrganDto {
     this.nazwa,
     this.numerEwidencyjny,
     this.identyfikatorREGON,
-    this.REGON,
+    this.regon,
     this.nazwaOrganuWydajacego,
     this.typ,
   });
@@ -264,7 +264,7 @@ class CepOrganDto {
       nazwa: s('nazwa'),
       numerEwidencyjny: s('numerEwidencyjny'),
       identyfikatorREGON: s('identyfikatorREGON'),
-      REGON: s('REGON'),
+      regon: s('regon'),
       nazwaOrganuWydajacego: s('nazwaOrganuWydajacego'),
       typ: CepWartoscSlownikowaDto.fromJson(m('typ')),
     );
@@ -1074,7 +1074,7 @@ class CepPodmiotDto {
 
 /// Firma
 class CepFirmaDto {
-  final String? REGON;
+  final String? regon;
   final String? nazwaFirmy;
   final String? nazwaFirmyDrukowana;
   final CepWartoscSlownikowaDto? formaWlasnosci;
@@ -1082,7 +1082,7 @@ class CepFirmaDto {
   final CepAdresDto? adres;
 
   const CepFirmaDto({
-    this.REGON,
+    this.regon,
     this.nazwaFirmy,
     this.nazwaFirmyDrukowana,
     this.formaWlasnosci,
@@ -1095,7 +1095,7 @@ class CepFirmaDto {
     String? s(String k) => json[k]?.toString();
     Map<String, dynamic>? m(String k) => json[k] is Map<String, dynamic> ? json[k] as Map<String, dynamic> : null;
     return CepFirmaDto(
-      REGON: s('REGON'),
+      regon: s('REGON'),
       nazwaFirmy: s('nazwaFirmy'),
       nazwaFirmyDrukowana: s('nazwaFirmyDrukowana'),
       formaWlasnosci: CepWartoscSlownikowaDto.fromJson(m('formaWlasnosci')),

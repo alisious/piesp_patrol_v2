@@ -7,12 +7,14 @@ class ArrowButton extends StatelessWidget {
     required this.onTap,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.radius = 12,
+    this.enabled = true,
   });
 
   final String title;
   final VoidCallback onTap;
   final EdgeInsetsGeometry padding;
   final double radius;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +24,16 @@ class ArrowButton extends StatelessWidget {
 
     // Delikatniejsze obramowanie w jasnym trybie (outlineVariant), a w ciemnym zwykłe outline
     final borderColor = isLight ? cs.outlineVariant : cs.outline;
+    
+    // Kolor tekstu i ikony zależny od stanu enabled
+    final textColor = enabled ? cs.onSurface : cs.onSurface.withValues(alpha: 0.38);
+    final iconColor = enabled ? cs.onSurfaceVariant : cs.onSurfaceVariant.withValues(alpha: 0.38);
 
     return Material(
       color: cs.surface, // tło jak strona
       borderRadius: BorderRadius.circular(radius),
       child: InkWell(
-        onTap: onTap,
+        onTap: enabled ? onTap : null,
         borderRadius: BorderRadius.circular(radius),
         child: Container(
           padding: padding,
@@ -41,13 +47,13 @@ class ArrowButton extends StatelessWidget {
                 child: Text(
                   title,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: cs.onSurface, // czytelny w obu trybach
+                    color: textColor,
                   ),
                 ),
               ),
               Icon(
                 Icons.chevron_right,
-                color: cs.onSurfaceVariant, // subtelniejsza strzałka
+                color: iconColor,
               ),
             ],
           ),

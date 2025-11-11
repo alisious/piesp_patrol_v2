@@ -83,7 +83,8 @@ class AppRoutes {
         );
 
       // ===== HOME (guard: wymaga zalogowania) =====
-      case homePage:
+      case homePage: {
+        final initialTabIndex = settings.arguments is int ? settings.arguments as int : 0;
         return MaterialPageRoute(
           builder: (ctx) {
             final s = AppScope.of(ctx);
@@ -93,10 +94,11 @@ class AppRoutes {
               // Niezalogowany → wróć do loginu
               return LoginPage(auth: auth, config: cfg);
             }
-            return HomePage();
+            return HomePage(initialTabIndex: initialTabIndex);
           },
           settings: settings,
         );
+      }
 
       // ===== SETTINGS (dostępne z logowania i skądkolwiek) =====
       case settingsPage:

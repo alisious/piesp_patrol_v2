@@ -259,7 +259,7 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
         _rows({
           'Nazwa': informacjeSKP.stacjaKontroliPojazdow?.nazwa,
           'Numer ewidencyjny': informacjeSKP.stacjaKontroliPojazdow?.numerEwidencyjny,
-          'REGON': informacjeSKP.stacjaKontroliPojazdow?.REGON,
+          'REGON': informacjeSKP.stacjaKontroliPojazdow?.regon,
         }),
       );
     }
@@ -404,7 +404,7 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
             _rows({
               'Nazwa': rej.organRejestrujacy?.nazwa,
               'Numer ewidencyjny': rej.organRejestrujacy?.numerEwidencyjny,
-              'REGON': rej.organRejestrujacy?.REGON,
+              'REGON': rej.organRejestrujacy?.regon,
               'Nazwa organu wydającego': rej.organRejestrujacy?.nazwaOrganuWydajacego,
             }),
           );
@@ -537,7 +537,7 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
         widgets.add(const SizedBox(height: 4));
         widgets.addAll(
           _rows({
-            'REGON': wlasnosc.podmiot?.firma?.REGON,
+            'REGON': wlasnosc.podmiot?.firma?.regon,
             'Nazwa firmy': wlasnosc.podmiot?.firma?.nazwaFirmy,
             'Nazwa firmy drukowana': wlasnosc.podmiot?.firma?.nazwaFirmyDrukowana,
             'Forma własności': wlasnosc.podmiot?.firma?.formaWlasnosci?.wartoscOpisowaSkrocona ??

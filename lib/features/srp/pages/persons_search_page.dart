@@ -5,6 +5,7 @@ import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
+import 'package:piesp_patrol/widgets/responsive.dart';
 
 class PersonsSearchPage extends StatefulWidget {
   const PersonsSearchPage({super.key});
@@ -121,8 +122,8 @@ class _PersonsSearchPageState extends State<PersonsSearchPage> {
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      body: PageContainer(
+        maxWidth: 480,
         child: ListView(
           children: [
             // === PESEL z licznikiem L/11 po prawej i twardym limitem 11 cyfr ===

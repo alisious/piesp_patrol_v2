@@ -8,7 +8,11 @@ import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
 import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart';
+import 'package:piesp_patrol/features/srp/data/selected_person_dto.dart';
+import 'package:piesp_patrol/features/srp/data/person_controller.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
+import 'package:piesp_patrol/widgets/button_select.dart';
+import 'package:piesp_patrol/widgets/responsive.dart';
 
 /// Strona wyników wyszukiwania osób.
 /// Oczekuje listy wyników przekazanej przez konstruktor.
@@ -30,17 +34,23 @@ class PersonsSearchResultPage extends StatelessWidget {
         title: const Text('Wyniki wyszukiwania osób'),
       ),
       body: results.isEmpty
-          ? Center(
-              child: Text(
-                'Brak wyników.',
-                style: theme.textTheme.titleMedium?.copyWith(color: cs.outline),
+          ? PageContainer(
+              maxWidth: 480,
+              child: Center(
+                child: Text(
+                  'Brak wyników.',
+                  style: theme.textTheme.titleMedium?.copyWith(color: cs.outline),
+                ),
               ),
             )
-          : ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: results.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (ctx, i) => _PersonCard(person: results[i]),
+          : PageContainer(
+              maxWidth: 480,
+              child: ListView.separated(
+                padding: EdgeInsets.zero, // Padding zapewniony przez PageContainer
+                itemCount: results.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                itemBuilder: (ctx, i) => _PersonCard(person: results[i]),
+              ),
             ),
     );
   }
@@ -73,65 +83,101 @@ class _PersonCardState extends State<_PersonCard> {
     }
   }
 
-  Future<void> _checkWantedAndNotify(BuildContext context) async {
-  final ctx = context; // kopiujemy kontekst przed async gap
-  final messenger = ScaffoldMessenger.of(ctx);
-  messenger.hideCurrentSnackBar();
+  /// Sprawdza, czy osoba jest poszukiwana (używa tej samej metody co przycisk "Czy osoba poszukiwana?").
+  /// Zwraca parę (bool?, Future void ?) gdzie:
+  /// - bool? - true jeśli osoba jest poszukiwana, false jeśli nie, null w przypadku błędu
+  /// - Future void ? - Future, które zakończy się po zamknięciu splash screen (jeśli był wyświetlony), null w przeciwnym razie
+  /// [showAllNotifications] - jeśli true, wyświetla wszystkie komunikaty (dla przycisku "Czy osoba poszukiwana?")
+  /// [showWantedSplash] - jeśli true, wyświetla splash screen gdy osoba jest poszukiwana (dla przycisku "Wybierz")
+  Future<({bool? isWanted, Future<void>? splashFuture})> _checkIfWanted({
+    required BuildContext context,
+    bool showAllNotifications = true,
+    bool showWantedSplash = true,
+  }) async {
+    final ctx = context;
+    final messenger = ScaffoldMessenger.of(ctx);
+    if (showAllNotifications) {
+      messenger.hideCurrentSnackBar();
+    }
 
-  final pesel = (widget.person.pesel ?? '').trim();
-  if (pesel.isEmpty) {
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Brak numeru PESEL dla tej osoby.')),
-    );
-    return;
-  }
-
-  // Pobierz zależności PRZED await
-  final scope = AppScope.of(ctx);
-  final srpApi = scope.srpApi as SrpApi;
-
-  try {
-    final result = await srpApi.checkIfWanted(pesel: pesel);
-
-    // Strzeż użycie kontekstu po async gap
-    if (!ctx.mounted) return;
-
-    if (result.isOk) {
-      final isWanted = result.value;
-
-      setState(() {
-        widget.person.czyPoszukiwana = isWanted;
-      });
-
-      if (isWanted) {
-        // Czerwony, migający splash — "OSOBA POSZUKIWANA!"
-        showGeneralDialog(
-          context: ctx,
-          barrierDismissible: true,
-          barrierLabel: 'wanted',
-          pageBuilder: (_, __, ___) => const _WantedSplash(),
-          transitionBuilder: (_, anim, __, child) => FadeTransition(
-            opacity: anim,
-            child: child,
-          ),
-          transitionDuration: const Duration(milliseconds: 200),
-        );
-      } else {
+    final pesel = (widget.person.pesel ?? '').trim();
+    if (pesel.isEmpty) {
+      if (showAllNotifications) {
         messenger.showSnackBar(
-          const SnackBar(content: Text('Brak wpisów o poszukiwaniu.')),
+          const SnackBar(content: Text('Brak numeru PESEL dla tej osoby.')),
         );
       }
-    } else {
-      final errMsg = (result.error.message.isNotEmpty)
-          ? result.error.message
-          : 'Błąd podczas sprawdzania poszukiwania.';
-      messenger.showSnackBar(SnackBar(content: Text(errMsg)));
+      return (isWanted: null, splashFuture: null);
     }
-  } catch (e) {
-    if (!ctx.mounted) return;
-    messenger.showSnackBar(SnackBar(content: Text('Wyjątek: $e')));
+
+    // Pobierz zależności PRZED await
+    final scope = AppScope.of(ctx);
+    final srpApi = scope.srpApi as SrpApi;
+
+    try {
+      final result = await srpApi.checkIfWanted(pesel: pesel);
+
+      // Strzeż użycie kontekstu po async gap
+      if (!ctx.mounted) return (isWanted: null, splashFuture: null);
+
+      if (result.isOk) {
+        final isWanted = result.value;
+
+        setState(() {
+          widget.person.czyPoszukiwana = isWanted;
+        });
+
+        Future<void>? splashFuture;
+        if (isWanted && showWantedSplash) {
+          // Czerwony, migający splash — "OSOBA POSZUKIWANA!"
+          // showGeneralDialog zwraca Future, które zakończy się po zamknięciu dialogu
+          splashFuture = showGeneralDialog<void>(
+            context: ctx,
+            barrierDismissible: true,
+            barrierLabel: 'wanted',
+            pageBuilder: (_, __, ___) => const _WantedSplash(),
+            transitionBuilder: (_, anim, __, child) => FadeTransition(
+              opacity: anim,
+              child: child,
+            ),
+            transitionDuration: const Duration(milliseconds: 200),
+          );
+        } else if (!isWanted && showAllNotifications) {
+          messenger.showSnackBar(
+            const SnackBar(content: Text('Brak wpisów o poszukiwaniu.')),
+          );
+        }
+
+        return (isWanted: isWanted, splashFuture: splashFuture);
+      } else {
+        if (showAllNotifications) {
+          final errMsg = (result.error.message.isNotEmpty)
+              ? result.error.message
+              : 'Błąd podczas sprawdzania poszukiwania.';
+          messenger.showSnackBar(SnackBar(content: Text(errMsg)));
+        }
+        return (isWanted: null, splashFuture: null);
+      }
+    } catch (e) {
+      if (!ctx.mounted) return (isWanted: null, splashFuture: null);
+      if (showAllNotifications) {
+        messenger.showSnackBar(SnackBar(content: Text('Wyjątek: $e')));
+      }
+      return (isWanted: null, splashFuture: null);
+    }
   }
-}
+
+  Future<void> _checkWantedAndNotify(BuildContext context) async {
+    final result = await _checkIfWanted(
+      context: context,
+      showAllNotifications: true,
+      showWantedSplash: true,
+    );
+    // Jeśli splash został wyświetlony, poczekaj na jego zamknięcie
+    if (result.splashFuture != null) {
+      await result.splashFuture;
+    }
+  }
 
   Future<void> _openPersonId(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
@@ -271,17 +317,20 @@ class _PersonCardState extends State<_PersonCard> {
               fit: BoxFit.fitHeight,
               height: 300,
             ),
-            if (widget.person.czyPoszukiwana)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      '⚠️ Osoba poszukiwana',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: cs.error,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+          if (widget.person.czyPoszukiwana == true)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Center(
+                child: Text(
+                  '⚠️ Osoba poszukiwana',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: cs.error,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -296,6 +345,8 @@ class _PersonCardState extends State<_PersonCard> {
                     style: theme.textTheme.bodyMedium,
                   ),
                 const SizedBox(height: 16),
+
+               
 
                 // ——— Szczegóły osoby (zachowujemy nawigację do srpPersonDetails) ———
                 ArrowButton(
@@ -314,6 +365,59 @@ class _PersonCardState extends State<_PersonCard> {
                 ArrowButton(
                   title: 'Czy osoba poszukiwana?',
                   onTap: () => _checkWantedAndNotify(context),
+                ),
+                const SizedBox(height: 8),
+                 // ——— Przycisk Wybierz ———
+                ButtonSelect(
+                  label: 'Wybierz',
+                  onPressedAsync: () async {
+                    Future<void>? splashFuture;
+                    
+                    // Jeśli czyPoszukiwana == null, najpierw sprawdź, czy osoba jest poszukiwana
+                    if (widget.person.czyPoszukiwana == null) {
+                      // Sprawdź (bez komunikatu "Brak wpisów"), ale pokaż splash jeśli poszukiwana
+                      final checkResult = await _checkIfWanted(
+                        context: context,
+                        showAllNotifications: false, // Nie pokazuj "Brak wpisów o poszukiwaniu"
+                        showWantedSplash: true, // Pokaż splash jeśli poszukiwana
+                      );
+                      
+                      // Zapamiętaj Future splash screen, jeśli został wyświetlony
+                      splashFuture = checkResult.splashFuture;
+                      
+                      // Sprawdź, czy widget jest nadal zamontowany
+                      if (!mounted) return;
+                      
+                      // Jeśli osoba jest poszukiwana i splash został wyświetlony, poczekaj na jego zamknięcie
+                      if (checkResult.isWanted == true && splashFuture != null) {
+                        await splashFuture;
+                        // Sprawdź ponownie, czy widget jest nadal zamontowany po zamknięciu splash
+                        if (!mounted) return;
+                      }
+                    }
+                    
+                    // Zapisz wybraną osobę w PersonController
+                    final scope = AppScope.of(context);
+                    final personController = scope.personController as PersonController;
+                    
+                    final selectedPerson = SelectedPersonDto.fromOsobaZnalezionaDto(
+                      widget.person,
+                      // czyZolnierz pozostaje null, może być uzupełnione później
+                    );
+                    
+                    personController.selectPerson(selectedPerson);
+                    
+                    // Przejdź do strony Home na services_tab (indeks 1)
+                    if (mounted) {
+                      final navigator = Navigator.of(context);
+                      // Usuń wszystkie poprzednie strony z historii i przejdź do Home z services_tab
+                      navigator.pushNamedAndRemoveUntil(
+                        AppRoutes.homePage,
+                        (route) => false, // Usuń wszystkie poprzednie trasy
+                        arguments: 1, // ServicesTab ma indeks 1
+                      );
+                    }
+                  },
                 ),
                 const SizedBox(height: 8),
                 

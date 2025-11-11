@@ -30,7 +30,9 @@ class Services {
     required this.authController,
     required this.cepApi,
     required this.cepDictionaryService,
-    // np. required this.vehiclesApi, required this.anprsApi, ...
+    required this.personController,
+    required this.vehicleController,
+    // np. required this.anprsApi, ...
   });
 
   final Object apiClient; // Konkretne typy importujesz w main.dart
@@ -40,4 +42,6 @@ class Services {
   final Object authController;
   final Object cepApi;
   final Object cepDictionaryService;
+  final Object personController;
+  final Object vehicleController;
 }

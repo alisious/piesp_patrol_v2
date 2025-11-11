@@ -13,15 +13,26 @@ import 'package:piesp_patrol/widgets/responsive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
-    super.key
+    super.key,
+    this.initialTabIndex = 0,
   });
+
+  /// Indeks zakładki do wyświetlenia przy starcie (0 = DutyTab, 1 = ServicesTab, 2 = OtherTab)
+  final int initialTabIndex;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _index = 0;
+  late int _index;
+
+  @override
+  void initState() {
+    super.initState();
+    // Ustaw początkowy indeks zakładki (domyślnie 0, ale może być przekazany przez konstruktor)
+    _index = widget.initialTabIndex.clamp(0, 2);
+  }
 
   // Kontener ograniczający szerokość tylko na większych ekranach (web/desktop/tablet)
   Widget _responsiveShell(BuildContext context, Widget child) {

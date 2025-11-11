@@ -4,6 +4,7 @@ import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/cep/data/cep_api.dart';
 import 'package:piesp_patrol/features/cep/data/upki_dtos.dart';
+import 'package:piesp_patrol/features/srp/data/person_controller.dart';
 import 'package:piesp_patrol/widgets/input_box.dart';
 import 'package:piesp_patrol/widgets/button_search.dart';
 import 'package:piesp_patrol/widgets/common_appbar.dart';
@@ -42,6 +43,44 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
     final s = ScaffoldMessenger.of(context);
     s.hideCurrentSnackBar();
     s.showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  /// Wypełnia pola formularza danymi z wybranej osoby.
+  void _fillFieldsFromSelectedPerson() {
+    final personController = AppScope.of(context).personController as PersonController;
+    final selectedPerson = personController.selectedPerson;
+    
+    if (selectedPerson == null) {
+      _showSnack('Brak wybranej osoby.');
+      return;
+    }
+
+    setState(() {
+      if (_usePesel) {
+        // Wypełnij pole PESEL
+        _peselCtrl.text = selectedPerson.pesel ?? '';
+      } else {
+        // Wypełnij pola: Imię pierwsze, Nazwisko, Data urodzenia
+        _imieCtrl.text = selectedPerson.imie ?? '';
+        _nazwiskoCtrl.text = selectedPerson.nazwisko ?? '';
+        
+        // Konwertuj datę urodzenia z formatu yyyyMMdd na yyyy-MM-dd jeśli potrzeba
+        final dataUrodzenia = selectedPerson.dataUrodzenia ?? '';
+        if (dataUrodzenia.isNotEmpty) {
+          // Jeśli data jest w formacie yyyyMMdd (8 znaków), konwertuj na yyyy-MM-dd
+          if (dataUrodzenia.length == 8 && RegExp(r'^\d{8}$').hasMatch(dataUrodzenia)) {
+            _dataUrodzeniaCtrl.text = '${dataUrodzenia.substring(0, 4)}-${dataUrodzenia.substring(4, 6)}-${dataUrodzenia.substring(6, 8)}';
+          } else {
+            // W przeciwnym razie użyj oryginalnej wartości (może być już w formacie yyyy-MM-dd)
+            _dataUrodzeniaCtrl.text = dataUrodzenia;
+          }
+        } else {
+          _dataUrodzeniaCtrl.text = '';
+        }
+      }
+    });
+    
+    _showSnack('Wypełniono pola danymi wybranej osoby.');
   }
 
   UpKiRequest _buildRequest() {
@@ -126,24 +165,63 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                SegmentedButton<bool>(
-                  segments: const [
-                    ButtonSegment<bool>(
-                      value: true,
-                      label: Text('PESEL'),
-                      icon: Icon(Icons.badge),
-                    ),
-                    ButtonSegment<bool>(
-                      value: false,
-                      label: Text('Dane osoby'),
-                      icon: Icon(Icons.person),
-                    ),
-                  ],
-                  selected: {_usePesel},
-                  onSelectionChanged: (Set<bool> newSelection) {
-                    setState(() {
-                      _usePesel = newSelection.first;
-                    });
+                Builder(
+                  builder: (context) {
+                    final personController = AppScope.of(context).personController as PersonController;
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: SegmentedButton<bool>(
+                            segments: const [
+                              ButtonSegment<bool>(
+                                value: true,
+                                label: Text('PESEL'),
+                                icon: Icon(Icons.badge),
+                              ),
+                              ButtonSegment<bool>(
+                                value: false,
+                                label: Text('Dane osoby'),
+                                icon: Icon(Icons.person),
+                              ),
+                            ],
+                            selected: {_usePesel},
+                            onSelectionChanged: (Set<bool> newSelection) {
+                              setState(() {
+                                _usePesel = newSelection.first;
+                              });
+                            },
+                          ),
+                        ),
+                        AnimatedBuilder(
+                          animation: personController,
+                          builder: (context, _) {
+                            final hasSelectedPerson = personController.selectedPerson != null;
+                            
+                            if (hasSelectedPerson) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Tooltip(
+                                  message: 'Wypełnij pola danymi wybranej osoby',
+                                  child: InkWell(
+                                    onTap: _fillFieldsFromSelectedPerson,
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Theme.of(context).colorScheme.primary,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            return const SizedBox.shrink();
+                          },
+                        ),
+                      ],
+                    );
                   },
                 ),
                 const SizedBox(height: 24),

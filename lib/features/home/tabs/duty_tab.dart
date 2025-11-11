@@ -34,16 +34,19 @@ class DutyTab extends StatelessWidget {
             ArrowButton(
               title: 'Rozpocznij służbę',
               onTap: () {},
+              enabled: true,
             ),
             const SizedBox(height: 12),
             ArrowButton(
               title: 'Zakończ służbę',
               onTap: () {},
+              enabled: false,
             ),
             const SizedBox(height: 12),
             ArrowButton(
               title: 'Dodaj służbę doraźną',
               onTap: () {},
+              enabled: true,
             ),
 
             const SizedBox(height: 24),
@@ -67,11 +70,13 @@ class DutyTab extends StatelessWidget {
             ArrowButton(
               title: 'Rozpocznij czynność',
               onTap: () {},
+              enabled: false,
             ),
             const SizedBox(height: 12),
             ArrowButton(
               title: 'Zakończ czynność',
               onTap: () {},
+              enabled: false,
             ),
           ],
         ),
