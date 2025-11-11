@@ -16,6 +16,9 @@ import 'package:piesp_patrol/features/settings/settings_page.dart';
 import 'package:piesp_patrol/features/cep/pages/vehicle_question_extended_page.dart';
 import 'package:piesp_patrol/features/cep/pages/vehicle_qestion_extended_response_page.dart';
 import 'package:piesp_patrol/features/cep/data/cep_pojazd_dtos.dart' show CepPytanieOPojazdRozszerzoneResponseDto;
+import 'package:piesp_patrol/features/cep/pages/upki_check_page.dart';
+import 'package:piesp_patrol/features/cep/pages/upki_check_result_page.dart';
+import 'package:piesp_patrol/features/cep/data/upki_dtos.dart' show UpKiResponseDto;
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_page.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_result_page.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_dtos.dart' show WpmVehicleDto;
@@ -54,6 +57,8 @@ class AppRoutes {
   static const String vehicleQuestionExtendedResponsePage = '/vehicles/vehicle-question-extended-response';
   static const String wpmSearch = '/vehicles/wpm-search';
   static const String wpmSearchResults = '/vehicles/wpm-search-results';
+  static const String upkiCheckPage = '/vehicles/upki-check';
+  static const String upkiCheckResultPage = '/vehicles/upki-check-result';
 
   /// Centralny router
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -186,6 +191,23 @@ class AppRoutes {
         return _badArgs(settings, 'Wymagany argument: WpmVehicleArgs');
       }
 
+      case upkiCheckPage:
+        return MaterialPageRoute(
+          builder: (_) => const UpKiCheckPage(),
+          settings: settings,
+        );
+
+      case upkiCheckResultPage: {
+        final args = settings.arguments;
+        if (args is UpKiCheckResultArgs) {
+          return MaterialPageRoute(
+            builder: (_) => UpKiCheckResultPage(response: args.response),
+            settings: settings,
+          );
+        }
+        return _badArgs(settings, 'Wymagany argument: UpKiCheckResultArgs');
+      }
+
       // ===== Nieznana trasa =====
       default:
         return _unknown(settings);
@@ -255,4 +277,9 @@ class WpmVehicleArgs {
 class VehicleQuestionExtendedResponseArgs {
   final CepPytanieOPojazdRozszerzoneResponseDto response;
   const VehicleQuestionExtendedResponseArgs({required this.response});
+}
+
+class UpKiCheckResultArgs {
+  final UpKiResponseDto response;
+  const UpKiCheckResultArgs({required this.response});
 }

@@ -84,7 +84,13 @@ class ServicesTab extends StatelessWidget {
               ),
           ),
           const SizedBox(height: 12),
-          ArrowButton(title: 'Sprawdź uprawnienia kierowcy', onTap: () {}),
+          ArrowButton(
+            title: 'Sprawdź uprawnienia kierowcy',
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.upkiCheckPage,
+            ),
+          ),
           const SizedBox(height: 12),
           ArrowButton(title: 'Sprawdź wykroczenia', onTap: () {}),
           const SizedBox(height: 12),

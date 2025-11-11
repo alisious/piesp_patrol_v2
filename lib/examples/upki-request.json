@@ -1,0 +1,12 @@
+{
+    "danePesel": {
+      "numerPesel": "string",
+      "dataZapytania": "2025-11-11T12:00:38.872Z"
+    },
+    "daneOsoby": {
+      "imiePierwsze": "string",
+      "nazwisko": "string",
+      "dataUrodzenia": "2025-11-11",
+      "dataZapytania": "2025-11-11T12:00:38.872Z"
+    }
+  }
