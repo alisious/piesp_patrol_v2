@@ -14,6 +14,8 @@ import 'package:piesp_patrol/features/settings/settings_page.dart';
 
 // ===== Vehicles =====
 import 'package:piesp_patrol/features/cep/pages/vehicle_question_extended_page.dart';
+import 'package:piesp_patrol/features/cep/pages/vehicle_qestion_extended_response_page.dart';
+import 'package:piesp_patrol/features/cep/data/cep_pojazd_dtos.dart' show CepPytanieOPojazdRozszerzoneResponseDto;
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_page.dart';
 import 'package:piesp_patrol/features/vehicles/pages/wpm_search_result_page.dart';
 import 'package:piesp_patrol/features/vehicles/data/vehicles_dtos.dart' show WpmVehicleDto;
@@ -49,6 +51,7 @@ class AppRoutes {
 
   // === Vehicles ===
   static const String vehicleQuestionExtendedPage = '/vehicles/vehicle-question-extended';
+  static const String vehicleQuestionExtendedResponsePage = '/vehicles/vehicle-question-extended-response';
   static const String wpmSearch = '/vehicles/wpm-search';
   static const String wpmSearchResults = '/vehicles/wpm-search-results';
 
@@ -149,12 +152,22 @@ class AppRoutes {
       }
 
       // ===== Vehicles =====
-      // ===== SRP =====
       case vehicleQuestionExtendedPage:
         return MaterialPageRoute(
           builder: (_) => const VehicleQuestionExtendedPage(),
           settings: settings,
         );
+
+      case vehicleQuestionExtendedResponsePage: {
+        final args = settings.arguments;
+        if (args is VehicleQuestionExtendedResponseArgs) {
+          return MaterialPageRoute(
+            builder: (_) => VehicleQuestionExtendedResponsePage(response: args.response),
+            settings: settings,
+          );
+        }
+        return _badArgs(settings, 'Wymagany argument: VehicleQuestionExtendedResponseArgs');
+      }
 
       case wpmSearch:
         return MaterialPageRoute(
@@ -237,4 +250,9 @@ class PersonIdArgs {
 class WpmVehicleArgs {
   final List<WpmVehicleDto> wpmList;
   const WpmVehicleArgs({required this.wpmList});
+}
+
+class VehicleQuestionExtendedResponseArgs {
+  final CepPytanieOPojazdRozszerzoneResponseDto response;
+  const VehicleQuestionExtendedResponseArgs({required this.response});
 }

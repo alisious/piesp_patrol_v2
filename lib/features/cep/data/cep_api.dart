@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:piesp_patrol/core/api_client.dart';
 import 'package:piesp_patrol/core/proxy_response_dto.dart' show ProxyResponseDto;
 import 'package:piesp_patrol/features/cep/data/cep_slowniki_dtos.dart';
-import 'package:piesp_patrol/features/cep/data/cep_pojazd_dtos.dart';
+import 'package:piesp_patrol/features/cep/data/cep_pojazd_dtos.dart' hide CepWartoscSlownikowaDto;
 
 class CepApi {
   final ApiClient apiClient;

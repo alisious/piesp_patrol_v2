@@ -1,6 +1,7 @@
 // lib/features/cep/pages/vehicle_question_extended_page.dart
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/cep/data/cep_api.dart';
 import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/features/cep/data/cep_pojazd_dtos.dart';
@@ -62,10 +63,26 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
     setState(() {
       _docTypes = resp;
       // domyślnie wybierz DICT155_DR (jeśli istnieje w słowniku),
-     // w przeciwnym razie pierwszy dostępny wpis
-      _typDokumentu ??= resp.any((e) => e.kod == _defaultDocTypeCode)
-          ? _defaultDocTypeCode
-          : (resp.isNotEmpty ? resp.first.kod : null); 
+      // w przeciwnym razie pierwszy dostępny wpis
+      if (_typDokumentu == null && resp.isNotEmpty) {
+        final defaultType = resp.any((e) => e.kod == _defaultDocTypeCode)
+            ? resp.firstWhere((e) => e.kod == _defaultDocTypeCode)
+            : resp.first;
+        _selectedDocType = defaultType;
+        _typDokumentu = defaultType.kod;
+      } else if (_typDokumentu != null && resp.isNotEmpty) {
+        // Synchronizuj _selectedDocType z _typDokumentu jeśli został już ustawiony
+        try {
+          _selectedDocType = resp.firstWhere((e) => e.kod == _typDokumentu);
+        } catch (_) {
+          // Jeśli kod nie istnieje w liście, wybierz domyślny
+          final defaultType = resp.any((e) => e.kod == _defaultDocTypeCode)
+              ? resp.firstWhere((e) => e.kod == _defaultDocTypeCode)
+              : resp.first;
+          _selectedDocType = defaultType;
+          _typDokumentu = defaultType.kod;
+        }
+      }
     });
   }
 
@@ -109,16 +126,23 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
               ? 'Zapytanie wykonane.'
               : 'Błąd zapytania.');
 
-      _showSnack(
-        status == 0
-            ? 'OK: $msg'
-            : 'Błąd ($status): $msg',
-      );
-
-      // Tu ewentualnie: nawigacja do strony wynikowej, gdy dodasz widok szczegółów pojazdu.
-      // if (status == 0 && resp.data?.pojazdRozszerzone != null) { ... }
-    } finally {
-      // ewentualne czyszczenie stanu ładowania itp.
+      if (status == 0 && resp.data != null) {
+        // Nawigacja do strony wynikowej
+        final navigator = Navigator.of(context);
+        navigator.pushNamed(
+          AppRoutes.vehicleQuestionExtendedResponsePage,
+          arguments: VehicleQuestionExtendedResponseArgs(response: resp.data!),
+        );
+      } else {
+        _showSnack(
+          status == 0
+              ? 'OK: $msg'
+              : 'Błąd ($status): $msg',
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      _showSnack('Wyjątek: $e');
     }
   }
 
@@ -150,7 +174,10 @@ class _VehicleQuestionExtendedPageState extends State<VehicleQuestionExtendedPag
                 items: _docTypes,
                 itemLabel: (e) => e.wartoscOpisowa!,
                 value: _selectedDocType,
-                onChanged: (v) => setState(() => _selectedDocType = v),
+                onChanged: (v) => setState(() {
+                  _selectedDocType = v;
+                  _typDokumentu = v?.kod;
+                }),
                 hint: 'Wybierz typ dokumentu',
                 borderStyle: InputBorderStyle.underline,
                 allowClear: true,

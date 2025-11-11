@@ -1,0 +1,1366 @@
+{
+  "data": {
+    "meta": {
+      "identyfikatorTransakcji": "ebe16427-dd0f-4f72-a4f1-d7f726876f96",
+      "iloscZwroconychRekordow": 1,
+      "znacznikCzasowy": "2025-10-04T13:06:26",
+      "identyfikatorSystemuZewnetrznego": "ŻW",
+      "znakSprawy": "P002",
+      "wnioskodawca": "ŻW"
+    },
+    "parametryZapytania": {
+      "numerRejestracyjny": null,
+      "znakSprawy": null,
+      "wnioskodawca": null,
+      "identyfikatorSystemuZewnetrznego": null
+    },
+    "pojazdRozszerzone": {
+      "aktualnyIdentyfikatorPojazdu": {
+        "identyfikatorSystemowyPojazdu": "5302051569907661",
+        "tokenAktualnosci": "CC28F099156298B23516F9036DB2B977"
+      },
+      "informacjeSKP": {
+        "identyfikatorSystemowyInformacjiSKP": "4377794759506559",
+        "identyfikatorCzynnosci": "1046756477326144",
+        "stacjaKontroliPojazdow": {
+          "dataOd": "2019-05-28T15:24:55",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kod": "DICT061_10093602",
+          "nazwa": "PTHW Spółka z o.o.",
+          "numerEwidencyjny": "LU/019",
+          "identyfikatorREGON": "1179833",
+          "regon": "431029464",
+          "typ": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT077_SKP",
+            "wartoscOpisowaSkrocona": "Stacja Kontroli Pojazdów",
+            "wartoscOpisowa": null
+          }
+        },
+        "rodzajCzynnosciSKP": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T23:59:59",
+          "status": "A",
+          "kod": "DICT098_OKR",
+          "wartoscOpisowaSkrocona": "Okresowe",
+          "wartoscOpisowa": null
+        },
+        "numerZaswiadczenia": "04237/LU/019/2024",
+        "wynikCzynnosci": {
+          "zrodlo": null,
+          "oznaczenie": null,
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T23:59:59",
+          "status": "A",
+          "kod": "DICT095_P",
+          "wartoscOpisowaSkrocona": "Pozytywny",
+          "wartoscOpisowa": "Wynik pozytywny czynności SKP: wykonanego Badania technicznego oraz odnotowanie licznika pojazdu po wymianie."
+        },
+        "wpisDoDokumentuPojazdu": true,
+        "wydanieZaswiadczenia": true,
+        "dataGodzWykonaniaCzynnosciSKP": "2024-11-20T14:08:46",
+        "trybAwaryjny": false,
+        "terminKolejnegoBadaniaTechnicznego": {
+          "dataKolejnegoBadania": "2025-11-20"
+        },
+        "stanLicznika": {
+          "identyfikatorSystemowyStanuLicznika": "6850571084114360",
+          "wartoscStanuLicznika": 203881,
+          "jednostkaStanuLicznika": null,
+          "dataSpisaniaLicznika": "2024-11-20T14:08:46",
+          "podmiotWprowadzajacy": {
+            "dataOd": "2019-05-28T15:24:55",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_10093602",
+            "nazwa": "PTHW Spółka z o.o.",
+            "numerEwidencyjny": "LU/019",
+            "identyfikatorREGON": "1179833",
+            "regon": "431029464",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_SKP",
+              "wartoscOpisowaSkrocona": "Stacja Kontroli Pojazdów",
+              "wartoscOpisowa": null
+            }
+          },
+          "dataOdnotowania": "2024-11-20T14:08:46"
+        }
+      },
+      "daneTechnicznePojazdu": {
+        "identyfikatorSystemowyDanychTechnicznych": "4090274744271223",
+        "pojemnoscSilnika": 2287,
+        "mocSilnika": 96,
+        "masaWlasna": 2200,
+        "masaCalkowita": null,
+        "dopuszczalnaMasaCalkowita": 3300,
+        "dopuszczalnaMasaCalkowitaZespoluPojazdow": null,
+        "dopuszczalnaLadownoscCalkowita": null,
+        "maksymalnaMasaCalkowitaCiagnietejPrzyczepyZHamulcem": null,
+        "maksymalnaMasaCalkowitaCiagnietejPrzyczepyBezHamulca": null,
+        "liczbaOsi": 2,
+        "liczbaMiejscOgolem": null,
+        "liczbaMiejscSiedzacych": 3,
+        "reduktorKatalityczny": null,
+        "czyHak": null,
+        "czyKierownicaPoPrawejStronie": null,
+        "maksymalnyDopuszczalnyNaciskOsi": null,
+        "poziomEmisjiSpalinEURODlaGmin": {
+          "zrodlo": null,
+          "oznaczenie": "EURO 6",
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": null,
+          "kod": "DICT047_6",
+          "wartoscOpisowaSkrocona": null,
+          "wartoscOpisowa": "Norma emisji euro EURO 6"
+        },
+        "paliwoPodstawowe": {
+          "rodzajPaliwa": {
+            "kodPaliwa": "D",
+            "wartoscOpisowa": "OLEJ NAPĘDOWY",
+            "kod": "DICT030_2",
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": null,
+            "zrodlo": "0"
+          }
+        }
+      },
+      "homologacjaPojazdu": {
+        "identyfikatorSystemowyHomologacjiPojazdu": "1720864766152273",
+        "identyfikatorPozycjiKatalogowej": "002800007000000",
+        "wersjaPojazdu": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kod": "DICT259_6217",
+          "kodWersji": "0006217",
+          "wersjaHomologacji": "---",
+          "kodWariantu": null,
+          "nazwaWariantu": null,
+          "zrodlo": "0"
+        },
+        "wariantPojazdu": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kod": "DICT258_2027",
+          "kodWersji": null,
+          "wersjaHomologacji": null,
+          "kodWariantu": "0002027",
+          "nazwaWariantu": "---",
+          "zrodlo": "0"
+        },
+        "typPojazdu": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kod": "DICT012_6663259",
+          "wartoscOpisowa": "---",
+          "zrodlo": "1"
+        },
+        "numerDokumentuHomologacji": "---",
+        "kodKategoriiHomologacji": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodKatHom": "---",
+          "wartoscOpisowa": "---",
+          "kod": "DICT038_11111111"
+        },
+        "homologacjaITS": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "identyfikatorPozycjiKatalogowej": "002800007000000",
+          "numerSwiadectwa": "---"
+        },
+        "typWartoscOpisowa": "---",
+        "wariantWartoscOpisowa": "---",
+        "wersjaWartoscOpisowa": "---"
+      },
+      "daneOpisujacePojazd": {
+        "identyfikatorSystemowyDanychPojazdu": "6754052689828865",
+        "marka": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodMarki": "00280",
+          "wartoscOpisowa": "FIAT",
+          "kod": "DICT010_252",
+          "pozycjeSzczegolowe": null
+        },
+        "model": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodMarki": null,
+          "wartoscOpisowa": "DUCATO",
+          "kod": "DICT011_248016",
+          "pozycjeSzczegolowe": "N"
+        },
+        "rodzaj": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodRodzaj": "DICT074_4",
+          "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+          "kodPodrodzaj": null,
+          "podrodzaj": null,
+          "wersja": "1",
+          "zrodlo": "0"
+        },
+        "podrodzaj": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodRodzaj": null,
+          "rodzaj": null,
+          "kodPodrodzaj": "DICT075_17",
+          "podrodzaj": "FURGON",
+          "wersja": "1",
+          "zrodlo": "0"
+        },
+        "przeznaczenie": {
+          "dataOd": "1896-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": null,
+          "kod": null,
+          "wartoscOpisowaSkrocona": null,
+          "wartoscOpisowa": null
+        },
+        "kodRPP": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodRPP": "0602000",
+          "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+          "podrodzaj": "FURGON",
+          "przeznaczenie": "---",
+          "wersja": "1",
+          "kod": "DICT072_274",
+          "zrodlo": "1"
+        },
+        "pochodzeniePojazdu": {
+          "zrodlo": null,
+          "oznaczenie": null,
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": "A",
+          "kod": "DICT142_3",
+          "wartoscOpisowaSkrocona": "Używ. import indyw",
+          "wartoscOpisowa": null
+        },
+        "czyWybityNumerIdentyfikacyjny": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": "A",
+          "kod": "DICT144_O",
+          "wartoscOpisowaSkrocona": "Oryginalny",
+          "wartoscOpisowa": null
+        },
+        "rodzajTabliczkiZnamionowej": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T23:59:59",
+          "status": "A",
+          "kod": "DICT143_O",
+          "wartoscOpisowaSkrocona": "Oryginalna",
+          "wartoscOpisowa": null
+        },
+        "sposobProdukcji": {
+          "zrodlo": null,
+          "oznaczenie": null,
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": "A",
+          "kod": "DICT046_1",
+          "wartoscOpisowaSkrocona": "FABRYCZNY",
+          "wartoscOpisowa": "FAB"
+        },
+        "numerPodwoziaNadwoziaRamy": "ZFA25000002D14055",
+        "rokProdukcji": 2017,
+        "rodzajKodowaniaRPP": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "statusRekordu": "A",
+          "kodRPP": "0602000",
+          "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+          "podrodzaj": "FURGON",
+          "przeznaczenie": "---",
+          "wersja": "1",
+          "kod": "DICT072_274",
+          "zrodlo": "1"
+        }
+      },
+      "danePierwszejRejestracji": {
+        "identyfikatorSystemowyPierwszejRejestracjiPojazdu": "6448659706021751",
+        "dataPierwszejRejestracjiWKraju": "2019-10-04",
+        "dataPierwszejRejestracjiZaGranica": "2017-05-04",
+        "dataPierwszejRejestracji": "2017-05-04"
+      },
+      "dokumentyPojazdu": [
+        {
+          "identyfikatorSystemowyDokumentuPojazdu": "961851935125122",
+          "typDokumentu": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT155_DR",
+            "wartoscOpisowaSkrocona": "Dowód rejestracyjny",
+            "wartoscOpisowa": "Dowód rejestracyjny"
+          },
+          "dokumentSeriaNumer": "BAS4381563",
+          "czyWtornik": "N",
+          "dataWydaniaDokumentu": "2022-12-12",
+          "organWydajacyDokument": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_0663",
+            "nazwa": "URZĄD MIASTA LUBLIN",
+            "numerEwidencyjny": "0663",
+            "identyfikatorREGON": "1176536",
+            "regon": "000594198",
+            "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_STAROSTA",
+              "wartoscOpisowaSkrocona": "Starosta",
+              "wartoscOpisowa": null
+            }
+          },
+          "danePierwszejRejestracji": {
+            "identyfikatorSystemowyPierwszejRejestracjiPojazdu": "6448659706021751",
+            "dataPierwszejRejestracjiWKraju": "2019-10-04",
+            "dataPierwszejRejestracjiZaGranica": "2017-05-04",
+            "dataPierwszejRejestracji": "2017-05-04"
+          },
+          "daneOpisujacePojazd": {
+            "identyfikatorSystemowyDanychPojazdu": "6754052689828865",
+            "marka": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodMarki": "00280",
+              "wartoscOpisowa": "FIAT",
+              "kod": "DICT010_252",
+              "pozycjeSzczegolowe": null
+            },
+            "model": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodMarki": null,
+              "wartoscOpisowa": "DUCATO",
+              "kod": "DICT011_248016",
+              "pozycjeSzczegolowe": "N"
+            },
+            "rodzaj": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRodzaj": "DICT074_4",
+              "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+              "kodPodrodzaj": null,
+              "podrodzaj": null,
+              "wersja": "1",
+              "zrodlo": "0"
+            },
+            "podrodzaj": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRodzaj": null,
+              "rodzaj": null,
+              "kodPodrodzaj": "DICT075_17",
+              "podrodzaj": "FURGON",
+              "wersja": "1",
+              "zrodlo": "0"
+            },
+            "przeznaczenie": {
+              "dataOd": "1896-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": null,
+              "kod": null,
+              "wartoscOpisowaSkrocona": null,
+              "wartoscOpisowa": null
+            },
+            "kodRPP": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRPP": "0602000",
+              "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+              "podrodzaj": "FURGON",
+              "przeznaczenie": "---",
+              "wersja": "1",
+              "kod": "DICT072_274",
+              "zrodlo": "1"
+            },
+            "pochodzeniePojazdu": {
+              "zrodlo": null,
+              "oznaczenie": null,
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT142_3",
+              "wartoscOpisowaSkrocona": "Używ. import indyw",
+              "wartoscOpisowa": null
+            },
+            "czyWybityNumerIdentyfikacyjny": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT144_O",
+              "wartoscOpisowaSkrocona": "Oryginalny",
+              "wartoscOpisowa": null
+            },
+            "rodzajTabliczkiZnamionowej": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T23:59:59",
+              "status": "A",
+              "kod": "DICT143_O",
+              "wartoscOpisowaSkrocona": "Oryginalna",
+              "wartoscOpisowa": null
+            },
+            "sposobProdukcji": {
+              "zrodlo": null,
+              "oznaczenie": null,
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT046_1",
+              "wartoscOpisowaSkrocona": "FABRYCZNY",
+              "wartoscOpisowa": "FAB"
+            },
+            "numerPodwoziaNadwoziaRamy": "ZFA25000002D14055",
+            "rokProdukcji": 2017,
+            "rodzajKodowaniaRPP": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRPP": "0602000",
+              "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+              "podrodzaj": "FURGON",
+              "przeznaczenie": "---",
+              "wersja": "1",
+              "kod": "DICT072_274",
+              "zrodlo": "1"
+            }
+          },
+          "homologacjaPojazdu": {
+            "identyfikatorSystemowyHomologacjiPojazdu": "1720864766152273",
+            "identyfikatorPozycjiKatalogowej": "002800007000000",
+            "wersjaPojazdu": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT259_6217",
+              "kodWersji": "0006217",
+              "wersjaHomologacji": "---",
+              "kodWariantu": null,
+              "nazwaWariantu": null,
+              "zrodlo": "0"
+            },
+            "wariantPojazdu": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT258_2027",
+              "kodWersji": null,
+              "wersjaHomologacji": null,
+              "kodWariantu": "0002027",
+              "nazwaWariantu": "---",
+              "zrodlo": "0"
+            },
+            "typPojazdu": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT012_6663259",
+              "wartoscOpisowa": "---",
+              "zrodlo": "1"
+            },
+            "numerDokumentuHomologacji": "---",
+            "kodKategoriiHomologacji": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodKatHom": "---",
+              "wartoscOpisowa": "---",
+              "kod": "DICT038_11111111"
+            },
+            "homologacjaITS": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "identyfikatorPozycjiKatalogowej": "002800007000000",
+              "numerSwiadectwa": "---"
+            },
+            "typWartoscOpisowa": "---",
+            "wariantWartoscOpisowa": "---",
+            "wersjaWartoscOpisowa": "---"
+          },
+          "daneTechnicznePojazdu": {
+            "identyfikatorSystemowyDanychTechnicznych": "4090274744271223",
+            "pojemnoscSilnika": 2287,
+            "mocSilnika": 96,
+            "masaWlasna": 2200,
+            "masaCalkowita": null,
+            "dopuszczalnaMasaCalkowita": 3300,
+            "dopuszczalnaMasaCalkowitaZespoluPojazdow": null,
+            "dopuszczalnaLadownoscCalkowita": null,
+            "maksymalnaMasaCalkowitaCiagnietejPrzyczepyZHamulcem": null,
+            "maksymalnaMasaCalkowitaCiagnietejPrzyczepyBezHamulca": null,
+            "liczbaOsi": 2,
+            "liczbaMiejscOgolem": null,
+            "liczbaMiejscSiedzacych": 3,
+            "reduktorKatalityczny": null,
+            "czyHak": null,
+            "czyKierownicaPoPrawejStronie": null,
+            "maksymalnyDopuszczalnyNaciskOsi": null,
+            "poziomEmisjiSpalinEURODlaGmin": null,
+            "paliwoPodstawowe": null
+          },
+          "stanDokumentu": {
+            "identyfikatorSystemowyStanuOznaczeniaPojazdu": null,
+            "dataPoczatkuObowiazywania": "2023-01-26T09:31:03",
+            "stanOznaczenia": null,
+            "organUstanawiajacyStan": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_0663",
+              "nazwa": "URZĄD MIASTA LUBLIN",
+              "numerEwidencyjny": "0663",
+              "identyfikatorREGON": "1176536",
+              "regon": "000594198",
+              "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_STAROSTA",
+                "wartoscOpisowaSkrocona": "Starosta",
+                "wartoscOpisowa": null
+              }
+            },
+            "dataOdnotowaniaStanu": "2023-01-26T09:31:09"
+          },
+          "czyAktualny": "T",
+          "oznaczenia": [
+            {
+              "identyfikatorSystemowyOznaczenia": "1401516308789113",
+              "typOznaczenia": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT227_ZL",
+                "wartoscOpisowaSkrocona": "Znak legalizacyjny",
+                "wartoscOpisowa": "Znak legalizacyjny"
+              },
+              "numerOznaczenia": "AAI8554825",
+              "rodzajTablicyRejestracyjnej": null,
+              "wzorTablicyRejestracyjnej": null,
+              "kolorTablicyRejestracyjnej": null,
+              "czyWtornik": "N",
+              "stanOznaczenia": {
+                "identyfikatorSystemowyStanuOznaczeniaPojazdu": "2238276614917084",
+                "dataPoczatkuObowiazywania": "2022-12-09T12:45:29",
+                "stanOznaczenia": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT228_OD",
+                  "wartoscOpisowaSkrocona": "Odebrany",
+                  "wartoscOpisowa": null
+                },
+                "organUstanawiajacyStan": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "statusRekordu": "A",
+                  "kod": "DICT061_0663",
+                  "nazwa": "URZĄD MIASTA LUBLIN",
+                  "numerEwidencyjny": "0663",
+                  "identyfikatorREGON": "1176536",
+                  "regon": "000594198",
+                  "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+                  "typ": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "status": "A",
+                    "kod": "DICT077_STAROSTA",
+                    "wartoscOpisowaSkrocona": "Starosta",
+                    "wartoscOpisowa": null
+                  }
+                },
+                "dataOdnotowaniaStanu": "2022-12-09T12:48:08"
+              }
+            },
+            {
+              "identyfikatorSystemowyOznaczenia": "1850596667872988",
+              "typOznaczenia": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT227_TP",
+                "wartoscOpisowaSkrocona": "Tablica pojazdu",
+                "wartoscOpisowa": "Tablica pojazdu"
+              },
+              "numerOznaczenia": "LU638JU",
+              "rodzajTablicyRejestracyjnej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT115_ZW",
+                "wartoscOpisowaSkrocona": "Zwyczajne",
+                "wartoscOpisowa": null
+              },
+              "wzorTablicyRejestracyjnej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT231_SAM",
+                "wartoscOpisowaSkrocona": "Samochodowe",
+                "wartoscOpisowa": null
+              },
+              "kolorTablicyRejestracyjnej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT257_B",
+                "wartoscOpisowaSkrocona": "Białe",
+                "wartoscOpisowa": "kolor tablicy rejestracyjnej - Biały"
+              },
+              "czyWtornik": "N",
+              "stanOznaczenia": {
+                "identyfikatorSystemowyStanuOznaczeniaPojazdu": "2046658955737309",
+                "dataPoczatkuObowiazywania": "2019-10-04T11:49:12",
+                "stanOznaczenia": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT228_OD",
+                  "wartoscOpisowaSkrocona": "Odebrany",
+                  "wartoscOpisowa": null
+                },
+                "organUstanawiajacyStan": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "statusRekordu": "A",
+                  "kod": "DICT061_0663",
+                  "nazwa": "URZĄD MIASTA LUBLIN",
+                  "numerEwidencyjny": "0663",
+                  "identyfikatorREGON": "1176536",
+                  "regon": "000594198",
+                  "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+                  "typ": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "status": "A",
+                    "kod": "DICT077_STAROSTA",
+                    "wartoscOpisowaSkrocona": "Starosta",
+                    "wartoscOpisowa": null
+                  }
+                },
+                "dataOdnotowaniaStanu": "2019-10-04T11:51:42"
+              }
+            }
+          ]
+        },
+        {
+          "identyfikatorSystemowyDokumentuPojazdu": "8372218440534072",
+          "typDokumentu": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT155_DR",
+            "wartoscOpisowaSkrocona": "Dowód rejestracyjny",
+            "wartoscOpisowa": "Dowód rejestracyjny"
+          },
+          "dokumentSeriaNumer": "BAP4324971",
+          "czyWtornik": "N",
+          "dataWydaniaDokumentu": "2019-10-07",
+          "organWydajacyDokument": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_0663",
+            "nazwa": "URZĄD MIASTA LUBLIN",
+            "numerEwidencyjny": "0663",
+            "identyfikatorREGON": "1176536",
+            "regon": "000594198",
+            "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_STAROSTA",
+              "wartoscOpisowaSkrocona": "Starosta",
+              "wartoscOpisowa": null
+            }
+          },
+          "danePierwszejRejestracji": {
+            "identyfikatorSystemowyPierwszejRejestracjiPojazdu": "6448659706021751",
+            "dataPierwszejRejestracjiWKraju": "2019-10-04",
+            "dataPierwszejRejestracjiZaGranica": "2017-05-04",
+            "dataPierwszejRejestracji": "2017-05-04"
+          },
+          "daneOpisujacePojazd": {
+            "identyfikatorSystemowyDanychPojazdu": "6754052689828865",
+            "marka": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodMarki": "00280",
+              "wartoscOpisowa": "FIAT",
+              "kod": "DICT010_252",
+              "pozycjeSzczegolowe": null
+            },
+            "model": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodMarki": null,
+              "wartoscOpisowa": "DUCATO",
+              "kod": "DICT011_248016",
+              "pozycjeSzczegolowe": "N"
+            },
+            "rodzaj": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRodzaj": "DICT074_4",
+              "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+              "kodPodrodzaj": null,
+              "podrodzaj": null,
+              "wersja": "1",
+              "zrodlo": "0"
+            },
+            "podrodzaj": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRodzaj": null,
+              "rodzaj": null,
+              "kodPodrodzaj": "DICT075_17",
+              "podrodzaj": "FURGON",
+              "wersja": "1",
+              "zrodlo": "0"
+            },
+            "przeznaczenie": {
+              "dataOd": "1896-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": null,
+              "kod": null,
+              "wartoscOpisowaSkrocona": null,
+              "wartoscOpisowa": null
+            },
+            "kodRPP": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRPP": "0602000",
+              "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+              "podrodzaj": "FURGON",
+              "przeznaczenie": "---",
+              "wersja": "1",
+              "kod": "DICT072_274",
+              "zrodlo": "1"
+            },
+            "pochodzeniePojazdu": {
+              "zrodlo": null,
+              "oznaczenie": null,
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT142_3",
+              "wartoscOpisowaSkrocona": "Używ. import indyw",
+              "wartoscOpisowa": null
+            },
+            "czyWybityNumerIdentyfikacyjny": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT144_O",
+              "wartoscOpisowaSkrocona": "Oryginalny",
+              "wartoscOpisowa": null
+            },
+            "rodzajTabliczkiZnamionowej": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T23:59:59",
+              "status": "A",
+              "kod": "DICT143_O",
+              "wartoscOpisowaSkrocona": "Oryginalna",
+              "wartoscOpisowa": null
+            },
+            "sposobProdukcji": {
+              "zrodlo": null,
+              "oznaczenie": null,
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT046_1",
+              "wartoscOpisowaSkrocona": "FABRYCZNY",
+              "wartoscOpisowa": "FAB"
+            },
+            "numerPodwoziaNadwoziaRamy": "ZFA25000002D14055",
+            "rokProdukcji": 2017,
+            "rodzajKodowaniaRPP": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodRPP": "0602000",
+              "rodzaj": "SAMOCHÓD CIĘŻAROWY",
+              "podrodzaj": "FURGON",
+              "przeznaczenie": "---",
+              "wersja": "1",
+              "kod": "DICT072_274",
+              "zrodlo": "1"
+            }
+          },
+          "homologacjaPojazdu": {
+            "identyfikatorSystemowyHomologacjiPojazdu": "1720864766152273",
+            "identyfikatorPozycjiKatalogowej": "002800007000000",
+            "wersjaPojazdu": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT259_6217",
+              "kodWersji": "0006217",
+              "wersjaHomologacji": "---",
+              "kodWariantu": null,
+              "nazwaWariantu": null,
+              "zrodlo": "0"
+            },
+            "wariantPojazdu": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT258_2027",
+              "kodWersji": null,
+              "wersjaHomologacji": null,
+              "kodWariantu": "0002027",
+              "nazwaWariantu": "---",
+              "zrodlo": "0"
+            },
+            "typPojazdu": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT012_6663259",
+              "wartoscOpisowa": "---",
+              "zrodlo": "1"
+            },
+            "numerDokumentuHomologacji": "---",
+            "kodKategoriiHomologacji": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kodKatHom": "---",
+              "wartoscOpisowa": "---",
+              "kod": "DICT038_11111111"
+            },
+            "homologacjaITS": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "identyfikatorPozycjiKatalogowej": "002800007000000",
+              "numerSwiadectwa": "---"
+            },
+            "typWartoscOpisowa": "---",
+            "wariantWartoscOpisowa": "---",
+            "wersjaWartoscOpisowa": "---"
+          },
+          "daneTechnicznePojazdu": {
+            "identyfikatorSystemowyDanychTechnicznych": "4090274744271223",
+            "pojemnoscSilnika": 2287,
+            "mocSilnika": 96,
+            "masaWlasna": 2200,
+            "masaCalkowita": null,
+            "dopuszczalnaMasaCalkowita": 3300,
+            "dopuszczalnaMasaCalkowitaZespoluPojazdow": null,
+            "dopuszczalnaLadownoscCalkowita": null,
+            "maksymalnaMasaCalkowitaCiagnietejPrzyczepyZHamulcem": null,
+            "maksymalnaMasaCalkowitaCiagnietejPrzyczepyBezHamulca": null,
+            "liczbaOsi": 2,
+            "liczbaMiejscOgolem": null,
+            "liczbaMiejscSiedzacych": 3,
+            "reduktorKatalityczny": null,
+            "czyHak": null,
+            "czyKierownicaPoPrawejStronie": null,
+            "maksymalnyDopuszczalnyNaciskOsi": null,
+            "poziomEmisjiSpalinEURODlaGmin": null,
+            "paliwoPodstawowe": null
+          },
+          "stanDokumentu": {
+            "identyfikatorSystemowyStanuOznaczeniaPojazdu": null,
+            "dataPoczatkuObowiazywania": "2023-01-26T09:30:40",
+            "stanOznaczenia": null,
+            "organUstanawiajacyStan": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_0663",
+              "nazwa": "URZĄD MIASTA LUBLIN",
+              "numerEwidencyjny": "0663",
+              "identyfikatorREGON": "1176536",
+              "regon": "000594198",
+              "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_STAROSTA",
+                "wartoscOpisowaSkrocona": "Starosta",
+                "wartoscOpisowa": null
+              }
+            },
+            "dataOdnotowaniaStanu": "2023-01-26T09:30:42"
+          },
+          "czyAktualny": "N",
+          "oznaczenia": [
+            {
+              "identyfikatorSystemowyOznaczenia": "568649823998660",
+              "typOznaczenia": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT227_ZL",
+                "wartoscOpisowaSkrocona": "Znak legalizacyjny",
+                "wartoscOpisowa": "Znak legalizacyjny"
+              },
+              "numerOznaczenia": "AAH3802482",
+              "rodzajTablicyRejestracyjnej": null,
+              "wzorTablicyRejestracyjnej": null,
+              "kolorTablicyRejestracyjnej": null,
+              "czyWtornik": "N",
+              "stanOznaczenia": {
+                "identyfikatorSystemowyStanuOznaczeniaPojazdu": "8430280452563195",
+                "dataPoczatkuObowiazywania": "2022-12-09T12:45:29",
+                "stanOznaczenia": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT228_NIE_ZDO",
+                  "wartoscOpisowaSkrocona": "Nieważność - zwrócenie do organu",
+                  "wartoscOpisowa": null
+                },
+                "organUstanawiajacyStan": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "statusRekordu": "A",
+                  "kod": "DICT061_0663",
+                  "nazwa": "URZĄD MIASTA LUBLIN",
+                  "numerEwidencyjny": "0663",
+                  "identyfikatorREGON": "1176536",
+                  "regon": "000594198",
+                  "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+                  "typ": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "status": "A",
+                    "kod": "DICT077_STAROSTA",
+                    "wartoscOpisowaSkrocona": "Starosta",
+                    "wartoscOpisowa": null
+                  }
+                },
+                "dataOdnotowaniaStanu": "2022-12-09T12:48:08"
+              }
+            },
+            {
+              "identyfikatorSystemowyOznaczenia": "1401516308789113",
+              "typOznaczenia": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT227_ZL",
+                "wartoscOpisowaSkrocona": "Znak legalizacyjny",
+                "wartoscOpisowa": "Znak legalizacyjny"
+              },
+              "numerOznaczenia": "AAI8554825",
+              "rodzajTablicyRejestracyjnej": null,
+              "wzorTablicyRejestracyjnej": null,
+              "kolorTablicyRejestracyjnej": null,
+              "czyWtornik": "N",
+              "stanOznaczenia": {
+                "identyfikatorSystemowyStanuOznaczeniaPojazdu": "2238276614917084",
+                "dataPoczatkuObowiazywania": "2022-12-09T12:45:29",
+                "stanOznaczenia": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT228_OD",
+                  "wartoscOpisowaSkrocona": "Odebrany",
+                  "wartoscOpisowa": null
+                },
+                "organUstanawiajacyStan": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "statusRekordu": "A",
+                  "kod": "DICT061_0663",
+                  "nazwa": "URZĄD MIASTA LUBLIN",
+                  "numerEwidencyjny": "0663",
+                  "identyfikatorREGON": "1176536",
+                  "regon": "000594198",
+                  "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+                  "typ": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "status": "A",
+                    "kod": "DICT077_STAROSTA",
+                    "wartoscOpisowaSkrocona": "Starosta",
+                    "wartoscOpisowa": null
+                  }
+                },
+                "dataOdnotowaniaStanu": "2022-12-09T12:48:08"
+              }
+            },
+            {
+              "identyfikatorSystemowyOznaczenia": "1850596667872988",
+              "typOznaczenia": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT227_TP",
+                "wartoscOpisowaSkrocona": "Tablica pojazdu",
+                "wartoscOpisowa": "Tablica pojazdu"
+              },
+              "numerOznaczenia": "LU638JU",
+              "rodzajTablicyRejestracyjnej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT115_ZW",
+                "wartoscOpisowaSkrocona": "Zwyczajne",
+                "wartoscOpisowa": null
+              },
+              "wzorTablicyRejestracyjnej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT231_SAM",
+                "wartoscOpisowaSkrocona": "Samochodowe",
+                "wartoscOpisowa": null
+              },
+              "kolorTablicyRejestracyjnej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT257_B",
+                "wartoscOpisowaSkrocona": "Białe",
+                "wartoscOpisowa": "kolor tablicy rejestracyjnej - Biały"
+              },
+              "czyWtornik": "N",
+              "stanOznaczenia": {
+                "identyfikatorSystemowyStanuOznaczeniaPojazdu": "2046658955737309",
+                "dataPoczatkuObowiazywania": "2019-10-04T11:49:12",
+                "stanOznaczenia": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT228_OD",
+                  "wartoscOpisowaSkrocona": "Odebrany",
+                  "wartoscOpisowa": null
+                },
+                "organUstanawiajacyStan": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "statusRekordu": "A",
+                  "kod": "DICT061_0663",
+                  "nazwa": "URZĄD MIASTA LUBLIN",
+                  "numerEwidencyjny": "0663",
+                  "identyfikatorREGON": "1176536",
+                  "regon": "000594198",
+                  "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+                  "typ": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "status": "A",
+                    "kod": "DICT077_STAROSTA",
+                    "wartoscOpisowaSkrocona": "Starosta",
+                    "wartoscOpisowa": null
+                  }
+                },
+                "dataOdnotowaniaStanu": "2019-10-04T11:51:42"
+              }
+            }
+          ]
+        }
+      ],
+      "danePojazduSprowadzonego": {
+        "identyfikatorSystemowyPojazduSprowadzonego": "6448659706021751",
+        "numerRejestracyjnyZagraniczny": "SO- 90403",
+        "krajZagranicznejRejestracji": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T23:59:00",
+          "statusRekordu": "A",
+          "kodNumeryczny": "756",
+          "kodIsoAlfa2": "CH",
+          "kodIsoAlfa3": "CHE",
+          "kodMks": "CH",
+          "czyNalezyDoUE": false,
+          "nazwa": "Szwajcaria",
+          "obywatelstwo": "BRAK DANYCH",
+          "dataAktualizacji": "2017-10-29T00:56:54"
+        },
+        "poprzedniVINZagranicznejRejestracji": "ZFA25000002D14055"
+      },
+      "stanPojazdu": {
+        "identyfikatorSystemowyStanuRejestracjiPojazdu": "2341298507911404",
+        "dataPoczatkuObowiazywaniaStanu": "2022-12-09T12:45:29",
+        "stanPojazdu": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T23:59:59",
+          "status": "A",
+          "kod": "DICT017_Z",
+          "wartoscOpisowaSkrocona": "Zarejestrowany",
+          "wartoscOpisowa": "ZA-R"
+        },
+        "typRejestracji": null
+      },
+      "najnowszyWariantPodmiotu": {
+        "identyfikatorSystemowyWlasnosci": "4095685398158349",
+        "kodWlasnosci": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": "A",
+          "kod": "DICT118_WL",
+          "wartoscOpisowaSkrocona": "Właściciel",
+          "wartoscOpisowa": null
+        },
+        "dataZmianyPrawWlasnosci": "2022-10-24T00:00:00",
+        "dataOdnotowania": "2022-12-09T12:48:08",
+        "zmianaWlasnosci": {
+          "sposobZmianyPrawWlasnosci": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT117_4",
+            "wartoscOpisowaSkrocona": "Faktura potwierdzająca nabycie pojazdu",
+            "wartoscOpisowa": "Rozp. Ministra Infrastruktury w sprawie rejestracji i oznaczania pojazdów, wymagań dla tablic rejestracyjnych oraz wzorów innych dokumentów związanych z rejestracją pojazdów, Par.4 ust.1 pkt 6"
+          },
+          "dataOdnotowania": "2022-12-09T12:48:08"
+        },
+        "podmiot": {
+          "identyfikatorSystemowyPodmiotu": "81478078224014",
+          "wariantPodmiotu": "8",
+          "firma": {
+            "REGON": "06073867300000",
+            "nazwaFirmy": "APS IMPORT-EXPORT SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+            "nazwaFirmyDrukowana": "APS IMPORT-EXPORT SP. Z O.O.",
+            "formaWlasnosci": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T23:59:59",
+              "status": "A",
+              "kod": "DICT252_PRYWATNA",
+              "wartoscOpisowaSkrocona": "Prywatna",
+              "wartoscOpisowa": "Prywatna"
+            },
+            "identyfikatorSystemowyREGON": "606073867300000",
+            "adres": {
+              "kraj": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:00",
+                "statusRekordu": "A",
+                "kodNumeryczny": "616",
+                "kodIsoAlfa2": "PL",
+                "kodIsoAlfa3": "POL",
+                "kodMks": "PL",
+                "czyNalezyDoUE": true,
+                "nazwa": "Polska",
+                "obywatelstwo": "BRAK DANYCH",
+                "dataAktualizacji": "2017-10-29T00:56:54"
+              },
+              "kodTeryt": "0663011",
+              "kodTerytWojewodztwa": "06",
+              "nazwaWojewodztwaStanu": "LUBELSKIE",
+              "kodTerytPowiatu": "63",
+              "nazwaPowiatuDzielnicy": "LUBLIN",
+              "kodTerytGminy": "01",
+              "nazwaGminy": "LUBLIN",
+              "kodRodzajuGminy": "1",
+              "kodPocztowy": "20315",
+              "kodTerytMiejscowosci": "0954700",
+              "nazwaMiejscowosci": "LUBLIN",
+              "nazwaMiejscowosciPodst": "LUBLIN",
+              "kodTerytUlicy": "58882",
+              "ulicaCecha": {
+                "dataOd": "2017-11-18T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT368_UL",
+                "wartoscOpisowaSkrocona": "ul.",
+                "wartoscOpisowa": "ulica"
+              },
+              "nazwaUlicy": "AL. WINCENTEGO WITOSA",
+              "numerDomu": "3"
+            }
+          }
+        }
+      },
+      "rejestracjePojazdu": [
+        {
+          "identyfikatorSystemowyRejestracji": "1376468600618315",
+          "organRejestrujacy": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_0663",
+            "nazwa": "URZĄD MIASTA LUBLIN",
+            "numerEwidencyjny": "0663",
+            "identyfikatorREGON": "1176536",
+            "regon": "000594198",
+            "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_STAROSTA",
+              "wartoscOpisowaSkrocona": "Starosta",
+              "wartoscOpisowa": null
+            }
+          },
+          "dataRejestracjiPojazdu": "2022-12-09T12:45:29",
+          "typRejestracji": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT437_S",
+            "wartoscOpisowaSkrocona": "Stała",
+            "wartoscOpisowa": null
+          }
+        },
+        {
+          "identyfikatorSystemowyRejestracji": "5449105003754427",
+          "organRejestrujacy": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_0663",
+            "nazwa": "URZĄD MIASTA LUBLIN",
+            "numerEwidencyjny": "0663",
+            "identyfikatorREGON": "1176536",
+            "regon": "000594198",
+            "nazwaOrganuWydajacego": "PREZYDENT MIASTA LUBLIN",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_STAROSTA",
+              "wartoscOpisowaSkrocona": "Starosta",
+              "wartoscOpisowa": null
+            }
+          },
+          "dataRejestracjiPojazdu": "2019-10-04T11:49:12",
+          "typRejestracji": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT437_S",
+            "wartoscOpisowaSkrocona": "Stała",
+            "wartoscOpisowa": null
+          }
+        }
+      ],
+      "danePolisyOC": {
+        "identyfikatorPolisy": "2972316365",
+        "numerPolisy": "F31289784102",
+        "dataZawarciaPolisy": "2024-12-30T00:00:00",
+        "dataPoczatkuObowiazywaniaPolisy": "2024-12-30T00:00:00",
+        "dataKoncaObowiazywaniaPolisy": "2025-12-29T23:59:59",
+        "rodzajUbezpieczenia": {
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T00:00:00",
+          "status": "A",
+          "kod": "DICT321_K",
+          "wartoscOpisowaSkrocona": "Krajowa",
+          "wartoscOpisowa": null
+        },
+        "daneZU": {
+          "identyfikatorSystemowyZakladuUbezpieczen": "143",
+          "identyfikatorBiznesowyZakladuUbezpieczen": "-1",
+          "odmowaUdostepnienia": null,
+          "nazwaZakladuUbezpieczen": "LINK4 TOWARZYSTWO UBEZPIECZEŃ S.A.",
+          "nazwaHandlowaZakladuUbezpieczeniowego": "LINK4"
+        },
+        "wariantUbezpieczenia": {
+          "dataPoczatkuWariantu": "2024-12-30T00:00:00",
+          "dataKoncaWariantu": "2025-12-29T23:59:59"
+        }
+      },
+      "oznaczenieAktualnyNrRejestracyjny": {
+        "identyfikatorSystemowyOznaczenia": "1850596667872988",
+        "typOznaczenia": {
+          "zrodlo": null,
+          "oznaczenie": null,
+          "dataOd": "1900-01-01T00:00:00",
+          "dataDo": "9999-12-31T23:59:59",
+          "status": "A",
+          "kod": "DICT227_TP",
+          "wartoscOpisowaSkrocona": "Tablica pojazdu",
+          "wartoscOpisowa": "Tablica pojazdu"
+        },
+        "numerOznaczenia": "LU638JU"
+      },
+      "aktualnyStanLicznika": {
+        "historiaLicznikaWymagaWeryfikacji": false,
+        "licznikWymieniony": false,
+        "stanLicznika": {
+          "identyfikatorSystemowyStanuLicznika": "6850571084114360",
+          "wartoscStanuLicznika": 203881,
+          "jednostkaStanuLicznika": null,
+          "dataSpisaniaLicznika": "2024-11-20T14:08:46",
+          "podmiotWprowadzajacy": {
+            "dataOd": "2019-05-28T15:24:55",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_10093602",
+            "nazwa": "PTHW Spółka z o.o.",
+            "numerEwidencyjny": "LU/019",
+            "identyfikatorREGON": "1179833",
+            "regon": "431029464",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_SKP",
+              "wartoscOpisowaSkrocona": "Stacja Kontroli Pojazdów",
+              "wartoscOpisowa": null
+            }
+          },
+          "dataOdnotowania": "2024-11-20T14:08:46"
+        }
+      }
+    }
+  },
+  "status": 0,
+  "message": null,
+  "source": "CEP.Udostepnianie.Test",
+  "sourceStatusCode": "200",
+  "requestId": "b2af768f393844d1a27f698cfea6df2d"
+}

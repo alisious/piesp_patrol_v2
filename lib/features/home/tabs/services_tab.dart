@@ -37,17 +37,17 @@ class ServicesTab extends StatelessWidget {
           const SizedBox(height: 12),
 
           ArrowButton(
-            title: 'Szukaj osoby', 
+            title: 'Sprawdź osobę', 
             onTap: () => Navigator.pushNamed(
               context,
               AppRoutes.srpPersonsSearch),
           ),
-          const SizedBox(height: 12),
-          ArrowButton(title: 'Dowód osobisty', onTap: () {}),
-          const SizedBox(height: 12),
-          ArrowButton(title: 'Czy żołnierz?', onTap: () {}),
-          const SizedBox(height: 12),
-          ArrowButton(title: 'Czy osoba poszukiwana?', onTap: () {}),
+          //const SizedBox(height: 12),
+          //ArrowButton(title: 'Dowód osobisty', onTap: () {}),
+          //const SizedBox(height: 12),
+          //ArrowButton(title: 'Czy żołnierz?', onTap: () {}),
+          //const SizedBox(height: 12),
+          //ArrowButton(title: 'Czy osoba poszukiwana?', onTap: () {}),
 
           const SizedBox(height: 24),
 
