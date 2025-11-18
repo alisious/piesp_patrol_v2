@@ -28,7 +28,7 @@ class ApiConfig extends ChangeNotifier {
   static Future<ApiConfig> load() async {
     final sp = await SharedPreferences.getInstance();
     final url = sp.getString(_kBaseUrlKey) ?? 'https://api.trentum.pl';
-    final tlsMode = sp.getString(_kTlsModeKey) ?? 'systemOnly';
+    final tlsMode = sp.getString(_kTlsModeKey) ?? 'systemThenAssetFallback';
     final pemAsset = sp.getString(_kPemAssetKey) ?? 'assets/certs/kacper_ca.pem';
     final allowedHosts = sp.getStringList(_kAllowedHostsKey) ?? <String>['api.trentum.pl','portal.kacper.zw.int'];
     final pinnedSpki = sp.getStringList(_kPinnedSpkiKey) ?? <String>[];

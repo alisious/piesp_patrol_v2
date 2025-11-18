@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:piesp_patrol/core/api_config.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -49,6 +50,7 @@ class _SettingsBodyState extends State<SettingsBody> {
 
   late String _tlsMode = widget.config.tlsMode;
   bool _saved = false;
+  PackageInfo? _packageInfo;
 
   @override
   void initState() {
@@ -56,6 +58,17 @@ class _SettingsBodyState extends State<SettingsBody> {
     // Normalizacja wartości spoza listy (na wypadek starych zapisów)
     if (!_allowedTlsModes.contains(_tlsMode)) {
       _tlsMode = 'systemOnly';
+    }
+    // Pobierz informacje o wersji aplikacji
+    _loadPackageInfo();
+  }
+
+  Future<void> _loadPackageInfo() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    if (mounted) {
+      setState(() {
+        _packageInfo = packageInfo;
+      });
     }
   }
 
@@ -201,6 +214,50 @@ class _SettingsBodyState extends State<SettingsBody> {
             style: TextStyle(color: Colors.green.withValues(alpha: 0.9)),
           ),
         ],
+        
+        const SizedBox(height: 24),
+        const Divider(),
+        const SizedBox(height: 8),
+        
+        // Informacje o wersji aplikacji
+        if (_packageInfo != null)
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Wersja aplikacji',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      _packageInfo!.buildNumber.isNotEmpty
+                          ? '${_packageInfo!.version} (build ${_packageInfo!.buildNumber})'
+                          : _packageInfo!.version,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        else
+          const Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Ładowanie informacji o wersji...',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ],
+          ),
       ],
     );
   }
