@@ -6,67 +6,73 @@ import 'package:piesp_patrol/core/proxy_response_dto.dart' show ProxyResponseDto
 /// =====================
 
 /// Request dla /CEP/udostepnianie/uprawnienia-kierowcy
-/// Wymagane: danePesel LUB daneOsoby
+/// Wymagane: numerPesel LUB daneOsoby LUB osobaId/idk
 class UpKiRequest {
-  final UpKiDanePesel? danePesel;
+  final String? dataZapytania; // ISO 8601 datetime
+  final String? numerPesel;
+  final String? numerDokumentu;
+  final String? seriaNumerDokumentu;
   final UpKiDaneOsoby? daneOsoby;
+  final String? osobaId;
+  final String? idk;
 
   const UpKiRequest({
-    this.danePesel,
+    this.dataZapytania,
+    this.numerPesel,
+    this.numerDokumentu,
+    this.seriaNumerDokumentu,
     this.daneOsoby,
+    this.osobaId,
+    this.idk,
   });
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (danePesel != null) {
-      map['danePesel'] = danePesel!.toJson();
+    if (dataZapytania != null && dataZapytania!.trim().isNotEmpty) {
+      map['dataZapytania'] = dataZapytania;
+    }
+    if (numerPesel != null && numerPesel!.trim().isNotEmpty) {
+      map['numerPesel'] = numerPesel;
+    }
+    if (numerDokumentu != null && numerDokumentu!.trim().isNotEmpty) {
+      map['numerDokumentu'] = numerDokumentu;
+    }
+    if (seriaNumerDokumentu != null && seriaNumerDokumentu!.trim().isNotEmpty) {
+      map['seriaNumerDokumentu'] = seriaNumerDokumentu;
     }
     if (daneOsoby != null) {
       map['daneOsoby'] = daneOsoby!.toJson();
     }
+    if (osobaId != null && osobaId!.trim().isNotEmpty) {
+      map['osobaId'] = osobaId;
+    }
+    if (idk != null && idk!.trim().isNotEmpty) {
+      map['idk'] = idk;
+    }
     return map;
   }
 
-  /// Walidacja: wymagane danePesel LUB daneOsoby
+  /// Walidacja: wymagane numerPesel LUB numerDokumentu LUB seriaNumerDokumentu LUB daneOsoby LUB osobaId/idk
   String? validate() {
-    if (danePesel == null && daneOsoby == null) {
-      return 'Wymagane: danePesel LUB daneOsoby';
+    final hasPesel = numerPesel != null && numerPesel!.trim().isNotEmpty;
+    final hasDaneOsoby = daneOsoby != null;
+    final hasNumerDokumentu = numerDokumentu != null && numerDokumentu!.trim().isNotEmpty;
+    final hasSeriaNumerDokumentu = seriaNumerDokumentu != null && seriaNumerDokumentu!.trim().isNotEmpty;
+    final hasOsobaId = osobaId != null && osobaId!.trim().isNotEmpty;
+    final hasIdk = idk != null && idk!.trim().isNotEmpty;
+
+    if (!hasPesel && !hasNumerDokumentu && !hasSeriaNumerDokumentu && !hasDaneOsoby && !(hasOsobaId || hasIdk)) {
+      return 'Wymagane: numerPesel LUB numerDokumentu LUB seriaNumerDokumentu LUB daneOsoby LUB osobaId/idk';
     }
-    if (danePesel != null && daneOsoby != null) {
-      return 'Podaj tylko danePesel LUB daneOsoby, nie oba jednocześnie';
+
+    if (numerPesel != null && numerPesel!.trim().isNotEmpty && numerPesel!.trim().length != 11) {
+      return 'PESEL musi mieć 11 cyfr';
     }
-    if (danePesel != null) {
-      return danePesel!.validate();
-    }
+
     if (daneOsoby != null) {
       return daneOsoby!.validate();
     }
-    return null;
-  }
-}
 
-/// Dane PESEL
-class UpKiDanePesel {
-  final String? numerPesel;
-  final String? dataZapytania; // ISO 8601 datetime
-
-  const UpKiDanePesel({
-    this.numerPesel,
-    this.dataZapytania,
-  });
-
-  Map<String, dynamic> toJson() => {
-        'numerPesel': numerPesel,
-        'dataZapytania': dataZapytania,
-      }..removeWhere((k, v) => v == null || (v is String && v.trim().isEmpty));
-
-  String? validate() {
-    if (numerPesel == null || numerPesel!.trim().isEmpty) {
-      return 'PESEL jest wymagany';
-    }
-    if (numerPesel!.trim().length != 11) {
-      return 'PESEL musi mieć 11 cyfr';
-    }
     return null;
   }
 }
@@ -76,20 +82,17 @@ class UpKiDaneOsoby {
   final String? imiePierwsze;
   final String? nazwisko;
   final String? dataUrodzenia; // yyyy-MM-dd
-  final String? dataZapytania; // ISO 8601 datetime
 
   const UpKiDaneOsoby({
     this.imiePierwsze,
     this.nazwisko,
     this.dataUrodzenia,
-    this.dataZapytania,
   });
 
   Map<String, dynamic> toJson() => {
         'imiePierwsze': imiePierwsze,
         'nazwisko': nazwisko,
         'dataUrodzenia': dataUrodzenia,
-        'dataZapytania': dataZapytania,
       }..removeWhere((k, v) => v == null || (v is String && v.trim().isEmpty));
 
   String? validate() {
@@ -153,22 +156,53 @@ class UpKiOrganWydajacyDto {
   }
 }
 
-/// Stan dokumentu
-class UpKiStanDokumentuDto {
+/// Stan dokumentu (wewnętrzny obiekt w strukturze stanu)
+class UpKiStanDokumentuWewnDto {
   final String? kod;
   final String? wartoscOpisowa;
 
-  const UpKiStanDokumentuDto({
+  const UpKiStanDokumentuWewnDto({
     this.kod,
     this.wartoscOpisowa,
+  });
+
+  factory UpKiStanDokumentuWewnDto.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return const UpKiStanDokumentuWewnDto();
+    String? s(String k) => json[k]?.toString();
+    return UpKiStanDokumentuWewnDto(
+      kod: s('kod'),
+      wartoscOpisowa: s('wartoscOpisowa'),
+    );
+  }
+}
+
+/// Stan dokumentu (pełna struktura)
+class UpKiStanDokumentuDto {
+  final UpKiStanDokumentuWewnDto? stanDokumentu;
+  final String? dataZmianyStanu;
+  final UpKiOrganWydajacyDto? podmiotZmianyStanu;
+  final List<UpKiWartoscSlownikowaDto>? powodZmianyStanu;
+
+  const UpKiStanDokumentuDto({
+    this.stanDokumentu,
+    this.dataZmianyStanu,
+    this.podmiotZmianyStanu,
+    this.powodZmianyStanu,
   });
 
   factory UpKiStanDokumentuDto.fromJson(Map<String, dynamic>? json) {
     if (json == null) return const UpKiStanDokumentuDto();
     String? s(String k) => json[k]?.toString();
+    Map<String, dynamic>? m(String k) => json[k] is Map<String, dynamic> ? json[k] as Map<String, dynamic> : null;
+    List<Map<String, dynamic>> lm(String k) =>
+        (json[k] as List?)?.whereType<Map<String, dynamic>>().toList() ?? const [];
     return UpKiStanDokumentuDto(
-      kod: s('kod'),
-      wartoscOpisowa: s('wartoscOpisowa'),
+      stanDokumentu: UpKiStanDokumentuWewnDto.fromJson(m('stanDokumentu')),
+      dataZmianyStanu: s('dataZmianyStanu'),
+      podmiotZmianyStanu: UpKiOrganWydajacyDto.fromJson(m('podmiotZmianyStanu')),
+      powodZmianyStanu: lm('powodZmianyStanu')
+          .map((e) => UpKiWartoscSlownikowaDto.fromJson(e))
+          .toList(),
     );
   }
 }
@@ -245,14 +279,14 @@ class UpKiDaneUprawnieniaKategoriiDto {
   final String? dataWaznosci;
   final String? dataWydania;
   final List<UpKiDaneZakazuCofnieciaDto>? daneZakazuCofniecia;
-  final List<UpKiOgraniczenieDto>? ograniczenie;
+  final List<UpKiOgraniczenieDto>? ograniczenia; // Changed to plural
 
   const UpKiDaneUprawnieniaKategoriiDto({
     this.kategoria,
     this.dataWaznosci,
     this.dataWydania,
     this.daneZakazuCofniecia,
-    this.ograniczenie,
+    this.ograniczenia,
   });
 
   factory UpKiDaneUprawnieniaKategoriiDto.fromJson(Map<String, dynamic>? json) {
@@ -269,7 +303,7 @@ class UpKiDaneUprawnieniaKategoriiDto {
       daneZakazuCofniecia: lm('daneZakazuCofniecia')
           .map((e) => UpKiDaneZakazuCofnieciaDto.fromJson(e))
           .toList(),
-      ograniczenie: lm('ograniczenie')
+      ograniczenia: lm('ograniczenia')
           .map((e) => UpKiOgraniczenieDto.fromJson(e))
           .toList(),
     );
@@ -338,7 +372,7 @@ class UpKiMiejscowoscPodstawowaDto {
     String? s(String k) => json[k]?.toString();
     return UpKiMiejscowoscPodstawowaDto(
       kodMiejscowosciPodstawowej: s('kodMiejscowosciPodstawowej'),
-      nazwaMiejscowosciPodstawowej: s('NazwaMiejscowosciPodstawowej'),
+      nazwaMiejscowosciPodstawowej: s('nazwaMiejscowosciPodstawowej'),
     );
   }
 }
@@ -478,8 +512,8 @@ class UpKiDaneKierowcyDto {
 
 /// Parametr osoba ID
 class UpKiParametrOsobaIdDto {
-  final int? osobaId;
-  final int? wariantId;
+  final String? osobaId; // Changed to String to match JSON
+  final String? wariantId; // Changed to String to match JSON
   final String? tokenKierowcy;
   final String? idk;
   final UpKiDaneKierowcyDto? daneKierowcy;
@@ -495,11 +529,10 @@ class UpKiParametrOsobaIdDto {
   factory UpKiParametrOsobaIdDto.fromJson(Map<String, dynamic>? json) {
     if (json == null) return const UpKiParametrOsobaIdDto();
     String? s(String k) => json[k]?.toString();
-    int? i(String k) => (json[k] is num) ? (json[k] as num).toInt() : int.tryParse('${json[k]}');
     Map<String, dynamic>? m(String k) => json[k] is Map<String, dynamic> ? json[k] as Map<String, dynamic> : null;
     return UpKiParametrOsobaIdDto(
-      osobaId: i('osobaId'),
-      wariantId: i('wariantId'),
+      osobaId: s('osobaId'),
+      wariantId: s('wariantId'),
       tokenKierowcy: s('tokenKierowcy'),
       idk: s('idk'),
       daneKierowcy: UpKiDaneKierowcyDto.fromJson(m('daneKierowcy')),
@@ -507,8 +540,29 @@ class UpKiParametrOsobaIdDto {
   }
 }
 
+/// Komunikat biznesowy
+class UpKiKomunikatBiznesowyDto {
+  final String? kod;
+  final String? opis;
+
+  const UpKiKomunikatBiznesowyDto({
+    this.kod,
+    this.opis,
+  });
+
+  factory UpKiKomunikatBiznesowyDto.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return const UpKiKomunikatBiznesowyDto();
+    String? s(String k) => json[k]?.toString();
+    return UpKiKomunikatBiznesowyDto(
+      kod: s('kod'),
+      opis: s('opis'),
+    );
+  }
+}
+
 /// Dokument uprawnienia kierowcy
 class UpKiDokumentUprawnieniaKierowcyDto {
+  final String? dokumentId; // Added
   final UpKiWartoscSlownikowaDto? typDokumentu;
   final String? numerDokumentu;
   final String? seriaNumerDokumentu;
@@ -517,11 +571,13 @@ class UpKiDokumentUprawnieniaKierowcyDto {
   final String? dataWydania;
   final UpKiParametrOsobaIdDto? parametrOsobaId;
   final UpKiStanDokumentuDto? stanDokumentu;
-  final List<UpKiOgraniczenieDto>? ograniczenie;
+  final List<UpKiDaneZakazuCofnieciaDto>? daneZakazuCofniecia; // Added at document level
+  final List<UpKiOgraniczenieDto>? ograniczenia; // Changed to plural
   final List<UpKiDaneUprawnieniaKategoriiDto>? daneUprawnieniaKategorii;
-  final String? komunikatyBiznesowe;
+  final UpKiKomunikatBiznesowyDto? komunikatBiznesowy; // Changed to object and singular
 
   const UpKiDokumentUprawnieniaKierowcyDto({
+    this.dokumentId,
     this.typDokumentu,
     this.numerDokumentu,
     this.seriaNumerDokumentu,
@@ -530,9 +586,10 @@ class UpKiDokumentUprawnieniaKierowcyDto {
     this.dataWydania,
     this.parametrOsobaId,
     this.stanDokumentu,
-    this.ograniczenie,
+    this.daneZakazuCofniecia,
+    this.ograniczenia,
     this.daneUprawnieniaKategorii,
-    this.komunikatyBiznesowe,
+    this.komunikatBiznesowy,
   });
 
   factory UpKiDokumentUprawnieniaKierowcyDto.fromJson(Map<String, dynamic>? json) {
@@ -543,6 +600,7 @@ class UpKiDokumentUprawnieniaKierowcyDto {
         (json[k] as List?)?.whereType<Map<String, dynamic>>().toList() ?? const [];
 
     return UpKiDokumentUprawnieniaKierowcyDto(
+      dokumentId: s('dokumentId'),
       typDokumentu: UpKiWartoscSlownikowaDto.fromJson(m('typDokumentu')),
       numerDokumentu: s('numerDokumentu'),
       seriaNumerDokumentu: s('seriaNumerDokumentu'),
@@ -551,25 +609,28 @@ class UpKiDokumentUprawnieniaKierowcyDto {
       dataWydania: s('dataWydania'),
       parametrOsobaId: UpKiParametrOsobaIdDto.fromJson(m('parametrOsobaId')),
       stanDokumentu: UpKiStanDokumentuDto.fromJson(m('stanDokumentu')),
-      ograniczenie: lm('ograniczenie')
+      daneZakazuCofniecia: lm('daneZakazuCofniecia')
+          .map((e) => UpKiDaneZakazuCofnieciaDto.fromJson(e))
+          .toList(),
+      ograniczenia: lm('ograniczenia')
           .map((e) => UpKiOgraniczenieDto.fromJson(e))
           .toList(),
       daneUprawnieniaKategorii: lm('daneUprawnieniaKategorii')
           .map((e) => UpKiDaneUprawnieniaKategoriiDto.fromJson(e))
           .toList(),
-      komunikatyBiznesowe: s('komunikatyBiznesowe'),
+      komunikatBiznesowy: UpKiKomunikatBiznesowyDto.fromJson(m('komunikatBiznesowy')),
     );
   }
 }
 
 /// Response data
 class UpKiResponseDto {
-  final List<UpKiDokumentUprawnieniaKierowcyDto>? dokumentUprawnieniaKierowcy;
+  final List<UpKiDokumentUprawnieniaKierowcyDto>? dokumentyUprawnieniaKierowcy; // Changed to plural
   final String? komunikat;
   final String? dataZapytania;
 
   const UpKiResponseDto({
-    this.dokumentUprawnieniaKierowcy,
+    this.dokumentyUprawnieniaKierowcy,
     this.komunikat,
     this.dataZapytania,
   });
@@ -590,7 +651,7 @@ class UpKiResponseDto {
     }
 
     return UpKiResponseDto(
-      dokumentUprawnieniaKierowcy: lm('dokumentUprawnieniaKierowcy')
+      dokumentyUprawnieniaKierowcy: lm('dokumentyUprawnieniaKierowcy')
           .map((e) => UpKiDokumentUprawnieniaKierowcyDto.fromJson(e))
           .toList(),
       komunikat: s('komunikat'),

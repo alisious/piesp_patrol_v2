@@ -1,0 +1,126 @@
+{
+      "dataZapytania": "string",
+      "dokumentyUprawnieniaKierowcy": [
+        {
+          "dokumentId": "string",
+          "typDokumentu": {
+            "kod": "string",
+            "wartoscOpisowa": "string"
+          },
+          "numerDokumentu": "string",
+          "seriaNumerDokumentu": "string",
+          "organWydajacyDokument": {
+            "kod": "string",
+            "wartoscOpisowa": "string"
+          },
+          "dataWaznosci": "string",
+          "dataWydania": "string",
+          "parametrOsobaId": {
+            "osobaId": "string",
+            "wariantId": "string",
+            "tokenKierowcy": "string",
+            "idk": "string",
+            "daneKierowcy": {
+              "numerPesel": "string",
+              "imiePierwsze": "string",
+              "nazwisko": "string",
+              "dataUrodzenia": "string",
+              "miejsceUrodzenia": "string",
+              "adres": {
+                "miejsce": {
+                  "kodTERYT": "string",
+                  "kodWojewodztwa": "string",
+                  "nazwaWojewodztwaStanu": "string",
+                  "kodPowiatu": "string",
+                  "nazwaPowiatuDzielnicy": "string",
+                  "kodGminy": "string",
+                  "nazwaGminy": "string",
+                  "kodMiejscowosci": "string",
+                  "nazwaMiejscowosci": "string",
+                  "kodPocztowyKrajowy": "string"
+                },
+                "nrLokalu": "string",
+                "miejscowoscPodstawowa": {
+                  "kodMiejscowosciPodstawowej": "string",
+                  "nazwaMiejscowosciPodstawowej": "string"
+                },
+                "kraj": {
+                  "kod": "string",
+                  "wartoscOpisowa": "string"
+                },
+                "ulica": {
+                  "cechaUlicy": {
+                    "kod": "string",
+                    "wartoscOpisowa": "string"
+                  },
+                  "kodUlicy": "string",
+                  "nazwaUlicy": "string",
+                  "nazwaUlicyZDokumentu": "string",
+                  "nrDomu": "string"
+                }
+              }
+            }
+          },
+          "stanDokumentu": {
+            "stanDokumentu": {
+              "kod": "string",
+              "wartoscOpisowa": "string"
+            },
+            "dataZmianyStanu": "string",
+            "podmiotZmianyStanu": {
+              "kod": "string",
+              "wartoscOpisowa": "string"
+            },
+            "powodZmianyStanu": [
+              {
+                "kod": "string",
+                "wartoscOpisowa": "string"
+              }
+            ]
+          },
+          "daneZakazuCofniecia": [
+            {
+              "typZdarzenia": "string",
+              "dataDo": "string"
+            }
+          ],
+          "ograniczenia": [
+            {
+              "kodOgraniczenia": "string",
+              "wartoscOgraniczenia": "string",
+              "opisKodu": "string",
+              "dataDo": "string"
+            }
+          ],
+          "daneUprawnieniaKategorii": [
+            {
+              "kategoria": {
+                "kod": "string",
+                "wartoscOpisowa": "string"
+              },
+              "dataWaznosci": "string",
+              "dataWydania": "string",
+              "daneZakazuCofniecia": [
+                {
+                  "typZdarzenia": "string",
+                  "dataDo": "string"
+                }
+              ],
+              "ograniczenia": [
+                {
+                  "kodOgraniczenia": "string",
+                  "wartoscOgraniczenia": "string",
+                  "opisKodu": "string",
+                  "dataDo": "string"
+                }
+              ]
+            }
+          ],
+          "komunikatBiznesowy": {
+            "kod": "string",
+            "opis": "string"
+          }
+        }
+      ],
+      "komunikat": "string"
+}

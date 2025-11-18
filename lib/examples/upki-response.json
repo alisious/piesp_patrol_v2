@@ -1,124 +1,95 @@
 {
-    "data": {
-      "dokumentUprawnieniaKierowcy": [
-        {
-          "typDokumentu": {
-            "kod": "DICT155_DR",
-            "wartoscOpisowa": "Prawo jazdy"
-          },
-          "numerDokumentu": "ABC123456",
-          "seriaNumerDokumentu": "ABC123456",
-          "organWydajacyDokument": {
-            "kod": "PL-MWKP",
-            "wartoscOpisowa": "Starosta Warszawski Zachodni"
-          },
-          "dataWaznosci": "2035-02-09T00:00:00",
-          "dataWydania": "2025-02-10T00:00:00",
-          "parametrOsobaId": {
-            "osobaId": 9876543210,
-            "wariantId": 1,
-            "tokenKierowcy": "tk_9f3a1b2c3d4e5f6g",
-            "idk": "IDK-2025-0001",
-            "daneKierowcy": {
-              "numerPesel": "73020916558",
-              "imiePierwsze": "JACEK",
-              "nazwisko": "KORPUSIK",
-              "dataUrodzenia": "1973-02-09T00:00:00",
-              "miejsceUrodzenia": "Warszawa",
-              "adres": {
-                "miejsce": {
-                  "kodTERYT": null,
-                  "kodWojewodztwa": null,
-                  "nazwaWojewodztwaStanu": "Mazowieckie",
-                  "kodPowiatu": null,
-                  "nazwaPowiatuDzielnicy": "Warszawski Zachodni",
-                  "kodGminy": null,
-                  "nazwaGminy": "Łomianki",
-                  "kodRodzajuGminy": null,
-                  "kodPocztowyKrajowy": "05-092",
-                  "kodMiejscowosci": null,
-                  "nazwaMiejscowosci": "Kiełpin"
-                },
-                "nrLokalu": null,
-                "miejscowoscPodstawowa": {
-                  "kodMiejscowosciPodstawowej": null,
-                  "NazwaMiejscowosciPodstawowej": "Kiełpin"
-                },
-                "kraj": {
-                  "kod": "PL",
-                  "wartoscOpisowa": "POLSKA"
-                },
-                "ulica": {
-                  "cechaUlicy": {
-                    "kod": "UL",
-                    "wartoscOpisowa": "ul."
-                  },
-                  "kodUlicy": null,
-                  "nazwaUlicy": "Wiśniowa",
-                  "nazwaUlicyZDokumentu": "ul. Wiśniowa",
-                  "nrDomu": "9"
-                }
+    "dataZapytania": null,
+    "dokumentyUprawnieniaKierowcy": [
+      {
+        "dokumentId": "809869045",
+        "typDokumentu": {
+          "kod": "DICT155_PJ",
+          "wartoscOpisowa": "Prawo jazdy"
+        },
+        "numerDokumentu": "00459151465028",
+        "seriaNumerDokumentu": "Q0250418",
+        "organWydajacyDokument": {
+          "kod": "DICT061_1465028",
+          "wartoscOpisowa": "PREZYDENT M.ST. WARSZAWY"
+        },
+        "dataWaznosci": "2030-03-31",
+        "dataWydania": "2015-03-31",
+        "parametrOsobaId": {
+          "osobaId": "385307137",
+          "wariantId": "2",
+          "tokenKierowcy": null,
+          "idk": "2150317103531002031601782",
+          "daneKierowcy": {
+            "numerPesel": "81040709629",
+            "imiePierwsze": "EDYTA",
+            "nazwisko": "KOROLCZUK",
+            "dataUrodzenia": "1981-04-07",
+            "miejsceUrodzenia": "OSTROWIEC ŚWIĘTOKRZYSKI",
+            "adres": {
+              "miejsce": {
+                "kodTERYT": null,
+                "kodWojewodztwa": null,
+                "nazwaWojewodztwaStanu": null,
+                "kodPowiatu": null,
+                "nazwaPowiatuDzielnicy": null,
+                "kodGminy": null,
+                "nazwaGminy": null,
+                "kodMiejscowosci": null,
+                "nazwaMiejscowosci": "WARSZAWA",
+                "kodPocztowyKrajowy": "01-471"
+              },
+              "nrLokalu": "4",
+              "miejscowoscPodstawowa": {
+                "kodMiejscowosciPodstawowej": null,
+                "nazwaMiejscowosciPodstawowej": null
+              },
+              "kraj": null,
+              "ulica": {
+                "cechaUlicy": null,
+                "kodUlicy": null,
+                "nazwaUlicy": "NARWIK",
+                "nazwaUlicyZDokumentu": "NARWIK",
+                "nrDomu": "12"
               }
             }
-          },
+          }
+        },
+        "stanDokumentu": {
           "stanDokumentu": {
-            "kod": "AKT",
-            "wartoscOpisowa": "Aktywny"
+            "kod": "DICT003_WYD",
+            "wartoscOpisowa": "Wydany"
           },
-          "ograniczenie": [
-            {
-              "kodOgraniczenia": "01",
-              "wartoscOgraniczenia": null,
-              "opisKodu": "Konieczność używania szkieł korekcyjnych",
-              "dataDo": null
-            }
-          ],
-          "daneUprawnieniaKategorii": [
-            {
-              "kategoria": {
-                "kod": "A",
-                "wartoscOpisowa": "A"
-              },
-              "dataWaznosci": "2035-02-09T00:00:00",
-              "dataWydania": "2025-02-10T00:00:00",
-              "daneZakazuCofniecia": null,
-              "ograniczenie": null
+          "dataZmianyStanu": "2015-03-31",
+          "podmiotZmianyStanu": {
+            "kod": "DICT061_1465028",
+            "wartoscOpisowa": "URZĄD M.ST. WARSZAWY DELEGATURA BIURA ADMINISTRACJI I SPRAW OBYWATELSKICH W DZIELNICY BEMOWO"
+          },
+          "powodZmianyStanu": []
+        },
+        "daneZakazuCofniecia": [],
+        "ograniczenia": [
+          {
+            "kodOgraniczenia": "DICT094_01",
+            "wartoscOgraniczenia": "01",
+            "opisKodu": "Wymagana korekta lub ochrona wzroku",
+            "dataDo": null
+          }
+        ],
+        "daneUprawnieniaKategorii": [
+          {
+            "kategoria": {
+              "kod": "DICT060_B",
+              "wartoscOpisowa": "B"
             },
-            {
-              "kategoria": {
-                "kod": "B",
-                "wartoscOpisowa": "B"
-              },
-              "dataWaznosci": "2035-02-09T00:00:00",
-              "dataWydania": "2025-02-10T00:00:00",
-              "daneZakazuCofniecia": [
-                {
-                  "typZdarzenia": "ZAKAZ PROWADZENIA",
-                  "dataDo": "2026-12-31T00:00:00"
-                }
-              ],
-              "ograniczenie": null
-            },
-            {
-              "kategoria": {
-                "kod": "T",
-                "wartoscOpisowa": "T"
-              },
-              "dataWaznosci": "2035-02-09T00:00:00",
-              "dataWydania": "2025-02-10T00:00:00",
-              "daneZakazuCofniecia": null,
-              "ograniczenie": null
-            }
-          ],
-          "komunikatyBiznesowe": null
-        }
-      ],
-      "komunikat": null,
-      "dataZapytania": "2025-11-11T00:00:00"
-    },
-    "status": 0,
-    "message": "OK",
-    "source": "CEP.UpKi",
-    "sourceStatusCode": "200",
-    "requestId": "1418d64a8caa4214995ab894d14d3f17"
+            "dataWaznosci": "2030-03-31",
+            "dataWydania": "2001-05-21",
+            "daneZakazuCofniecia": [],
+            "ograniczenia": []
+          }
+        ],
+        "komunikatBiznesowy": null
+      }
+    ],
+    "komunikat": null
   }

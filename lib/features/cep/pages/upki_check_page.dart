@@ -18,8 +18,8 @@ class UpKiCheckPage extends StatefulWidget {
 }
 
 class _UpKiCheckPageState extends State<UpKiCheckPage> {
-  // Selection: PESEL or Person data
-  bool _usePesel = true;
+  // Selection: PESEL, Person data, Numer dokumentu (uprawnienia), or Seria numer dokumentu (blankiet)
+  String _searchType = 'pesel';
 
   // PESEL fields
   final _peselCtrl = TextEditingController();
@@ -29,12 +29,18 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
   final _nazwiskoCtrl = TextEditingController();
   final _dataUrodzeniaCtrl = TextEditingController();
 
+  // Document fields
+  final _numerDokumentuCtrl = TextEditingController();
+  final _seriaNumerDokumentuCtrl = TextEditingController();
+
   @override
   void dispose() {
     _peselCtrl.dispose();
     _imieCtrl.dispose();
     _nazwiskoCtrl.dispose();
     _dataUrodzeniaCtrl.dispose();
+    _numerDokumentuCtrl.dispose();
+    _seriaNumerDokumentuCtrl.dispose();
     super.dispose();
   }
 
@@ -56,10 +62,10 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
     }
 
     setState(() {
-      if (_usePesel) {
+      if (_searchType == 'pesel') {
         // Wypełnij pole PESEL
         _peselCtrl.text = selectedPerson.pesel ?? '';
-      } else {
+      } else if (_searchType == 'daneOsoby') {
         // Wypełnij pola: Imię pierwsze, Nazwisko, Data urodzenia
         _imieCtrl.text = selectedPerson.imie ?? '';
         _nazwiskoCtrl.text = selectedPerson.nazwisko ?? '';
@@ -78,32 +84,38 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
           _dataUrodzeniaCtrl.text = '';
         }
       }
+      // Dla numerDokumentu i seriaNumerDokumentu nie ma danych w personController
     });
     
     _showSnack('Wypełniono pola danymi wybranej osoby.');
   }
 
   UpKiRequest _buildRequest() {
-    // Automatycznie ustaw datę zapytania na bieżący czas (UTC, ISO 8601)
-    final dataZapytania = DateTime.now().toUtc().toIso8601String();
+    // Tworzenie requestu z wszystkimi polami (zostaną przesłane tylko wypełnione)
+    final peselText = _peselCtrl.text.trim();
+    final numerPesel = peselText.isNotEmpty ? peselText : null;
     
-    if (_usePesel) {
-      return UpKiRequest(
-        danePesel: UpKiDanePesel(
-          numerPesel: _nullIfEmpty(_peselCtrl.text),
-          dataZapytania: dataZapytania,
-        ),
-      );
-    } else {
-      return UpKiRequest(
-        daneOsoby: UpKiDaneOsoby(
-          imiePierwsze: _nullIfEmpty(_imieCtrl.text),
-          nazwisko: _nullIfEmpty(_nazwiskoCtrl.text),
-          dataUrodzenia: _nullIfEmpty(_dataUrodzeniaCtrl.text),
-          dataZapytania: dataZapytania,
-        ),
-      );
-    }
+    final daneOsoby = (_searchType == 'daneOsoby' &&
+            (_imieCtrl.text.trim().isNotEmpty ||
+             _nazwiskoCtrl.text.trim().isNotEmpty ||
+             _dataUrodzeniaCtrl.text.trim().isNotEmpty))
+        ? UpKiDaneOsoby(
+            imiePierwsze: _nullIfEmpty(_imieCtrl.text),
+            nazwisko: _nullIfEmpty(_nazwiskoCtrl.text),
+            dataUrodzenia: _nullIfEmpty(_dataUrodzeniaCtrl.text),
+          )
+        : null;
+    
+    final numerDokumentu = _nullIfEmpty(_numerDokumentuCtrl.text);
+    final seriaNumerDokumentu = _nullIfEmpty(_seriaNumerDokumentuCtrl.text);
+    
+    return UpKiRequest(
+      dataZapytania: null, // Nie ustawiamy automatycznie - użytkownik musi ustawić jawnie
+      numerPesel: numerPesel,
+      numerDokumentu: numerDokumentu,
+      seriaNumerDokumentu: seriaNumerDokumentu,
+      daneOsoby: daneOsoby,
+    );
   }
 
   Future<void> _onSearch() async {
@@ -171,23 +183,43 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
                     return Row(
                       children: [
                         Expanded(
-                          child: SegmentedButton<bool>(
-                            segments: const [
-                              ButtonSegment<bool>(
-                                value: true,
-                                label: Text('PESEL'),
-                                icon: Icon(Icons.badge),
+                          child: SegmentedButton<String>(
+                            segments: [
+                              ButtonSegment<String>(
+                                value: 'pesel',
+                                label: Text(
+                                  'PESEL',
+                                  style: TextStyle(fontSize: Theme.of(context).textTheme.labelLarge?.fontSize != null
+                                      ? Theme.of(context).textTheme.labelLarge!.fontSize! * 0.5
+                                      : null),
+                                ),
                               ),
-                              ButtonSegment<bool>(
-                                value: false,
-                                label: Text('Dane osoby'),
-                                icon: Icon(Icons.person),
+                              ButtonSegment<String>(
+                                value: 'daneOsoby',
+                                icon: Tooltip(
+                                  message: 'Dane osoby',
+                                  child: const Icon(Icons.person),
+                                ),
+                              ),
+                              ButtonSegment<String>(
+                                value: 'numerDokumentu',
+                                icon: Tooltip(
+                                  message: 'Numer dokumentu (uprawnienia)',
+                                  child: const Icon(Icons.description),
+                                ),
+                              ),
+                              ButtonSegment<String>(
+                                value: 'seriaNumerDokumentu',
+                                icon: Tooltip(
+                                  message: 'Seria i numer dokumentu (blankiet)',
+                                  child: const Icon(Icons.credit_card),
+                                ),
                               ),
                             ],
-                            selected: {_usePesel},
-                            onSelectionChanged: (Set<bool> newSelection) {
+                            selected: {_searchType},
+                            onSelectionChanged: (Set<String> newSelection) {
                               setState(() {
-                                _usePesel = newSelection.first;
+                                _searchType = newSelection.first;
                               });
                             },
                           ),
@@ -226,22 +258,20 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
                 ),
                 const SizedBox(height: 24),
 
-                if (_usePesel) ...[
+                if (_searchType == 'pesel') ...[
                   // PESEL fields
                   InputBox(
                     controller: _peselCtrl,
                     label: 'PESEL',
                     preset: InputPreset.pesel,
-                    prefixIcon: Icons.badge,
                   ),
-                ] else ...[
+                ] else if (_searchType == 'daneOsoby') ...[
                   // Person fields
                   InputBox(
                     controller: _imieCtrl,
                     label: 'Imię pierwsze',
                     preset: InputPreset.text,
                     uppercase: true,
-                    prefixIcon: Icons.person,
                   ),
                   const SizedBox(height: 12),
                   InputBox(
@@ -249,7 +279,6 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
                     label: 'Nazwisko',
                     preset: InputPreset.text,
                     uppercase: true,
-                    prefixIcon: Icons.person_outline,
                   ),
                   const SizedBox(height: 12),
                   InputBox(
@@ -257,7 +286,20 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
                     label: 'Data urodzenia',
                     hint: 'RRRR-MM-DD',
                     preset: InputPreset.dateYmd,
-                    prefixIcon: Icons.cake,
+                  ),
+                ] else if (_searchType == 'numerDokumentu') ...[
+                  // Numer dokumentu (uprawnienia) fields
+                  InputBox(
+                    controller: _numerDokumentuCtrl,
+                    label: 'Numer dokumentu (uprawnienia)',
+                    preset: InputPreset.text,
+                  ),
+                ] else if (_searchType == 'seriaNumerDokumentu') ...[
+                  // Seria numer dokumentu (blankiet) fields
+                  InputBox(
+                    controller: _seriaNumerDokumentuCtrl,
+                    label: 'Seria i numer dokumentu (blankiet)',
+                    preset: InputPreset.text,
                   ),
                 ],
 

@@ -125,20 +125,22 @@ class _KvLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // label
-        SizedBox(
-          width: 220,
+        Expanded(
+          flex: 1,
           child: Text(
             label,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: cs.onSurfaceVariant,
             ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
 
         // value
         Expanded(
-          flex: 7,
+          flex: 1,
           child: Text(
             value,
             style: theme.textTheme.bodyMedium?.copyWith(
