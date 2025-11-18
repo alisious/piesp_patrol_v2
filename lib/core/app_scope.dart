@@ -16,6 +16,13 @@ class AppScope extends InheritedWidget {
     return widget!.services;
   }
 
+  /// Odczytuje Services bez subskrypcji na rebuilde (użyj gdy nie potrzebujesz reagować na zmiany)
+  static Services read(BuildContext context) {
+    final widget = context.getInheritedWidgetOfExactType<AppScope>();
+    assert(widget != null, 'Brak AppScope w drzewie widżetów.');
+    return widget!.services;
+  }
+
   @override
   bool updateShouldNotify(AppScope oldWidget) => services != oldWidget.services;
 }
@@ -32,6 +39,7 @@ class Services {
     required this.cepDictionaryService,
     required this.personController,
     required this.vehicleController,
+    required this.dutyApi,
     // np. required this.anprsApi, ...
   });
 
@@ -44,4 +52,5 @@ class Services {
   final Object cepDictionaryService;
   final Object personController;
   final Object vehicleController;
+  final Object dutyApi;
 }

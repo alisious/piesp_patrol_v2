@@ -66,7 +66,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final auth = AppScope.of(context).authController as AuthController;
+    // Używamy read() aby uniknąć niepotrzebnych rebuildu przy notifyListeners() w AuthController
+    final auth = AppScope.read(context).authController as AuthController;
     final badge = auth.meProfile?.badgeNumber ?? '---';
     final name = auth.meProfile?.userName ?? '---';
        
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 // bezpiecznie – bierzemy navigator przed await
                 final navigator = Navigator.of(context);
-                final auth = AppScope.of(context).authController as AuthController;
+                final auth = AppScope.read(context).authController as AuthController;
                 await auth.logout();
                 if (!mounted) return;
                 navigator.pushNamedAndRemoveUntil(

@@ -57,7 +57,8 @@ class _OtherTabState extends State<OtherTab> {
 Future<void> updateCepDictionaries(BuildContext context) async {
   final messenger = ScaffoldMessenger.of(context); // bezpiecznie przed await
   try {
-    final scope = AppScope.of(context);
+    // Używamy read() aby uniknąć niepotrzebnych rebuildu
+    final scope = AppScope.read(context);
     final service = scope.cepDictionaryService as CepDictionaryService;
 
     final res = await service.refreshVehicleDocumentTypes();

@@ -34,7 +34,7 @@ class DutyTab extends StatelessWidget {
             ArrowButton(
               title: 'Rozpocznij służbę',
               onTap: () {},
-              enabled: true,
+              enabled: false,
             ),
             const SizedBox(height: 12),
             ArrowButton(

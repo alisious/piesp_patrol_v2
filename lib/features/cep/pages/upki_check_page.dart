@@ -196,24 +196,18 @@ class _UpKiCheckPageState extends State<UpKiCheckPage> {
                               ),
                               ButtonSegment<String>(
                                 value: 'daneOsoby',
-                                icon: Tooltip(
-                                  message: 'Dane osoby',
-                                  child: const Icon(Icons.person),
-                                ),
+                                tooltip: 'Dane osoby',
+                                icon: const Icon(Icons.person),
                               ),
                               ButtonSegment<String>(
                                 value: 'numerDokumentu',
-                                icon: Tooltip(
-                                  message: 'Numer dokumentu (uprawnienia)',
-                                  child: const Icon(Icons.description),
-                                ),
+                                tooltip: 'Numer dokumentu (uprawnienia)',
+                                icon: const Icon(Icons.description),
                               ),
                               ButtonSegment<String>(
                                 value: 'seriaNumerDokumentu',
-                                icon: Tooltip(
-                                  message: 'Seria i numer dokumentu (blankiet)',
-                                  child: const Icon(Icons.credit_card),
-                                ),
+                                tooltip: 'Seria i numer dokumentu (blankiet)',
+                                icon: const Icon(Icons.credit_card),
                               ),
                             ],
                             selected: {_searchType},
