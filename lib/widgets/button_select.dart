@@ -14,6 +14,7 @@ class ButtonSelect extends StatefulWidget {
     this.style,
     this.expandOnMobile = true,   // NEW: zawsze pełna szerokość na telefonie
     this.mobileBreakpoint = 600,  // NEW: szerokość ekranu w px (Material)
+    this.constrainWidthExternally = false,
   });
 
   final Future<void> Function() onPressedAsync;
@@ -30,6 +31,9 @@ class ButtonSelect extends StatefulWidget {
   /// nawet wewnątrz Row/Center itp.
   final bool expandOnMobile;
   final double mobileBreakpoint;
+  /// Gdy true, rodzic odpowiada za ograniczenie szerokości (np. SizedBox/Expanded).
+  /// ButtonSelect nie owija się w SizedBox(width: double.infinity).
+  final bool constrainWidthExternally;
 
   @override
   State<ButtonSelect> createState() => _ButtonSelectState();
@@ -106,8 +110,10 @@ class _ButtonSelectState extends State<ButtonSelect> {
       child: content,
     );
 
-    // Wymuś pełną szerokość na mobile nawet w Row/Center
-    if (widget.fullWidth || forceFullWidthMobile) {
+    // Wymuś pełną szerokość na mobile nawet w Row/Center,
+    // chyba że oczekujemy, że zrobi to rodzic.
+    if (!widget.constrainWidthExternally &&
+        (widget.fullWidth || forceFullWidthMobile)) {
       return SizedBox(width: double.infinity, child: btn);
     }
     return btn;

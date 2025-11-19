@@ -1,6 +1,7 @@
 // lib/features/duty/pages/my_duties_result_page.dart
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
+import 'package:piesp_patrol/widgets/button_select.dart';
 import 'package:piesp_patrol/widgets/common_appbar.dart';
 import 'package:piesp_patrol/widgets/input_box.dart';
 import 'package:piesp_patrol/widgets/responsive.dart';
@@ -157,18 +158,41 @@ class _RealizationInputState extends State<_RealizationInput> {
 
   @override
   Widget build(BuildContext context) {
-    return InputBox(
-      controller: _controller,
-      label: 'Rozpoczęcie',
-      hint: 'rrrr-MM-dd HH:mm',
-      preset: InputPreset.text,
-      suffixIcon: Tooltip(
-        message: 'Teraz',
-        child: IconButton(
-          icon: const Icon(Icons.schedule),
-          onPressed: _setNow,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        InputBox(
+          controller: _controller,
+          label: 'Rozpoczęcie',
+          hint: 'rrrr-MM-dd HH:mm',
+          preset: InputPreset.text,
+          suffixIcon: Tooltip(
+            message: 'Teraz',
+            child: IconButton(
+              icon: const Icon(Icons.schedule),
+              onPressed: _setNow,
+            ),
+          ),
         ),
-      ),
+        const SizedBox(height: 12),
+        SizedBox(
+          width: double.infinity,
+          child: ButtonSelect(
+            label: 'Rozpocznij',
+            fullWidth: true,
+            constrainWidthExternally: true,
+            onPressedAsync: () async {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'Rozpoczęcie służby - funkcja w przygotowaniu.',
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
