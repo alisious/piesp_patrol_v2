@@ -371,31 +371,6 @@ class _PersonCardState extends State<_PersonCard> {
                 ButtonSelect(
                   label: 'Wybierz',
                   onPressedAsync: () async {
-                    Future<void>? splashFuture;
-                    
-                    // Jeśli czyPoszukiwana == null, najpierw sprawdź, czy osoba jest poszukiwana
-                    if (widget.person.czyPoszukiwana == null) {
-                      // Sprawdź (bez komunikatu "Brak wpisów"), ale pokaż splash jeśli poszukiwana
-                      final checkResult = await _checkIfWanted(
-                        context: context,
-                        showAllNotifications: false, // Nie pokazuj "Brak wpisów o poszukiwaniu"
-                        showWantedSplash: true, // Pokaż splash jeśli poszukiwana
-                      );
-                      
-                      // Zapamiętaj Future splash screen, jeśli został wyświetlony
-                      splashFuture = checkResult.splashFuture;
-                      
-                      // Sprawdź, czy widget jest nadal zamontowany
-                      if (!mounted) return;
-                      
-                      // Jeśli osoba jest poszukiwana i splash został wyświetlony, poczekaj na jego zamknięcie
-                      if (checkResult.isWanted == true && splashFuture != null) {
-                        await splashFuture;
-                        // Sprawdź ponownie, czy widget jest nadal zamontowany po zamknięciu splash
-                        if (!mounted) return;
-                      }
-                    }
-                    
                     // Zapisz wybraną osobę w PersonController
                     final scope = AppScope.of(context);
                     final personController = scope.personController as PersonController;
