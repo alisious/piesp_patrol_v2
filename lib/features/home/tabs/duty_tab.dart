@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
+import 'package:piesp_patrol/features/duty/data/duty_api.dart';
+import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
 
 class DutyTab extends StatelessWidget {
@@ -34,8 +37,40 @@ class DutyTab extends StatelessWidget {
             const SizedBox(height: 12),
             ArrowButton(
               title: 'Rozpocznij służbę',
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.myDutiesResultPage);
+              onTap: () async {
+                final messenger = ScaffoldMessenger.of(context);
+                messenger.hideCurrentSnackBar();
+                final scope = AppScope.read(context);
+                final dutyApi = scope.dutyApi as DutyApi;
+
+                try {
+                  final response = await dutyApi.getMyPlannedDuties();
+                  if (!context.mounted) return;
+
+                  final status = response.status ?? -1;
+                  if (status != 0) {
+                    final message = (response.message?.isNotEmpty ?? false)
+                        ? response.message!
+                        : 'Nie udało się pobrać służb.';
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(message)),
+                    );
+                    return;
+                  }
+
+                  final duties = response.data ?? const <DutyDto>[];
+                  Navigator.of(context).pushNamed(
+                    AppRoutes.myDutiesResultPage,
+                    arguments: MyDutiesResultArgs(duties: duties),
+                  );
+                } catch (e) {
+                  if (!context.mounted) return;
+                  messenger.showSnackBar(
+                    SnackBar(
+                      content: Text('Błąd podczas pobierania służb: $e'),
+                    ),
+                  );
+                }
               },
               enabled: true,
             ),

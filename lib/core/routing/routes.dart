@@ -33,6 +33,7 @@ import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart' sh
 import 'package:piesp_patrol/features/srp/data/person_id_dtos.dart' show DowodOsobistyDto;
 
 // ===== Duty =====
+import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
 import 'package:piesp_patrol/features/duty/pages/my_duties_result_page.dart';
 
 class AppRoutes {
@@ -217,11 +218,16 @@ class AppRoutes {
       }
 
       // ===== Duty =====
-      case myDutiesResultPage:
-        return MaterialPageRoute(
-          builder: (_) => const MyDutiesResultPage(),
-          settings: settings,
-        );
+      case myDutiesResultPage: {
+        final args = settings.arguments;
+        if (args is MyDutiesResultArgs) {
+          return MaterialPageRoute(
+            builder: (_) => MyDutiesResultPage(duties: args.duties),
+            settings: settings,
+          );
+        }
+        return _badArgs(settings, 'Wymagany argument: MyDutiesResultArgs');
+      }
 
       // ===== Nieznana trasa =====
       default:
@@ -297,4 +303,9 @@ class VehicleQuestionExtendedResponseArgs {
 class UpKiCheckResultArgs {
   final UpKiResponseDto response;
   const UpKiCheckResultArgs({required this.response});
+}
+
+class MyDutiesResultArgs {
+  final List<DutyDto> duties;
+  const MyDutiesResultArgs({required this.duties});
 }
