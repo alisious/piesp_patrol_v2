@@ -1,6 +1,7 @@
 // lib/features/duty/pages/my_duties_result_page.dart
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/services/location_service.dart';
 import 'package:piesp_patrol/features/duty/data/duty_api.dart';
 import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
@@ -136,6 +137,7 @@ class _RealizationInput extends StatefulWidget {
 class _RealizationInputState extends State<_RealizationInput> {
   late final TextEditingController _controller;
   bool _isSubmitting = false;
+  bool _isGettingLocation = false;
   String? _error;
 
   @override
@@ -196,20 +198,100 @@ class _RealizationInputState extends State<_RealizationInput> {
     final services = AppScope.read(context);
     final dutyApi = services.dutyApi as DutyApi;
     final dutyController = services.dutyController as DutyController;
+    final locationService = services.locationService as LocationService;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
 
     setState(() {
       _isSubmitting = true;
+      _isGettingLocation = true;
       _error = null;
     });
 
+    // Pobierz lokalizację
+    double latitude = 0.0;
+    double longitude = 0.0;
+    bool locationObtained = false;
+
+    try {
+      final location = await locationService.getCurrentLocation();
+      if (location != null) {
+        latitude = location.latitude;
+        longitude = location.longitude;
+        locationObtained = true;
+      }
+    } on LocationError catch (e) {
+      if (!mounted) return;
+      
+      setState(() {
+        _isGettingLocation = false;
+      });
+
+      // Pokaż dialog z opcjami
+      final shouldContinue = await showDialog<bool>(
+        context: context,
+        builder: (context) => _LocationErrorDialog(error: e),
+      );
+
+      if (shouldContinue != true) {
+        // Użytkownik anulował
+        if (mounted) {
+          setState(() {
+            _isSubmitting = false;
+          });
+        }
+        return;
+      }
+      // Kontynuuj bez lokalizacji (latitude i longitude pozostają 0.0)
+    } catch (e) {
+      if (!mounted) return;
+      
+      setState(() {
+        _isGettingLocation = false;
+      });
+
+      // Nieoczekiwany błąd - zapytaj czy kontynuować
+      final shouldContinue = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Błąd lokalizacji'),
+          content: Text('Wystąpił nieoczekiwany błąd podczas pobierania lokalizacji: ${e.toString()}\n\nCzy chcesz kontynuować bez lokalizacji?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Anuluj'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Kontynuuj'),
+            ),
+          ],
+        ),
+      );
+
+      if (shouldContinue != true) {
+        if (mounted) {
+          setState(() {
+            _isSubmitting = false;
+          });
+        }
+        return;
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isGettingLocation = false;
+        });
+      }
+    }
+
+    // Wyślij żądanie rozpoczęcia służby
     try {
       final request = StartStopDutyRequest(
         dutyId: widget.dutyId!,
         dateTimeUtc: parsed.toUtc().toIso8601String(),
-        latitude: 0,
-        longitude: 0,
+        latitude: latitude,
+        longitude: longitude,
       );
       final response = await dutyApi.startDuty(request);
       if (!mounted) return;
@@ -217,8 +299,11 @@ class _RealizationInputState extends State<_RealizationInput> {
       if ((response.status ?? -1) == 0) {
         final startedDuty = response.data;
         final dutyType = startedDuty?.type ?? 'służbę';
+        final locationMsg = locationObtained
+            ? ' (lokalizacja: ${latitude.toStringAsFixed(5)}, ${longitude.toStringAsFixed(5)})'
+            : ' (bez lokalizacji)';
         messenger.showSnackBar(
-          SnackBar(content: Text('Rozpoczęto $dutyType')),
+          SnackBar(content: Text('Rozpoczęto $dutyType$locationMsg')),
         );
         if (startedDuty != null) {
           dutyController.setCurrentDuty(startedDuty);
@@ -242,7 +327,9 @@ class _RealizationInputState extends State<_RealizationInput> {
       );
     } finally {
       if (mounted) {
-        setState(() => _isSubmitting = false);
+        setState(() {
+          _isSubmitting = false;
+        });
       }
     }
   }
@@ -270,10 +357,10 @@ class _RealizationInputState extends State<_RealizationInput> {
         SizedBox(
           width: double.infinity,
           child: ButtonSelect(
-            label: 'Rozpocznij',
+            label: _isGettingLocation ? 'Pobieranie lokalizacji...' : 'Rozpocznij',
             fullWidth: true,
             constrainWidthExternally: true,
-            enabled: !_isSubmitting,
+            enabled: !_isSubmitting && !_isGettingLocation,
             onPressedAsync: _startDuty,
           ),
         ),
@@ -287,6 +374,65 @@ class _RealizationInputState extends State<_RealizationInput> {
             ),
           ),
         ],
+      ],
+    );
+  }
+}
+
+/// Dialog wyświetlany w przypadku błędu lokalizacji
+class _LocationErrorDialog extends StatelessWidget {
+  const _LocationErrorDialog({required this.error});
+
+  final LocationError error;
+
+  Future<void> _openSettings(BuildContext context, LocationService locationService) async {
+    Navigator.of(context).pop(false); // Zamknij dialog
+    if (error.type == LocationErrorType.permissionDeniedForever ||
+        error.type == LocationErrorType.permissionDenied) {
+      await locationService.openAppSettings();
+    } else if (error.type == LocationErrorType.locationServiceDisabled) {
+      await locationService.openLocationSettings();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final services = AppScope.read(context);
+    final locationService = services.locationService as LocationService;
+    final theme = Theme.of(context);
+
+    String actionButtonText = 'Otwórz ustawienia';
+    VoidCallback? actionButtonOnPressed;
+
+    if (error.type == LocationErrorType.permissionDeniedForever ||
+        error.type == LocationErrorType.permissionDenied) {
+      actionButtonText = 'Otwórz ustawienia aplikacji';
+      actionButtonOnPressed = () => _openSettings(context, locationService);
+    } else if (error.type == LocationErrorType.locationServiceDisabled) {
+      actionButtonText = 'Włącz GPS';
+      actionButtonOnPressed = () => _openSettings(context, locationService);
+    }
+
+    return AlertDialog(
+      title: const Text('Błąd lokalizacji'),
+      content: Text(error.message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text('Anuluj'),
+        ),
+        if (actionButtonOnPressed != null)
+          TextButton(
+            onPressed: actionButtonOnPressed,
+            child: Text(actionButtonText),
+          ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          style: TextButton.styleFrom(
+            foregroundColor: theme.colorScheme.primary,
+          ),
+          child: const Text('Kontynuuj bez lokalizacji'),
+        ),
       ],
     );
   }

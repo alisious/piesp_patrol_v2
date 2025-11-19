@@ -10,6 +10,7 @@ import 'package:piesp_patrol/features/cep/data/cep_api.dart';
 import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/features/duty/data/duty_api.dart';
 import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
+import 'package:piesp_patrol/core/services/location_service.dart';
 
 import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
@@ -34,6 +35,7 @@ Future<void> main() async {
   final personController = PersonController();
   final vehicleController = VehicleController();
   final dutyController = DutyController();
+  final locationService = LocationService();
   await auth.bootstrap();
 
   runApp(
@@ -50,6 +52,7 @@ Future<void> main() async {
         personController: personController,
         vehicleController: vehicleController,
         dutyController: dutyController,
+        locationService: locationService,
       ), 
       child: PiespApp(
       )
