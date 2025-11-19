@@ -32,6 +32,9 @@ import 'package:piesp_patrol/features/srp/data/srp_dtos.dart' show OsobaZnalezio
 import 'package:piesp_patrol/features/srp/data/srp_person_by_pesel_dtos.dart' show OsobaFullDto;
 import 'package:piesp_patrol/features/srp/data/person_id_dtos.dart' show DowodOsobistyDto;
 
+// ===== Duty =====
+import 'package:piesp_patrol/features/duty/pages/my_duties_result_page.dart';
+
 class AppRoutes {
   // Wejścia bazowe (np. z paska adresu w web/IIS)
   static const String rootSlash = '/';
@@ -59,6 +62,9 @@ class AppRoutes {
   static const String wpmSearchResults = '/vehicles/wpm-search-results';
   static const String upkiCheckPage = '/vehicles/upki-check';
   static const String upkiCheckResultPage = '/vehicles/upki-check-result';
+
+  // === Duty ===
+  static const String myDutiesResultPage = '/duty/my-duties-result';
 
   /// Centralny router
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -209,6 +215,13 @@ class AppRoutes {
         }
         return _badArgs(settings, 'Wymagany argument: UpKiCheckResultArgs');
       }
+
+      // ===== Duty =====
+      case myDutiesResultPage:
+        return MaterialPageRoute(
+          builder: (_) => const MyDutiesResultPage(),
+          settings: settings,
+        );
 
       // ===== Nieznana trasa =====
       default:

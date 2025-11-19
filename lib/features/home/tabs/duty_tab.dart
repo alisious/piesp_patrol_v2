@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
 
 class DutyTab extends StatelessWidget {
@@ -33,8 +34,10 @@ class DutyTab extends StatelessWidget {
             const SizedBox(height: 12),
             ArrowButton(
               title: 'Rozpocznij służbę',
-              onTap: () {},
-              enabled: false,
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.myDutiesResultPage);
+              },
+              enabled: true,
             ),
             const SizedBox(height: 12),
             ArrowButton(
