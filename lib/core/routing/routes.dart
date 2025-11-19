@@ -34,6 +34,7 @@ import 'package:piesp_patrol/features/srp/data/person_id_dtos.dart' show DowodOs
 
 // ===== Duty =====
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
+import 'package:piesp_patrol/features/duty/pages/current_duty_page.dart';
 import 'package:piesp_patrol/features/duty/pages/my_duties_result_page.dart';
 
 class AppRoutes {
@@ -66,6 +67,7 @@ class AppRoutes {
 
   // === Duty ===
   static const String myDutiesResultPage = '/duty/my-duties-result';
+  static const String currentDutyPage = '/duty/current-duty';
 
   /// Centralny router
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -228,6 +230,12 @@ class AppRoutes {
         }
         return _badArgs(settings, 'Wymagany argument: MyDutiesResultArgs');
       }
+
+      case currentDutyPage:
+        return MaterialPageRoute(
+          builder: (_) => const CurrentDutyPage(),
+          settings: settings,
+        );
 
       // ===== Nieznana trasa =====
       default:

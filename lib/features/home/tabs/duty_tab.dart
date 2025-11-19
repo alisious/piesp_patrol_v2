@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/duty/data/duty_api.dart';
+import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
 
@@ -13,12 +14,20 @@ class DutyTab extends StatelessWidget {
  Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+    final services = AppScope.read(context);
+    final dutyController = services.dutyController as DutyController;
+
+    return AnimatedBuilder(
+      animation: dutyController,
+      builder: (context, _) {
+        final hasCurrentDuty = dutyController.hasCurrentDuty;
+
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             // Sekcja 1: Służba
             Row(
               children: [
@@ -72,13 +81,15 @@ class DutyTab extends StatelessWidget {
                   );
                 }
               },
-              enabled: true,
+              enabled: !hasCurrentDuty,
             ),
             const SizedBox(height: 12),
             ArrowButton(
               title: 'Zakończ służbę',
-              onTap: () {},
-              enabled: false,
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.currentDutyPage);
+              },
+              enabled: hasCurrentDuty,
             ),
             const SizedBox(height: 12),
             ArrowButton(
@@ -116,9 +127,11 @@ class DutyTab extends StatelessWidget {
               onTap: () {},
               enabled: false,
             ),
-          ],
-        ),
-      ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

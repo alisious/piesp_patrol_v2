@@ -181,12 +181,12 @@ class DutyApi {
     }
   }
 
-  /// POST /piesp/Duty/stop
+  /// POST /piesp/Duty/finish
   /// Kończy służbę
   Future<ProxyResponseDto<DutyDto>> stopDuty(StartStopDutyRequest request) async {
     try {
       final Response<dynamic> resp = await apiClient.postJson(
-        '/piesp/Duty/stop',
+        '/piesp/Duty/finish',
         request.toJson(),
         auth: true,
       );

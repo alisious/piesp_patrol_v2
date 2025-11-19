@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/features/duty/data/duty_api.dart';
+import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
 import 'package:piesp_patrol/widgets/button_select.dart';
 import 'package:piesp_patrol/widgets/common_appbar.dart';
@@ -194,7 +195,9 @@ class _RealizationInputState extends State<_RealizationInput> {
 
     final services = AppScope.read(context);
     final dutyApi = services.dutyApi as DutyApi;
+    final dutyController = services.dutyController as DutyController;
     final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
 
     setState(() {
       _isSubmitting = true;
@@ -212,9 +215,17 @@ class _RealizationInputState extends State<_RealizationInput> {
       if (!mounted) return;
 
       if ((response.status ?? -1) == 0) {
+        final startedDuty = response.data;
+        final dutyType = startedDuty?.type ?? 'służbę';
         messenger.showSnackBar(
-          const SnackBar(content: Text('Służba rozpoczęta.')),
+          SnackBar(content: Text('Rozpoczęto $dutyType')),
         );
+        if (startedDuty != null) {
+          dutyController.setCurrentDuty(startedDuty);
+        }
+        if (navigator.mounted) {
+          navigator.pop();
+        }
       } else {
         messenger.showSnackBar(
           SnackBar(
