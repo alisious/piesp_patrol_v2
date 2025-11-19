@@ -1,5 +1,7 @@
 // lib/features/duty/pages/my_duties_result_page.dart
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/features/duty/data/duty_api.dart';
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
 import 'package:piesp_patrol/widgets/button_select.dart';
 import 'package:piesp_patrol/widgets/common_appbar.dart';
@@ -109,7 +111,7 @@ class MyDutiesResultPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          _RealizationInput(),
+                          _RealizationInput(dutyId: duty.id),
                         ],
                       ),
                     ),
@@ -122,7 +124,9 @@ class MyDutiesResultPage extends StatelessWidget {
 }
 
 class _RealizationInput extends StatefulWidget {
-  const _RealizationInput();
+  const _RealizationInput({required this.dutyId});
+
+  final int? dutyId;
 
   @override
   State<_RealizationInput> createState() => _RealizationInputState();
@@ -130,11 +134,19 @@ class _RealizationInput extends StatefulWidget {
 
 class _RealizationInputState extends State<_RealizationInput> {
   late final TextEditingController _controller;
+  bool _isSubmitting = false;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   String _formatNow(DateTime dt) {
@@ -150,14 +162,83 @@ class _RealizationInputState extends State<_RealizationInput> {
     _controller.text = _formatNow(now);
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  Future<void> _startDuty() async {
+    if (widget.dutyId == null) {
+      setState(() {
+        _error = 'Brak identyfikatora służby.';
+      });
+      return;
+    }
+
+    final text = _controller.text.trim();
+    if (text.isEmpty) {
+      setState(() {
+        _error = 'Uzupełnij datę rozpoczęcia.';
+      });
+      return;
+    }
+
+    DateTime? parsed;
+    try {
+      parsed = DateTime.parse(text);
+    } catch (_) {
+      parsed = null;
+    }
+
+    if (parsed == null) {
+      setState(() {
+        _error = 'Niepoprawny format daty.';
+      });
+      return;
+    }
+
+    final services = AppScope.read(context);
+    final dutyApi = services.dutyApi as DutyApi;
+    final messenger = ScaffoldMessenger.of(context);
+
+    setState(() {
+      _isSubmitting = true;
+      _error = null;
+    });
+
+    try {
+      final request = StartStopDutyRequest(
+        dutyId: widget.dutyId!,
+        dateTimeUtc: parsed.toUtc().toIso8601String(),
+        latitude: 0,
+        longitude: 0,
+      );
+      final response = await dutyApi.startDuty(request);
+      if (!mounted) return;
+
+      if ((response.status ?? -1) == 0) {
+        messenger.showSnackBar(
+          const SnackBar(content: Text('Służba rozpoczęta.')),
+        );
+      } else {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(
+              response.message ?? 'Nie udało się rozpocząć służby.',
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      messenger.showSnackBar(
+        SnackBar(content: Text('Błąd rozpoczęcia służby: $e')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isSubmitting = false);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -181,18 +262,22 @@ class _RealizationInputState extends State<_RealizationInput> {
             label: 'Rozpocznij',
             fullWidth: true,
             constrainWidthExternally: true,
-            onPressedAsync: () async {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'Rozpoczęcie służby - funkcja w przygotowaniu.',
-                  ),
-                ),
-              );
-            },
+            enabled: !_isSubmitting,
+            onPressedAsync: _startDuty,
           ),
         ),
+        if (_error != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            _error!,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.error,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ],
     );
   }
 }
+

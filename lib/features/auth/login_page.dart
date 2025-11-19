@@ -2,8 +2,11 @@
 import 'package:flutter/services.dart';
 // dopasuj ścieżki importów do swoich plików:
 import 'package:piesp_patrol/core/api_config.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
+import 'package:piesp_patrol/features/duty/data/duty_api.dart';
+import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -45,12 +48,33 @@ class _LoginPageState extends State<LoginPage> {
         _pinCtrl.text.trim(),
       );
       if (!mounted) return;
+
+      await _refreshCurrentDuty(context);
+
+      if (!mounted) return;
       // nawigacja po sukcesie – jeśli masz route na stronę główną:
       Navigator.of(context).pushReplacementNamed(AppRoutes.homePage);
     } catch (e) {
       setState(() => _error = e.toString());
     } finally {
       if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _refreshCurrentDuty(BuildContext context) async {
+    final scope = AppScope.read(context);
+    final dutyApi = scope.dutyApi as DutyApi;
+    final dutyController = scope.dutyController as DutyController;
+
+    try {
+      final response = await dutyApi.getMyCurrentDuty();
+      if ((response.status ?? -1) == 0 && response.data != null) {
+        dutyController.setCurrentDuty(response.data!);
+      } else {
+        dutyController.clearCurrentDuty();
+      }
+    } catch (_) {
+      dutyController.clearCurrentDuty();
     }
   }
 

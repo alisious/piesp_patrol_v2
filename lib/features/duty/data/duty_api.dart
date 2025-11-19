@@ -59,6 +59,67 @@ class DutyApi {
     }
   }
 
+  /// GET /piesp/Duty/my-current-duty
+  /// Zwraca bieżącą służbę użytkownika
+  Future<ProxyResponseDto<DutyDto>> getMyCurrentDuty() async {
+    try {
+      final Response<dynamic> resp = await apiClient.getJson(
+        '/piesp/Duty/my-current-duty',
+        auth: true,
+      );
+
+      final dynamic data = resp.data;
+      late final Map<String, dynamic> json;
+      if (data is Map<String, dynamic>) {
+        json = data;
+      } else if (data is String && data.isNotEmpty) {
+        json = jsonDecode(data) as Map<String, dynamic>;
+      } else {
+        return ProxyResponseDto<DutyDto>(
+          data: null,
+          status: -1,
+          message: 'Pusta lub nieobsługiwana odpowiedź z API.',
+          source: null,
+          sourceStatusCode: null,
+          requestId: null,
+        );
+      }
+
+      final dutyData = json['data'];
+      DutyDto? duty;
+      if (dutyData is Map<String, dynamic>) {
+        duty = DutyDto.fromJson(dutyData);
+      }
+
+      return ProxyResponseDto<DutyDto>(
+        data: duty,
+        status: (json['status'] as num?)?.toInt(),
+        message: json['message']?.toString(),
+        source: json['source']?.toString(),
+        sourceStatusCode: json['sourceStatusCode']?.toString(),
+        requestId: json['requestId']?.toString(),
+      );
+    } on DioException catch (e) {
+      return ProxyResponseDto<DutyDto>(
+        data: null,
+        status: -1,
+        message: e.message ?? 'Błąd transportu/DNS/TLS.',
+        source: null,
+        sourceStatusCode: null,
+        requestId: null,
+      );
+    } catch (e) {
+      return ProxyResponseDto<DutyDto>(
+        data: null,
+        status: -1,
+        message: 'Wyjątek parsowania/obsługi: $e',
+        source: null,
+        sourceStatusCode: null,
+        requestId: null,
+      );
+    }
+  }
+
   /// POST /piesp/Duty/start
   /// Rozpoczyna służbę
   Future<ProxyResponseDto<DutyDto>> startDuty(StartStopDutyRequest request) async {

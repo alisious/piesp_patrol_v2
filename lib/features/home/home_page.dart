@@ -2,6 +2,7 @@
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
+import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 
 // zakładki
 import 'package:piesp_patrol/features/home/tabs/services_tab.dart';
@@ -66,8 +67,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final services = AppScope.read(context);
     // Używamy read() aby uniknąć niepotrzebnych rebuildu przy notifyListeners() w AuthController
-    final auth = AppScope.read(context).authController as AuthController;
+    final auth = services.authController as AuthController;
+    final dutyController = services.dutyController as DutyController;
     final badge = auth.meProfile?.badgeNumber ?? '---';
     final name = auth.meProfile?.userName ?? '---';
        
@@ -157,7 +160,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icons.badge_outlined,
             label: badge,
           ),
-          const SizedBox(width: 10), // było 12
+          const SizedBox(width: 10),
           Expanded(
             child: _InfoChip(
               bg: cs.surfaceContainerHighest,
@@ -166,11 +169,23 @@ class _HomePageState extends State<HomePage> {
               label: name,
             ),
           ),
-          const SizedBox(width: 10), // było 12
-          _ChipIcon(
-            bg: cs.surfaceContainerHighest,
-            fg: cs.onSurfaceVariant,
-            icon: Icons.shield_outlined,
+          AnimatedBuilder(
+            animation: dutyController,
+            builder: (context, _) {
+              if (!dutyController.hasCurrentDuty) {
+                return const SizedBox.shrink();
+              }
+              return Row(
+                children: [
+                  const SizedBox(width: 10),
+                  _ChipIcon(
+                    bg: cs.surfaceContainerHighest,
+                    fg: cs.onSurfaceVariant,
+                    icon: Icons.shield_outlined,
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),

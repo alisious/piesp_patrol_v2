@@ -40,6 +40,7 @@ class Services {
     required this.personController,
     required this.vehicleController,
     required this.dutyApi,
+    required this.dutyController,
     // np. required this.anprsApi, ...
   });
 
@@ -53,4 +54,5 @@ class Services {
   final Object personController;
   final Object vehicleController;
   final Object dutyApi;
+  final Object dutyController;
 }
