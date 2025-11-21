@@ -1,6 +1,7 @@
 // lib/features/ksip/pages/ksip_check_person_page.dart
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
 import 'package:piesp_patrol/features/ksip/data/ksip_api.dart';
 import 'package:piesp_patrol/features/ksip/data/ksip_sprawdzenie_osoby_dtos.dart';
@@ -160,8 +161,12 @@ class _KsipCheckPersonPageState extends State<KsipCheckPersonPage> {
               : 'Błąd zapytania.');
 
       if (status == 0 && resp.data != null) {
-        // TODO: Nawigacja do strony wyników - zostanie dodana później
-        _showSnack('Znaleziono dane osoby. (Strona wyników w przygotowaniu)');
+        // Nawigacja do strony wyników
+        final navigator = Navigator.of(context);
+        navigator.pushNamed(
+          AppRoutes.ksipCheckPersonResultPage,
+          arguments: KsipCheckPersonResultArgs(response: resp.data!),
+        );
       } else {
         // Status 2 (błąd biznesowy) - wyświetl tylko message bez prefiksu "Błąd"
         if (status == 2) {

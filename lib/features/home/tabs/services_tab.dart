@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
+import 'package:piesp_patrol/features/auth/auth_controller.dart';
 import 'package:piesp_patrol/widgets/arrow_button.dart';
 
 
@@ -94,13 +96,44 @@ class ServicesTab extends StatelessWidget {
           const SizedBox(height: 12),
           ArrowButton(
             title: 'Sprawdź wykroczenia',
-            onTap: () => Navigator.pushNamed(
-              context,
-              AppRoutes.ksipCheckPersonPage,
-            ),
+            onTap: () {
+              final auth = AppScope.of(context).authController as AuthController;
+              if (auth.meProfile?.ksipUserId == null || 
+                  auth.meProfile!.ksipUserId!.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Nie masz uprawnień do sprawdzania osób w KSIP! Skontaktuj się z przełożonym.',
+                    ),
+                  ),
+                );
+                return;
+              }
+              Navigator.pushNamed(
+                context,
+                AppRoutes.ksipCheckPersonPage,
+              );
+            },
           ),
           const SizedBox(height: 12),
-          ArrowButton(title: 'Zarejestruj MRD5', onTap: () {}),
+          ArrowButton(
+            title: 'Zarejestruj MRD5',
+            onTap: () {
+              final auth = AppScope.of(context).authController as AuthController;
+              if (auth.meProfile?.ksipUserId == null || 
+                  auth.meProfile!.ksipUserId!.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Nie masz uprawnień do rejestracji karty MRD5 w KSIP! Skontaktuj się z przełożonym.',
+                    ),
+                  ),
+                );
+                return;
+              }
+              // TODO: Nawigacja do strony rejestracji MRD5 - zostanie dodana później
+            },
+          ),
 
           const SizedBox(height: 24),
          

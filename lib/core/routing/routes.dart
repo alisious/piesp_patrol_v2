@@ -39,6 +39,8 @@ import 'package:piesp_patrol/features/duty/pages/my_duties_result_page.dart';
 
 // ===== KSIP =====
 import 'package:piesp_patrol/features/ksip/pages/ksip_check_person_page.dart';
+import 'package:piesp_patrol/features/ksip/pages/ksip_check_person_result_page.dart';
+import 'package:piesp_patrol/features/ksip/data/ksip_sprawdzenie_osoby_dtos.dart' show KsipSprawdzenieOsobyResponseDto;
 
 class AppRoutes {
   // Wejścia bazowe (np. z paska adresu w web/IIS)
@@ -74,6 +76,7 @@ class AppRoutes {
 
   // === KSIP ===
   static const String ksipCheckPersonPage = '/ksip/check-person';
+  static const String ksipCheckPersonResultPage = '/ksip/check-person-result';
 
   /// Centralny router
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -232,6 +235,17 @@ class AppRoutes {
           settings: settings,
         );
 
+      case ksipCheckPersonResultPage: {
+        final args = settings.arguments;
+        if (args is KsipCheckPersonResultArgs) {
+          return MaterialPageRoute(
+            builder: (_) => KsipCheckPersonResultPage(response: args.response),
+            settings: settings,
+          );
+        }
+        return _badArgs(settings, 'Wymagany argument: KsipCheckPersonResultArgs');
+      }
+
       // ===== Duty =====
       case myDutiesResultPage: {
         final args = settings.arguments;
@@ -329,4 +343,9 @@ class UpKiCheckResultArgs {
 class MyDutiesResultArgs {
   final List<DutyDto> duties;
   const MyDutiesResultArgs({required this.duties});
+}
+
+class KsipCheckPersonResultArgs {
+  final KsipSprawdzenieOsobyResponseDto response;
+  const KsipCheckPersonResultArgs({required this.response});
 }
