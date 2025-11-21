@@ -1,0 +1,28 @@
+{
+    "data": {
+      "person": {
+        "firstName": "MATEUSZ",
+        "lastName": "DZIODKO",
+        "peselNumber": "03290901192",
+        "birthDate": "2003-09-09"
+      },
+      "offenseRecords": [
+        {
+          "incidentDate": "2024-12-16",
+          "finePaymentDate": "2025-01-06",
+          "validationOfDecisionDate": "2024-12-16",
+          "classification": {
+            "legalClassificationCode": "art. 86b § 1 pkt 5 k.w.",
+            "classificationCode": "B07 22r",
+            "description": "Naruszenie zakazu jazdy wzdłuż po chodniku lub przejściu dla pieszych"
+          }
+        }
+      ],
+      "state": 1
+    },
+    "status": 0,
+    "message": "OK",
+    "source": "KSIP",
+    "sourceStatusCode": "200",
+    "requestId": "72a4a3589f5c4491b851ccd3d23b3383"
+  }
