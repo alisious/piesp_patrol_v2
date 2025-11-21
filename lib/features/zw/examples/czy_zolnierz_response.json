@@ -1,0 +1,13 @@
+{
+    "data": {
+      "pesel": "82121017239",
+      "stopien": "PPOR.",
+      "jednostka": "18 BATALION ROZPOZNAWCZY",
+      "peselHash": null
+    },
+    "status": 0,
+    "message": "Znaleziono dane żołnierza dla PESEL 82121017239.",
+    "source": "ZW",
+    "sourceStatusCode": "200",
+    "requestId": "2cb9fd27ed894aa6b5af88495f29dd07"
+  }

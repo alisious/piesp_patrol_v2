@@ -44,12 +44,30 @@ class ServicesTab extends StatelessWidget {
               context,
               AppRoutes.srpPersonsSearch),
           ),
-          //const SizedBox(height: 12),
-          //ArrowButton(title: 'Dowód osobisty', onTap: () {}),
-          //const SizedBox(height: 12),
-          //ArrowButton(title: 'Czy żołnierz?', onTap: () {}),
-          //const SizedBox(height: 12),
-          //ArrowButton(title: 'Czy osoba poszukiwana?', onTap: () {}),
+          const SizedBox(height: 12),
+          ArrowButton(
+            title: 'Czy posiada broń prywatną?',
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.zwCheckWeaponHolderPage,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ArrowButton(
+            title: 'Czy może być tam broń?',
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.zwCheckWeaponAddressPage,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ArrowButton(
+            title: 'Czy jest żołnierzem?',
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.zwCheckSoldierPage,
+            ),
+          ),
 
           const SizedBox(height: 24),
 

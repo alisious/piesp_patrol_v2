@@ -1,0 +1,21 @@
+{
+    "data": {
+      "pesel": "82121017239",
+      "adresy": [
+        {
+          "miejscowosc": "KIELCE",
+          "ulica": "ŁOWIECKA",
+          "numerDomu": "5A",
+          "numerLokalu": "",
+          "kodPocztowy": "25-345",
+          "poczta": "KIELCE",
+          "opis": "PISTOLET, BROŃ SPORTOWA"
+        }
+      ]
+    },
+    "status": 0,
+    "message": "Znaleziono dane o broni prywatnej dla PESEL 82121017239.",
+    "source": "ZW",
+    "sourceStatusCode": "200",
+    "requestId": "244598f90ca64b7bbd119d98bd14e255"
+  }

@@ -1,0 +1,8 @@
+{
+    "miejscowosc": "string",
+    "ulica": "string",
+    "numerDomu": "string",
+    "numerLokalu": "string",
+    "kodPocztowy": "string",
+    "poczta": "string"
+  }

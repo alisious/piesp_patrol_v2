@@ -1,0 +1,21 @@
+{
+    "data": {
+      "pesel": "80050111879",
+      "adresy": [
+        {
+          "miejscowosc": "WARSZAWA",
+          "ulica": "BRZOZOWA",
+          "numerDomu": "12",
+          "numerLokalu": "3",
+          "kodPocztowy": "00-123",
+          "poczta": "WARSZAWA",
+          "opis": "PISTOLET, SZTUCER"
+        }
+      ]
+    },
+    "status": 0,
+    "message": "Znaleziono dane posiadacza broni prywatnej dla wskazanego adresu.",
+    "source": "ZW",
+    "sourceStatusCode": "200",
+    "requestId": "d6138853dfb9419c8192cb6c5d4f2555"
+  }

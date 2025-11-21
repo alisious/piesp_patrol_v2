@@ -121,7 +121,7 @@ class _KsipCheckPersonPageState extends State<KsipCheckPersonPage> {
 
   KsipSprawdzenieOsobyRequestDto _buildRequest() {
     final auth = AppScope.of(context).authController as AuthController;
-    final userId = auth.meProfile?.id;
+    final userId = auth.meProfile?.ksipUserId;
 
     final peselText = _searchType == 'pesel' ? _peselCtrl.text.trim() : null;
     final firstName = _searchType == 'daneOsoby' ? _nullIfEmpty(_firstNameCtrl.text) : null;

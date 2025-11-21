@@ -42,6 +42,11 @@ import 'package:piesp_patrol/features/ksip/pages/ksip_check_person_page.dart';
 import 'package:piesp_patrol/features/ksip/pages/ksip_check_person_result_page.dart';
 import 'package:piesp_patrol/features/ksip/data/ksip_sprawdzenie_osoby_dtos.dart' show KsipSprawdzenieOsobyResponseDto;
 
+// ===== ZW =====
+import 'package:piesp_patrol/features/zw/pages/zw_check_soldier_page.dart';
+import 'package:piesp_patrol/features/zw/pages/zw_check_weapon_holder_page.dart';
+import 'package:piesp_patrol/features/zw/pages/zw_check_weapon_address_page.dart';
+
 class AppRoutes {
   // Wejścia bazowe (np. z paska adresu w web/IIS)
   static const String rootSlash = '/';
@@ -77,6 +82,11 @@ class AppRoutes {
   // === KSIP ===
   static const String ksipCheckPersonPage = '/ksip/check-person';
   static const String ksipCheckPersonResultPage = '/ksip/check-person-result';
+
+  // === ZW ===
+  static const String zwCheckSoldierPage = '/zw/check-soldier';
+  static const String zwCheckWeaponHolderPage = '/zw/check-weapon-holder';
+  static const String zwCheckWeaponAddressPage = '/zw/check-weapon-address';
 
   /// Centralny router
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -245,6 +255,25 @@ class AppRoutes {
         }
         return _badArgs(settings, 'Wymagany argument: KsipCheckPersonResultArgs');
       }
+
+      // ===== ZW =====
+      case zwCheckSoldierPage:
+        return MaterialPageRoute(
+          builder: (_) => const ZwCheckSoldierPage(),
+          settings: settings,
+        );
+
+      case zwCheckWeaponHolderPage:
+        return MaterialPageRoute(
+          builder: (_) => const ZwCheckWeaponHolderPage(),
+          settings: settings,
+        );
+
+      case zwCheckWeaponAddressPage:
+        return MaterialPageRoute(
+          builder: (_) => const ZwCheckWeaponAddressPage(),
+          settings: settings,
+        );
 
       // ===== Duty =====
       case myDutiesResultPage: {
