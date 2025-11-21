@@ -11,6 +11,7 @@ import 'package:piesp_patrol/features/cep/data/cep_dictionary_service.dart';
 import 'package:piesp_patrol/features/duty/data/duty_api.dart';
 import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 import 'package:piesp_patrol/core/services/location_service.dart';
+import 'package:piesp_patrol/features/ksip/data/ksip_api.dart';
 
 import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
@@ -32,6 +33,7 @@ Future<void> main() async {
   final cepApi = CepApi(apiClient);
   final cepDictionaryService = CepDictionaryService(cepApi);
   final dutyApi = DutyApi(apiClient);
+  final ksipApi = KsipApi(apiClient);
   final personController = PersonController();
   final vehicleController = VehicleController();
   final dutyController = DutyController();
@@ -49,6 +51,7 @@ Future<void> main() async {
         cepApi: cepApi,
         cepDictionaryService: cepDictionaryService,
         dutyApi: dutyApi,
+        ksipApi: ksipApi,
         personController: personController,
         vehicleController: vehicleController,
         dutyController: dutyController,

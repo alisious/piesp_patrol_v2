@@ -92,7 +92,13 @@ class ServicesTab extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          ArrowButton(title: 'Sprawdź wykroczenia', onTap: () {}),
+          ArrowButton(
+            title: 'Sprawdź wykroczenia',
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.ksipCheckPersonPage,
+            ),
+          ),
           const SizedBox(height: 12),
           ArrowButton(title: 'Zarejestruj MRD5', onTap: () {}),
 
