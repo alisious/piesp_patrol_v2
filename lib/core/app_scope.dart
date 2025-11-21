@@ -44,6 +44,7 @@ class Services {
     required this.locationService,
     required this.ksipApi,
     required this.zwApi,
+    required this.supervisorApi,
     // np. required this.anprsApi, ...
   });
 
@@ -61,4 +62,5 @@ class Services {
   final Object locationService;
   final Object ksipApi;
   final Object zwApi;
+  final Object supervisorApi;
 }
