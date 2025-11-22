@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
+import 'package:piesp_patrol/features/auth/auth_controller.dart';
 import 'package:piesp_patrol/features/duty/data/duty_api.dart';
 import 'package:piesp_patrol/features/duty/data/duty_controller.dart';
 import 'package:piesp_patrol/features/duty/data/duty_dtos.dart';
@@ -16,6 +17,10 @@ class DutyTab extends StatelessWidget {
 
     final services = AppScope.read(context);
     final dutyController = services.dutyController as DutyController;
+    final authController = services.authController as AuthController;
+    
+    // Sprawdź rolę użytkownika tylko raz (profil nie zmienia się po zalogowaniu)
+    final hasSupervisorRole = _hasSupervisorRole(authController);
 
     return AnimatedBuilder(
       animation: dutyController,
@@ -91,12 +96,17 @@ class DutyTab extends StatelessWidget {
               },
               enabled: hasCurrentDuty,
             ),
-            const SizedBox(height: 12),
-            ArrowButton(
-              title: 'Dodaj służbę doraźną',
-              onTap: () {},
-              enabled: true,
-            ),
+            // Klawisz "Dodaj służbę doraźną" tylko dla Supervisora
+            if (hasSupervisorRole) ...[
+              const SizedBox(height: 12),
+              ArrowButton(
+                title: 'Dodaj służbę doraźną',
+                onTap: () {
+                  // TODO: Nawigacja do strony dodawania służby doraźnej - zostanie dodana później
+                },
+                enabled: true,
+              ),
+            ],
 
             const SizedBox(height: 24),
 
@@ -133,5 +143,14 @@ class DutyTab extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// Sprawdza czy użytkownik ma rolę Supervisor (role = 1)
+  bool _hasSupervisorRole(AuthController authController) {
+    final meProfile = authController.meProfile;
+    if (meProfile == null) return false;
+    
+    // Sprawdź czy użytkownik ma którąkolwiek rolę z role = 1 (Supervisor)
+    return meProfile.roles.any((role) => role.role == 1);
   }
 }

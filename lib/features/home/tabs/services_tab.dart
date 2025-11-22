@@ -11,11 +11,6 @@ class ServicesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final scope = AppScope.of(context);
-    final authController = scope.authController as AuthController;
-    
-    // Sprawdź rolę użytkownika tylko raz (profil nie zmienia się po zalogowaniu)
-    final hasSupervisorRole = _hasSupervisorRole(authController);
 
     // === Ograniczenie szerokości na web ===
     return SingleChildScrollView(
@@ -26,32 +21,6 @@ class ServicesTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Sekcja: Służba (tylko dla Supervisora)
-          if (hasSupervisorRole) ...[
-            Row(
-              children: [
-                Icon(Icons.shield_moon, color: cs.onSurface),
-                const SizedBox(width: 8),
-                Text(
-                  'Służba',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: cs.onSurface,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            ArrowButton(
-              title: 'Dodaj służbę doraźną',
-              onTap: () {
-                // TODO: Nawigacja do strony dodawania służby doraźnej - zostanie dodana później
-              },
-            ),
-            const SizedBox(height: 24),
-          ],
-
           // Sekcja 1: Osoby (z ikoną osoby)
           Row(
             children: [
@@ -191,14 +160,5 @@ class ServicesTab extends StatelessWidget {
     ),
       ),
     );
-  }
-
-  /// Sprawdza czy użytkownik ma rolę Supervisor (role = 1)
-  bool _hasSupervisorRole(AuthController authController) {
-    final meProfile = authController.meProfile;
-    if (meProfile == null) return false;
-    
-    // Sprawdź czy użytkownik ma którąkolwiek rolę z role = 1 (Supervisor)
-    return meProfile.roles.any((role) => role.role == 1);
   }
 }
