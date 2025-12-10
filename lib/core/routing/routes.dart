@@ -11,6 +11,7 @@ import 'package:piesp_patrol/features/auth/login_page.dart';
 import 'package:piesp_patrol/features/auth/reset_pin_page.dart';
 import 'package:piesp_patrol/features/home/home_page.dart';
 import 'package:piesp_patrol/features/settings/settings_page.dart';
+import 'package:piesp_patrol/features/settings/pages/dictionaries_page.dart';
 
 // ===== Vehicles =====
 import 'package:piesp_patrol/features/cep/pages/vehicle_question_extended_page.dart';
@@ -59,6 +60,7 @@ class AppRoutes {
   // === Strony główne ===
   static const String homePage = '/home';
   static const String settingsPage = '/settings';
+  static const String dictionariesPage = '/dictionaries';
   static const String resetPinPage = '/auth/reset-pin';
 
   // === SRP ===
@@ -136,6 +138,13 @@ class AppRoutes {
             final cfg = s.apiConfig as ApiConfig;
             return SettingsPage(config: cfg);
           },
+          settings: settings,
+        );
+
+      // ===== DICTIONARIES =====
+      case dictionariesPage:
+        return MaterialPageRoute(
+          builder: (_) => const DictionariesPage(),
           settings: settings,
         );
 

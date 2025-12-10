@@ -40,6 +40,11 @@ class _OtherTabState extends State<OtherTab> {
           onTap: () => Navigator.of(context).pushNamed(AppRoutes.settingsPage),
         ),
         const SizedBox(height: 12),
+        ArrowButton(
+          title: 'Słowniki',
+          onTap: () => Navigator.of(context).pushNamed(AppRoutes.dictionariesPage),
+        ),
+        const SizedBox(height: 12),
          ArrowButton(
           title: 'CEP - Aktualizuj słowniki',
           onTap: () => updateCepDictionaries(context),

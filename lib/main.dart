@@ -14,6 +14,8 @@ import 'package:piesp_patrol/core/services/location_service.dart';
 import 'package:piesp_patrol/features/ksip/data/ksip_api.dart';
 import 'package:piesp_patrol/features/zw/data/zw_api.dart';
 import 'package:piesp_patrol/features/supervisor/data/supervisor_api.dart';
+import 'package:piesp_patrol/features/piesp/data/piesp_api.dart';
+import 'package:piesp_patrol/features/piesp/data/piesp_dictionary_service.dart';
 
 import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/features/auth/auth_controller.dart';
@@ -38,6 +40,8 @@ Future<void> main() async {
   final ksipApi = KsipApi(apiClient);
   final zwApi = ZwApi(apiClient);
   final supervisorApi = SupervisorApi(apiClient);
+  final piespApi = PiespApi(apiClient);
+  final piespDictionaryService = PiespDictionaryService(piespApi);
   final personController = PersonController();
   final vehicleController = VehicleController();
   final dutyController = DutyController();
@@ -58,6 +62,8 @@ Future<void> main() async {
         ksipApi: ksipApi,
         zwApi: zwApi,
         supervisorApi: supervisorApi,
+        piespApi: piespApi,
+        piespDictionaryService: piespDictionaryService,
         personController: personController,
         vehicleController: vehicleController,
         dutyController: dutyController,

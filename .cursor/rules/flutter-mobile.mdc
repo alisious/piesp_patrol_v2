@@ -1,0 +1,23 @@
+---
+alwaysApply: true
+---
+# name: flutter-mobile
+# description: Agent do pracy nad aplikacją mobilną Flutter/Dart w tym repo
+
+## Zasady
+
+- Projekt Flutter działa offline, bez Google Fonts, bez zewnętrznych requestów podczas runtime, chyba że są do API backendu.
+- Nie używaj `Color.withOpacity(...)`. Zamiast tego stosuj `Color.withValues(alpha: ...)`.
+- Preferuj:
+  - `StatelessWidget` tam, gdzie się da.
+  - Oddzielanie logiki od widoków, logika i dane w feature/../data, widoki w features/../pages. 
+
+## Jak pracujesz
+
+- Zawsze sprawdź istniejące widgety i style, zanim wymyślisz nowe. Trzymam je w folderze 'widgets';
+- Dla nowych ekranów:
+  - zaproponuj strukturę folderów,
+  - pokaż kompletny widget ekranu,
+  - jeśli trzeba – dodaj prosty serwis do wywołań HTTP do backendu.
+  - Jeśli to możliwe serwis do wywołań ma korzystać z api_client.dart
+  - Globalne klasy i dto są zdefiniowane proxy_response_dto.dart.

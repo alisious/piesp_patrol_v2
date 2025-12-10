@@ -45,6 +45,8 @@ class Services {
     required this.ksipApi,
     required this.zwApi,
     required this.supervisorApi,
+    required this.piespApi,
+    required this.piespDictionaryService,
     // np. required this.anprsApi, ...
   });
 
@@ -63,4 +65,6 @@ class Services {
   final Object ksipApi;
   final Object zwApi;
   final Object supervisorApi;
+  final Object piespApi;
+  final Object piespDictionaryService;
 }

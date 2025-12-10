@@ -69,3 +69,10 @@ ios/Runner/GoogleService-Info.plist
 **/appsettings*.json
 *.env
 secrets.json
+
+# Dokumentacja - obrazy zrzutów ekranu
+docs/images/*.png
+docs/images/*.jpg
+docs/images/*.jpeg
+docs/images/*.gif
+docs/images/*.webp

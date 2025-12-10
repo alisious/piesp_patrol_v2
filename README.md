@@ -1,6 +1,10 @@
 # piesp_patrol
 
-A new Flutter project.
+Aplikacja mobilna PIESP Patrol dla Flutter.
+
+## Dokumentacja
+
+- [Instrukcja obsługi](docs/INSTRUKCJA_OBSLUGI.md) - szczegółowa instrukcja obsługi aplikacji dla użytkowników końcowych
 
 ## Getting Started
 
