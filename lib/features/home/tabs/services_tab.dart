@@ -27,7 +27,7 @@ class ServicesTab extends StatelessWidget {
               Icon(Icons.person, color: cs.onSurface),
               const SizedBox(width: 8),
               Text(
-                'Osoby',
+                'Osoba',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -71,13 +71,13 @@ class ServicesTab extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // Sekcja 2: Kierowca i pojazdy (z ikoną samochodu)
+          // Sekcja 2: Kierowca (z ikoną kierownicy)
           Row(
             children: [
-              Icon(Icons.directions_car, color: cs.onSurface),
+              Icon(Icons.credit_card, color: cs.onSurface),
               const SizedBox(width: 8),
               Text(
-                'Kierowca i pojazd',
+                'Kierowca',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -87,25 +87,9 @@ class ServicesTab extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-         
+
           ArrowButton(
-            title: 'Sprawdź pojazd', 
-            onTap: ( )=> Navigator.pushNamed(
-              context,
-              AppRoutes.vehicleQuestionExtendedPage
-              ),
-          ),
-          const SizedBox(height: 12),
-          ArrowButton(
-            title: 'Sprawdź pojazd wojskowy', 
-            onTap: () => Navigator.pushNamed(
-              context,
-              AppRoutes.wpmSearch
-              ),
-          ),
-          const SizedBox(height: 12),
-          ArrowButton(
-            title: 'Sprawdź uprawnienia kierowcy',
+            title: 'Sprawdź uprawnienia',
             onTap: () => Navigator.pushNamed(
               context,
               AppRoutes.upkiCheckPage,
@@ -151,6 +135,41 @@ class ServicesTab extends StatelessWidget {
               }
               // TODO: Nawigacja do strony rejestracji MRD5 - zostanie dodana później
             },
+          ),
+
+          const SizedBox(height: 24),
+
+          // Sekcja 3: Kierowca i pojazdy (z ikoną samochodu)
+          Row(
+            children: [
+              Icon(Icons.directions_car, color: cs.onSurface),
+              const SizedBox(width: 8),
+              Text(
+                'Pojazd',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: cs.onSurface,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+         
+          ArrowButton(
+            title: 'Sprawdź pojazd', 
+            onTap: ( )=> Navigator.pushNamed(
+              context,
+              AppRoutes.vehicleQuestionExtendedPage
+              ),
+          ),
+          const SizedBox(height: 12),
+          ArrowButton(
+            title: 'Sprawdź pojazd wojskowy', 
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.wpmSearch
+              ),
           ),
 
           const SizedBox(height: 24),
