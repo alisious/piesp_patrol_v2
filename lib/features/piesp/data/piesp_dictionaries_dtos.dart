@@ -14,11 +14,17 @@ class PiespWartoscSlownikowaDto {
   });
 
   factory PiespWartoscSlownikowaDto.fromJson(Map<String, dynamic> json) {
-    String? s(String k) => json[k]?.toString();
+    String? s(String k) {
+      final value = json[k];
+      if (value == null) return null;
+      final str = value.toString().trim();
+      return str.isEmpty || str == 'null' ? null : str;
+    }
+    // API zwraca "code" i "value", mapujemy na "kod" i "wartoscOpisowa"
     return PiespWartoscSlownikowaDto(
-      kod: s('kod'),
-      wartoscOpisowa: s('wartoscOpisowa'),
-      identyfikatorSlownika: s('identyfikatorSlownika'),
+      kod: s('code') ?? s('kod'), // Najpierw próbuj "code", potem "kod" (backward compatibility)
+      wartoscOpisowa: s('value') ?? s('wartoscOpisowa'), // Najpierw próbuj "value", potem "wartoscOpisowa"
+      identyfikatorSlownika: s('dictId') ?? s('identyfikatorSlownika'),
     );
   }
 
@@ -40,7 +46,12 @@ class PiespWartoscSlownikowaLite {
   });
 
   factory PiespWartoscSlownikowaLite.fromJson(Map<String, dynamic> json) {
-    String? s(String k) => json[k]?.toString();
+    String? s(String k) {
+      final value = json[k];
+      if (value == null) return null;
+      final str = value.toString().trim();
+      return str.isEmpty || str == 'null' ? null : str;
+    }
     return PiespWartoscSlownikowaLite(
       kod: s('kod'),
       wartoscOpisowa: s('wartoscOpisowa'),
@@ -48,8 +59,8 @@ class PiespWartoscSlownikowaLite {
   }
 
   Map<String, dynamic> toJson() => {
-        'kod': kod,
-        'wartoscOpisowa': wartoscOpisowa,
+        if (kod != null && kod!.trim().isNotEmpty) 'kod': kod,
+        if (wartoscOpisowa != null && wartoscOpisowa!.trim().isNotEmpty) 'wartoscOpisowa': wartoscOpisowa,
       };
 }
 

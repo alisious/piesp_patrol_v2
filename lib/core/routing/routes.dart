@@ -12,6 +12,7 @@ import 'package:piesp_patrol/features/auth/reset_pin_page.dart';
 import 'package:piesp_patrol/features/home/home_page.dart';
 import 'package:piesp_patrol/features/settings/settings_page.dart';
 import 'package:piesp_patrol/features/settings/pages/dictionaries_page.dart';
+import 'package:piesp_patrol/features/settings/pages/dictionary_view_page.dart';
 
 // ===== Vehicles =====
 import 'package:piesp_patrol/features/cep/pages/vehicle_question_extended_page.dart';
@@ -61,6 +62,7 @@ class AppRoutes {
   static const String homePage = '/home';
   static const String settingsPage = '/settings';
   static const String dictionariesPage = '/dictionaries';
+  static const String dictionaryViewPage = '/dictionaries/view';
   static const String resetPinPage = '/auth/reset-pin';
 
   // === SRP ===
@@ -147,6 +149,20 @@ class AppRoutes {
           builder: (_) => const DictionariesPage(),
           settings: settings,
         );
+
+      case dictionaryViewPage: {
+        final args = settings.arguments;
+        if (args is DictionaryViewArgs) {
+          return MaterialPageRoute(
+            builder: (_) => DictionaryViewPage(
+              dictionaryName: args.dictionaryName,
+              dictionaryId: args.dictionaryId,
+            ),
+            settings: settings,
+          );
+        }
+        return _badArgs(settings, 'Wymagany argument: DictionaryViewArgs');
+      }
 
       // ===== AUTH =====
       case resetPinPage:
@@ -386,4 +402,13 @@ class MyDutiesResultArgs {
 class KsipCheckPersonResultArgs {
   final KsipSprawdzenieOsobyResponseDto response;
   const KsipCheckPersonResultArgs({required this.response});
+}
+
+class DictionaryViewArgs {
+  final String dictionaryName;
+  final String dictionaryId;
+  const DictionaryViewArgs({
+    required this.dictionaryName,
+    required this.dictionaryId,
+  });
 }

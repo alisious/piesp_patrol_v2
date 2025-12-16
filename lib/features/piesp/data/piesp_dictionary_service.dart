@@ -54,6 +54,7 @@ class PiespDictionaryService {
     final key = _getStorageKey(dictionaryId);
     final str = prefs.getString(key);
     if (str == null || str.isEmpty) return const [];
+    
     final list = (jsonDecode(str) as List)
         .whereType<Map<String, dynamic>>()
         .map(PiespWartoscSlownikowaLite.fromJson)

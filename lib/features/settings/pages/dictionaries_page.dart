@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/features/piesp/data/piesp_dictionary_service.dart' show PiespDictionaryService, PiespDictionaryId;
 
 class DictionariesPage extends StatelessWidget {
@@ -180,13 +181,26 @@ class _DictionaryPanelState extends State<_DictionaryPanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              widget.name,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: Text(
-                    widget.name,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.dictionaryViewPage,
+                      arguments: DictionaryViewArgs(
+                        dictionaryName: widget.name,
+                        dictionaryId: widget.dictionaryId,
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.visibility, size: 18),
+                  label: const Text('Przeglądaj'),
                 ),
                 const SizedBox(width: 12),
                 FilledButton.icon(
