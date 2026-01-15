@@ -1,4 +1,4 @@
-﻿import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:piesp_patrol/core/api_client.dart';
 import 'package:piesp_patrol/features/auth/models.dart';
 import 'package:piesp_patrol/features/auth/data/reset_pin_dtos.dart';
@@ -11,14 +11,45 @@ class AuthRepository {
     required String badgeNumber,
     required String pin,
   }) async {
-    final resp = await _client.postJson('/piesp/Auth/login', {
-      'badgeNumber': badgeNumber,
-      'pin': pin,
-    }, auth: false);
-    if (resp.statusCode != 200 || resp.data is! Map) {
-      throw AuthException('Błędny numer odznaki lub PIN (${resp.statusCode}).');
+    try {
+      final resp = await _client.postJson('/piesp/Auth/login', {
+        'badgeNumber': badgeNumber,
+        'pin': pin,
+      }, auth: false);
+      if (resp.statusCode != 200 || resp.data is! Map) {
+        // Jeśli status != 200, ale nie rzuciło DioException, sprawdź response body
+        String? message;
+        if (resp.data is String) {
+          message = resp.data as String;
+        } else if (resp.data is Map && (resp.data as Map).containsKey('message')) {
+          message = (resp.data as Map)['message'] as String?;
+        }
+        throw AuthException(message ?? 'Błędny numer odznaki lub PIN (${resp.statusCode}).');
+      }
+      return LoginResult.fromMap(resp.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      // Obsługa błędów HTTP (401, 403, etc.)
+      String? message;
+      if (e.response?.data is String) {
+        message = e.response!.data as String;
+      } else if (e.response?.data is Map && (e.response!.data as Map).containsKey('message')) {
+        message = (e.response!.data as Map)['message'] as String?;
+      }
+      
+      // Domyślne komunikaty jeśli API nie zwróciło komunikatu
+      if (message == null || message.isEmpty) {
+        final statusCode = e.response?.statusCode;
+        if (statusCode == 401) {
+          message = 'Nie udało się zalogować. Sprawdź numer odznaki i PIN i spróbuj ponownie.';
+        } else if (statusCode == 403) {
+          message = 'Konto jest zablokowane lub nieaktywne. Skontaktuj się z przełożonym.';
+        } else {
+          message = 'Błąd logowania (${statusCode ?? 'nieznany'}).';
+        }
+      }
+      
+      throw AuthException(message);
     }
-    return LoginResult.fromMap(resp.data as Map<String, dynamic>);
   }
 
   Future<MeProfile> me() async {
@@ -68,5 +99,5 @@ class AuthException implements Exception {
   final String message;
   AuthException(this.message);
   @override
-  String toString() => 'AuthException: $message';
+  String toString() => message;
 }
