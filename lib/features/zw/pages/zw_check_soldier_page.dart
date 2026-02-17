@@ -33,6 +33,25 @@ class _ZwCheckSoldierPageState extends State<ZwCheckSoldierPage> {
     s.showSnackBar(SnackBar(content: Text(message)));
   }
 
+  /// Wyświetla dialog z wynikiem zapytania. Dialog pozostaje otwarty do czasu kliknięcia "Zamknij" lub X.
+  void _showResultDialog(String message) {
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Dialog nie zamknie się po kliknięciu poza nim
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Wynik sprawdzenia'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Zamknij'),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// Wypełnia pole PESEL danymi z wybranej osoby.
   void _fillFieldsFromSelectedPerson() {
     final personController = AppScope.of(context).personController as PersonController;
@@ -93,20 +112,20 @@ class _ZwCheckSoldierPageState extends State<ZwCheckSoldierPage> {
 
       if (status == 0 && resp.data != null) {
         // TODO: Nawigacja do strony wyników - zostanie dodana później
-        _showSnack('Znaleziono żołnierza: ${resp.data!.stopien ?? 'brak stopnia'} ${resp.data!.jednostka ?? 'brak jednostki'}');
+        _showResultDialog('Znaleziono żołnierza: ${resp.data!.stopien ?? 'brak stopnia'} ${resp.data!.jednostka ?? 'brak jednostki'}');
       } else {
         // Status 2 (błąd biznesowy) - wyświetl tylko message bez prefiksu "Błąd"
         if (status == 2) {
-          _showSnack(msg);
+          _showResultDialog(msg);
         } else if (status == 0) {
-          _showSnack('OK: $msg');
+          _showResultDialog('OK: $msg');
         } else {
-          _showSnack('Błąd ($status): $msg');
+          _showResultDialog('Błąd ($status): $msg');
         }
       }
     } catch (e) {
       if (!mounted) return;
-      _showSnack('Wyjątek: $e');
+      _showResultDialog('Wyjątek: $e');
     }
   }
 
