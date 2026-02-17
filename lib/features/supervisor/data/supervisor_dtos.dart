@@ -3,6 +3,8 @@
 /// =====================
 /// REQUEST
 /// =====================
+library;
+
 
 /// Żądanie do /piesp/Supervisor/generate-code
 class SupervisorGenerateCodeRequestDto {
