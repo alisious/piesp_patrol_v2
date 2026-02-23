@@ -38,6 +38,27 @@ class _ZwCheckWeaponHolderPageState extends State<ZwCheckWeaponHolderPage> {
     );
   }
 
+  /// Wyświetla dialog z wynikiem sprawdzenia. Tło dialogu w odpowiednim kolorze, czcionka standardowa. Zamyka się dopiero po kliknięciu Zamknij.
+  void _showResultDialog(String message, {Color? backgroundColor}) {
+    if (!mounted) return;
+    final theme = Theme.of(context);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: backgroundColor ?? theme.dialogBackgroundColor,
+        title: const Text('Wynik sprawdzenia'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Zamknij'),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// Wypełnia pole PESEL danymi z wybranej osoby.
   void _fillFieldsFromSelectedPerson() {
     final personController = AppScope.of(context).personController as PersonController;
@@ -104,12 +125,12 @@ class _ZwCheckWeaponHolderPageState extends State<ZwCheckWeaponHolderPage> {
         if (adresyCount > 0) {
           final pierwszyAdres = data.adresy.first;
           final opis = pierwszyAdres.opis ?? 'brak opisu';
-          _showSnack(
+          _showResultDialog(
             'Osoba z PESEL = $pesel może posiadać broń: $opis.',
             backgroundColor: Colors.red,
           );
         } else {
-          _showSnack(
+          _showResultDialog(
             'Znaleziono dane osoby (PESEL: $pesel), ale brak adresów z bronią.',
             backgroundColor: Colors.green,
           );
@@ -120,14 +141,14 @@ class _ZwCheckWeaponHolderPageState extends State<ZwCheckWeaponHolderPage> {
         // Status 2 = brak danych/informacja biznesowa
         // Status 0 bez danych = nie znaleziono informacji
         if (status == 1 || status == 2 || status == 0) {
-          _showSnack(msg, backgroundColor: Colors.green);
+          _showResultDialog(msg, backgroundColor: Colors.green);
         } else {
-          _showSnack('Błąd ($status): $msg');
+          _showResultDialog('Błąd ($status): $msg');
         }
       }
     } catch (e) {
       if (!mounted) return;
-      _showSnack('Wyjątek: $e');
+      _showResultDialog('Wyjątek: $e');
     }
   }
 

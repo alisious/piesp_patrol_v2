@@ -33,13 +33,15 @@ class _ZwCheckSoldierPageState extends State<ZwCheckSoldierPage> {
     s.showSnackBar(SnackBar(content: Text(message)));
   }
 
-  /// Wyświetla dialog z wynikiem zapytania. Dialog pozostaje otwarty do czasu kliknięcia "Zamknij" lub X.
-  void _showResultDialog(String message) {
+  /// Wyświetla dialog z wynikiem zapytania. Tło wg koloru (zielone = żołnierz, brak = standardowe). Czcionka standardowa. Zamyka się po kliknięciu Zamknij.
+  void _showResultDialog(String message, {Color? backgroundColor}) {
     if (!mounted) return;
+    final theme = Theme.of(context);
     showDialog(
       context: context,
-      barrierDismissible: false, // Dialog nie zamknie się po kliknięciu poza nim
+      barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
+        backgroundColor: backgroundColor ?? theme.dialogBackgroundColor,
         title: const Text('Wynik sprawdzenia'),
         content: Text(message),
         actions: [
@@ -112,9 +114,12 @@ class _ZwCheckSoldierPageState extends State<ZwCheckSoldierPage> {
 
       if (status == 0 && resp.data != null) {
         // TODO: Nawigacja do strony wyników - zostanie dodana później
-        _showResultDialog('Znaleziono żołnierza: ${resp.data!.stopien ?? 'brak stopnia'} ${resp.data!.jednostka ?? 'brak jednostki'}');
+        _showResultDialog(
+          'Znaleziono żołnierza: ${resp.data!.stopien ?? 'brak stopnia'} ${resp.data!.jednostka ?? 'brak jednostki'}',
+          backgroundColor: Colors.green,
+        );
       } else {
-        // Status 2 (błąd biznesowy) - wyświetl tylko message bez prefiksu "Błąd"
+        // Nie znaleziono osoby lub błąd - tło standardowe (szare)
         if (status == 2) {
           _showResultDialog(msg);
         } else if (status == 0) {

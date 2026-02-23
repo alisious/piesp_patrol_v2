@@ -47,6 +47,27 @@ class _ZwCheckWeaponAddressPageState extends State<ZwCheckWeaponAddressPage> {
     );
   }
 
+  /// Wyświetla dialog z wynikiem sprawdzenia. Tło dialogu w odpowiednim kolorze, czcionka standardowa. Zamyka się dopiero po kliknięciu Zamknij.
+  void _showResultDialog(String message, {Color? backgroundColor}) {
+    if (!mounted) return;
+    final theme = Theme.of(context);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: backgroundColor ?? theme.dialogBackgroundColor,
+        title: const Text('Wynik sprawdzenia'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Zamknij'),
+          ),
+        ],
+      ),
+    );
+  }
+
   String? _validateRequest() {
     // Sprawdź wymagane pola: miejscowość i numer domu
     final miejscowosc = _miejscowoscCtrl.text.trim();
@@ -105,27 +126,31 @@ class _ZwCheckWeaponAddressPageState extends State<ZwCheckWeaponAddressPage> {
           // Znaleziono broń - wyświetl czerwony komunikat
           final pierwszyAdres = data.adresy.first;
           final opis = pierwszyAdres.opis ?? 'brak opisu';
-          _showSnack(
+          _showResultDialog(
             'Pod podanym adresem może znajdować się broń: $opis',
             backgroundColor: Colors.red,
           );
         } else {
-          // Brak adresów z bronią - wyświetl bez koloru (domyślny)
-          _showSnack(
+          // Brak adresów z bronią - zielone tło
+          _showResultDialog(
             'Znaleziono dane osoby (PESEL: $pesel), ale brak adresów z bronią.',
+            backgroundColor: Colors.green,
           );
         }
       } else {
         // Status 1, 2 lub 0 (nie znaleziono lokalizacji) - wyświetl komunikat informacyjny
         if (status == 1 || status == 2 || status == 0) {
-          _showSnack('Nie znaleziono informacji o broni pod podanym adresem.');
+          _showResultDialog(
+            'Nie znaleziono informacji o broni pod podanym adresem.',
+            backgroundColor: Colors.green,
+          );
         } else {
-          _showSnack('Błąd ($status): $msg');
+          _showResultDialog('Błąd ($status): $msg');
         }
       }
     } catch (e) {
       if (!mounted) return;
-      _showSnack('Wyjątek: $e');
+      _showResultDialog('Wyjątek: $e');
     }
   }
 
