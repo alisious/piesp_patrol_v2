@@ -1,0 +1,11 @@
+---
+alwaysApply: true
+---
+# name: api-backend
+# description: Źródło prawdy dla API backendu – specyfikacja Swagger
+
+## API backendu
+
+- **Specyfikacja OpenAPI (Swagger):** https://api.trentum.pl/swagger/v1/swagger.json  
+- Przy implementacji lub zmianach wywołań API (endpointy, body, nagłówki, DTO) odwołuj się do tej specyfikacji.
+- Endpointy, schematy request/response (np. ProxyResponse, status, message, data) są tam zdefiniowane – dopasuj modele i wywołania w aplikacji do tej specyfikacji.

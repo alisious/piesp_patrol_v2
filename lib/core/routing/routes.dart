@@ -48,6 +48,7 @@ import 'package:piesp_patrol/features/ksip/data/ksip_sprawdzenie_osoby_dtos.dart
 import 'package:piesp_patrol/features/zw/pages/zw_check_soldier_page.dart';
 import 'package:piesp_patrol/features/zw/pages/zw_check_weapon_holder_page.dart';
 import 'package:piesp_patrol/features/zw/pages/zw_check_weapon_address_page.dart';
+import 'package:piesp_patrol/features/zw/pages/zw_check_is_person_wanted_page.dart';
 
 class AppRoutes {
   // Wejścia bazowe (np. z paska adresu w web/IIS)
@@ -91,6 +92,7 @@ class AppRoutes {
   static const String zwCheckSoldierPage = '/zw/check-soldier';
   static const String zwCheckWeaponHolderPage = '/zw/check-weapon-holder';
   static const String zwCheckWeaponAddressPage = '/zw/check-weapon-address';
+  static const String zwCheckIsPersonWantedPage = '/zw/check-is-person-wanted';
 
   /// Centralny router
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -297,6 +299,12 @@ class AppRoutes {
       case zwCheckWeaponAddressPage:
         return MaterialPageRoute(
           builder: (_) => const ZwCheckWeaponAddressPage(),
+          settings: settings,
+        );
+
+      case zwCheckIsPersonWantedPage:
+        return MaterialPageRoute(
+          builder: (_) => const ZwCheckIsPersonWantedPage(),
           settings: settings,
         );
 

@@ -2,6 +2,11 @@
 
 Wszystkie istotne zmiany w projekcie będą dokumentowane w tym pliku.
 
+## [1.0.20] - 2026-02-23
+
+### Dodane
+- **ZW – Czy osoba poszukiwana?**: W grupie Osoba (pod „Sprawdź osobę”), sprawdzenie po PESEL, wynik w dialogu (czerwone/zielone/szare tło)
+
 ## [1.0.19] - 2026-02-23
 
 ### Zmienione
@@ -17,4 +22,3 @@ Wszystkie istotne zmiany w projekcie będą dokumentowane w tym pliku.
 - **ZW - Sprawdzanie żołnierza**: Komunikaty wyników wyświetlane jako dialogi zamiast SnackBar
   - Dialog pozostaje otwarty do czasu kliknięcia "Zamknij" lub X
   - Nie zamyka się automatycznie ani po kliknięciu poza dialogiem
-checkout 

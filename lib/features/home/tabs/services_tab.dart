@@ -46,6 +46,14 @@ class ServicesTab extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ArrowButton(
+            title: 'Czy osoba poszukiwana?',
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.zwCheckIsPersonWantedPage,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ArrowButton(
             title: 'Czy posiada broń prywatną?',
             onTap: () => Navigator.pushNamed(
               context,
