@@ -37,18 +37,18 @@ class AuthRepository {
       }
       
       // Domyślne komunikaty jeśli API nie zwróciło komunikatu
-      if (message == null || message.isEmpty) {
+      String errMsg = message ?? '';
+      if (errMsg.isEmpty) {
         final statusCode = e.response?.statusCode;
         if (statusCode == 401) {
-          message = 'Nie udało się zalogować. Sprawdź numer odznaki i PIN i spróbuj ponownie.';
+          errMsg = 'Nie udało się zalogować. Sprawdź numer odznaki i PIN i spróbuj ponownie.';
         } else if (statusCode == 403) {
-          message = 'Konto jest zablokowane lub nieaktywne. Skontaktuj się z przełożonym.';
+          errMsg = 'Konto jest zablokowane lub nieaktywne. Skontaktuj się z przełożonym.';
         } else {
-          message = 'Błąd logowania (${statusCode ?? 'nieznany'}).';
+          errMsg = 'Błąd logowania (${statusCode ?? 'nieznany'}).';
         }
       }
-      
-      throw AuthException(message);
+      throw AuthException(errMsg);
     }
   }
 
