@@ -56,7 +56,7 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                     title: 'Dane techniczne',
                     children: _rows({
                       'Pojemność silnika (cm³)': pojazd.daneTechnicznePojazdu?.pojemnoscSilnika?.toString(),
-                      'Moc silnika (KM)': pojazd.daneTechnicznePojazdu?.mocSilnika?.toString(),
+                      'Moc silnika (kW)': pojazd.daneTechnicznePojazdu?.mocSilnika?.toString(),
                       'Masa własna (kg)': pojazd.daneTechnicznePojazdu?.masaWlasna?.toString(),
                       'Dopuszczalna masa całkowita (kg)': pojazd.daneTechnicznePojazdu?.dopuszczalnaMasaCalkowita?.toString(),
                       'Liczba miejsc ogółem': pojazd.daneTechnicznePojazdu?.liczbaMiejscOgolem?.toString(),
