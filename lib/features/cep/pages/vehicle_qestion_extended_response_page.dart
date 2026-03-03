@@ -509,7 +509,7 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
       if (widgets.isNotEmpty) {
         widgets.add(const Divider(height: 16));
       }
-      
+
       widgets.add(
         Align(
           alignment: Alignment.centerLeft,
@@ -520,8 +520,67 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
         ),
       );
       widgets.add(const SizedBox(height: 6));
-      
-      
+
+      // Osoba
+      if (wlasnosc.podmiot?.osoba != null) {
+        final osoba = wlasnosc.podmiot!.osoba!;
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Osoba',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+        );
+        widgets.add(const SizedBox(height: 4));
+        widgets.addAll(
+          _rows({
+            'PESEL': osoba.pesel,
+            'Imię': osoba.imiePierwsze,
+            'Nazwisko': osoba.nazwisko,
+            'Data urodzenia': osoba.dataUrodzenia,
+            'Miejsce urodzenia': osoba.miejsceUrodzenia,
+          }),
+        );
+
+        // Adres osoby
+        final adresOsoby = osoba.adres;
+        if (adresOsoby != null) {
+          widgets.add(const SizedBox(height: 8));
+          widgets.add(
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Adres',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+          );
+          widgets.add(const SizedBox(height: 4));
+
+          final ulicaTextOsoba = adresOsoby.ulicaCecha != null && adresOsoby.nazwaUlicy != null
+              ? '${adresOsoby.ulicaCecha!.wartoscOpisowaSkrocona ?? adresOsoby.ulicaCecha!.wartoscOpisowa ?? ''} ${adresOsoby.nazwaUlicy}'.trim()
+              : adresOsoby.nazwaUlicy;
+
+          widgets.addAll(
+            _rows({
+              'Kraj': adresOsoby.kraj?.nazwa,
+              'Kod pocztowy': adresOsoby.kodPocztowy,
+              'Miejscowość': adresOsoby.nazwaMiejscowosci,
+              'Ulica': ulicaTextOsoba,
+              'Numer domu': adresOsoby.numerDomu,
+              'Numer lokalu': adresOsoby.numerLokalu,
+              'Województwo': adresOsoby.nazwaWojewodztwaStanu,
+              'Powiat': adresOsoby.nazwaPowiatuDzielnicy,
+              'Gmina': adresOsoby.nazwaGminy,
+              'Kod TERYT': adresOsoby.kodTeryt,
+            }),
+          );
+        }
+      }
+
       // Firma
       if (wlasnosc.podmiot?.firma != null) {
         widgets.add(const SizedBox(height: 8));
@@ -545,8 +604,8 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
             'Identyfikator systemowy REGON': wlasnosc.podmiot?.firma?.identyfikatorSystemowyREGON,
           }),
         );
-        
-        // Adres
+
+        // Adres firmy
         final adres = wlasnosc.podmiot?.firma?.adres;
         if (adres != null) {
           widgets.add(const SizedBox(height: 8));
@@ -560,11 +619,11 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
             ),
           );
           widgets.add(const SizedBox(height: 4));
-          
+
           final ulicaText = adres.ulicaCecha != null && adres.nazwaUlicy != null
               ? '${adres.ulicaCecha!.wartoscOpisowaSkrocona ?? adres.ulicaCecha!.wartoscOpisowa ?? ''} ${adres.nazwaUlicy}'.trim()
               : adres.nazwaUlicy;
-          
+
           widgets.addAll(
             _rows({
               'Kraj': adres.kraj?.nazwa,

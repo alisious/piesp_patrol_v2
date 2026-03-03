@@ -2,6 +2,11 @@
 
 Wszystkie istotne zmiany w projekcie będą dokumentowane w tym pliku.
 
+## [1.0.21] - 2026-03-03
+
+### Dodane
+- **CEP – szczegóły pojazdu**: Wyświetlanie danych właściciela będącego osobą fizyczną (wraz z adresem) na ekranie odpowiedzi rozszerzonej oraz w modelach DTO.
+
 ## [1.0.20] - 2026-02-23
 
 ### Dodane

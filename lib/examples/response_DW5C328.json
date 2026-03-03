@@ -1,0 +1,903 @@
+{
+    "data": {
+      "meta": {
+        "identyfikatorTransakcji": "6ff4c8b5-f830-4eec-8817-819a6f0f78c8",
+        "iloscZwroconychRekordow": 1,
+        "znacznikCzasowy": "2026-02-26T10:51:10",
+        "identyfikatorSystemuZewnetrznego": "ŻW",
+        "znakSprawy": "P002",
+        "wnioskodawca": "ŻW"
+      },
+      "parametryZapytania": {
+        "numerRejestracyjny": null,
+        "znakSprawy": null,
+        "wnioskodawca": null,
+        "identyfikatorSystemuZewnetrznego": null
+      },
+      "pojazdRozszerzone": {
+        "aktualnyIdentyfikatorPojazdu": {
+          "identyfikatorSystemowyPojazdu": "50258887897726",
+          "tokenAktualnosci": "47DC0658E79B9E7DA02582F4E4A59B84"
+        },
+        "informacjeSKP": {
+          "identyfikatorSystemowyInformacjiSKP": "2477102150277163",
+          "identyfikatorCzynnosci": "79447529940559",
+          "stacjaKontroliPojazdow": {
+            "dataOd": "2018-11-07T15:32:51",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT061_10101308",
+            "nazwa": "\"DUNAJSCY AUTO SERWIS\" Zdzisław Dunajski",
+            "numerEwidencyjny": "DW/107/P",
+            "identyfikatorREGON": "2239097500000",
+            "regon": "022390975",
+            "typ": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT077_SKP",
+              "wartoscOpisowaSkrocona": "Stacja Kontroli Pojazdów",
+              "wartoscOpisowa": null
+            }
+          },
+          "rodzajCzynnosciSKP": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT098_OKR",
+            "wartoscOpisowaSkrocona": "Okresowe",
+            "wartoscOpisowa": null
+          },
+          "numerZaswiadczenia": "00796/DW/107/P/2026",
+          "wynikCzynnosci": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT095_P",
+            "wartoscOpisowaSkrocona": "Pozytywny",
+            "wartoscOpisowa": "Wynik pozytywny czynności SKP: wykonanego Badania technicznego oraz odnotowanie licznika pojazdu po wymianie."
+          },
+          "wpisDoDokumentuPojazdu": false,
+          "wydanieZaswiadczenia": true,
+          "dataGodzWykonaniaCzynnosciSKP": "2026-01-31T10:07:26",
+          "trybAwaryjny": false,
+          "terminKolejnegoBadaniaTechnicznego": {
+            "dataKolejnegoBadania": "2027-01-31"
+          },
+          "stanLicznika": {
+            "identyfikatorSystemowyStanuLicznika": "3705932927194113",
+            "wartoscStanuLicznika": 94106,
+            "jednostkaStanuLicznika": null,
+            "dataSpisaniaLicznika": "2026-01-31T10:07:26",
+            "podmiotWprowadzajacy": {
+              "dataOd": "2018-11-07T15:32:51",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_10101308",
+              "nazwa": "\"DUNAJSCY AUTO SERWIS\" Zdzisław Dunajski",
+              "numerEwidencyjny": "DW/107/P",
+              "identyfikatorREGON": "2239097500000",
+              "regon": "022390975",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_SKP",
+                "wartoscOpisowaSkrocona": "Stacja Kontroli Pojazdów",
+                "wartoscOpisowa": null
+              }
+            },
+            "dataOdnotowania": "2026-01-31T10:07:26"
+          }
+        },
+        "daneTechnicznePojazdu": {
+          "identyfikatorSystemowyDanychTechnicznych": "1671253544282390",
+          "pojemnoscSilnika": 1998,
+          "mocSilnika": 88,
+          "masaWlasna": 1276,
+          "masaCalkowita": null,
+          "dopuszczalnaMasaCalkowita": 1815,
+          "dopuszczalnaMasaCalkowitaZespoluPojazdow": null,
+          "dopuszczalnaLadownoscCalkowita": null,
+          "maksymalnaMasaCalkowitaCiagnietejPrzyczepyZHamulcem": null,
+          "maksymalnaMasaCalkowitaCiagnietejPrzyczepyBezHamulca": null,
+          "liczbaOsi": 2,
+          "liczbaMiejscOgolem": null,
+          "liczbaMiejscSiedzacych": 5,
+          "reduktorKatalityczny": null,
+          "czyHak": null,
+          "czyKierownicaPoPrawejStronie": null,
+          "maksymalnyDopuszczalnyNaciskOsi": null,
+          "poziomEmisjiSpalinEURODlaGmin": {
+            "zrodlo": null,
+            "oznaczenie": "EURO 6",
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": null,
+            "kod": "DICT047_6",
+            "wartoscOpisowaSkrocona": null,
+            "wartoscOpisowa": "Norma emisji euro EURO 6"
+          },
+          "paliwoPodstawowe": {
+            "rodzajPaliwa": {
+              "kodPaliwa": "P",
+              "wartoscOpisowa": "BENZYNA",
+              "kod": "DICT030_1",
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": null,
+              "zrodlo": "0"
+            }
+          }
+        },
+        "homologacjaPojazdu": {
+          "identyfikatorSystemowyHomologacjiPojazdu": "1991196010654067",
+          "identyfikatorPozycjiKatalogowej": "002620023000233",
+          "wersjaPojazdu": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT259_18836",
+            "kodWersji": "0018836",
+            "wersjaHomologacji": "61WX",
+            "kodWariantu": null,
+            "nazwaWariantu": null,
+            "zrodlo": "0"
+          },
+          "wariantPojazdu": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT258_21210",
+            "kodWersji": null,
+            "wersjaHomologacji": null,
+            "kodWariantu": "0021210",
+            "nazwaWariantu": "646",
+            "zrodlo": "0"
+          },
+          "typPojazdu": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kod": "DICT012_21929",
+            "wartoscOpisowa": "BL",
+            "zrodlo": "0"
+          },
+          "numerDokumentuHomologacji": "e11*2001/116*0262*14",
+          "kodKategoriiHomologacji": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodKatHom": "M1",
+            "wartoscOpisowa": "SAMOCHÓD OSOBOWY",
+            "kod": "DICT038_13"
+          },
+          "homologacjaITS": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "identyfikatorPozycjiKatalogowej": "002620023000233",
+            "numerSwiadectwa": "e11*2001/116*0262*14"
+          },
+          "typWartoscOpisowa": "BL",
+          "wariantWartoscOpisowa": "646",
+          "wersjaWartoscOpisowa": "61WX"
+        },
+        "daneOpisujacePojazd": {
+          "identyfikatorSystemowyDanychPojazdu": "1255439705172808",
+          "marka": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodMarki": "00262",
+            "wartoscOpisowa": "MAZDA",
+            "kod": "DICT010_237",
+            "pozycjeSzczegolowe": null
+          },
+          "model": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodMarki": null,
+            "wartoscOpisowa": "3",
+            "kod": "DICT011_123808",
+            "pozycjeSzczegolowe": "T"
+          },
+          "rodzaj": {
+            "dataOd": "1896-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodRodzaj": "DICT074_3",
+            "rodzaj": "SAMOCHÓD OSOBOWY",
+            "kodPodrodzaj": null,
+            "podrodzaj": null,
+            "wersja": "1",
+            "zrodlo": "0"
+          },
+          "podrodzaj": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodRodzaj": null,
+            "rodzaj": null,
+            "kodPodrodzaj": "DICT075_66",
+            "podrodzaj": "HATCHBACK",
+            "wersja": "1",
+            "zrodlo": "0"
+          },
+          "przeznaczenie": {
+            "dataOd": "1896-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": null,
+            "kod": null,
+            "wartoscOpisowaSkrocona": null,
+            "wartoscOpisowa": null
+          },
+          "kodRPP": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodRPP": "0302000",
+            "rodzaj": "SAMOCHÓD OSOBOWY",
+            "podrodzaj": "HATCHBACK",
+            "przeznaczenie": "---",
+            "wersja": "1",
+            "kod": "DICT072_43",
+            "zrodlo": "1"
+          },
+          "pochodzeniePojazdu": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT142_0",
+            "wartoscOpisowaSkrocona": "Nowy zakupiony w kraju",
+            "wartoscOpisowa": null
+          },
+          "czyWybityNumerIdentyfikacyjny": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT144_NI",
+            "wartoscOpisowaSkrocona": "Nieokreslony",
+            "wartoscOpisowa": null
+          },
+          "rodzajTabliczkiZnamionowej": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT143_O",
+            "wartoscOpisowaSkrocona": "Oryginalna",
+            "wartoscOpisowa": null
+          },
+          "sposobProdukcji": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT046_1",
+            "wartoscOpisowaSkrocona": "FABRYCZNY",
+            "wartoscOpisowa": "FAB"
+          },
+          "numerPodwoziaNadwoziaRamy": "3MZBM64661M131054",
+          "rokProdukcji": 2015,
+          "rodzajKodowaniaRPP": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "statusRekordu": "A",
+            "kodRPP": "0302000",
+            "rodzaj": "SAMOCHÓD OSOBOWY",
+            "podrodzaj": "HATCHBACK",
+            "przeznaczenie": "---",
+            "wersja": "1",
+            "kod": "DICT072_43",
+            "zrodlo": "1"
+          }
+        },
+        "danePierwszejRejestracji": {
+          "identyfikatorSystemowyPierwszejRejestracjiPojazdu": "54164115209907",
+          "dataPierwszejRejestracjiWKraju": "2016-02-11",
+          "dataPierwszejRejestracjiZaGranica": null,
+          "dataPierwszejRejestracji": "2016-02-11"
+        },
+        "dokumentyPojazdu": [
+          {
+            "identyfikatorSystemowyDokumentuPojazdu": "7639814435395455",
+            "typDokumentu": {
+              "zrodlo": null,
+              "oznaczenie": null,
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T23:59:59",
+              "status": "A",
+              "kod": "DICT155_DR",
+              "wartoscOpisowaSkrocona": "Dowód rejestracyjny",
+              "wartoscOpisowa": "Dowód rejestracyjny"
+            },
+            "dokumentSeriaNumer": "BAQ2771860",
+            "czyWtornik": "N",
+            "dataWydaniaDokumentu": "2020-07-23",
+            "organWydajacyDokument": {
+              "dataOd": "1901-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_0264",
+              "nazwa": "URZĄD MIEJSKI WROCŁAWIA",
+              "numerEwidencyjny": "0264",
+              "identyfikatorREGON": "1176544",
+              "regon": "931934839",
+              "nazwaOrganuWydajacego": "PREZYDENT WROCŁAWIA",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_STAROSTA",
+                "wartoscOpisowaSkrocona": "Starosta",
+                "wartoscOpisowa": null
+              }
+            },
+            "danePierwszejRejestracji": {
+              "identyfikatorSystemowyPierwszejRejestracjiPojazdu": "54164115209907",
+              "dataPierwszejRejestracjiWKraju": "2016-02-11",
+              "dataPierwszejRejestracjiZaGranica": null,
+              "dataPierwszejRejestracji": "2016-02-11"
+            },
+            "daneOpisujacePojazd": {
+              "identyfikatorSystemowyDanychPojazdu": "1255439705172808",
+              "marka": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodMarki": "00262",
+                "wartoscOpisowa": "MAZDA",
+                "kod": "DICT010_237",
+                "pozycjeSzczegolowe": null
+              },
+              "model": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodMarki": null,
+                "wartoscOpisowa": "3",
+                "kod": "DICT011_123808",
+                "pozycjeSzczegolowe": "T"
+              },
+              "rodzaj": {
+                "dataOd": "1896-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodRodzaj": "DICT074_3",
+                "rodzaj": "SAMOCHÓD OSOBOWY",
+                "kodPodrodzaj": null,
+                "podrodzaj": null,
+                "wersja": "1",
+                "zrodlo": "0"
+              },
+              "podrodzaj": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodRodzaj": null,
+                "rodzaj": null,
+                "kodPodrodzaj": "DICT075_66",
+                "podrodzaj": "HATCHBACK",
+                "wersja": "1",
+                "zrodlo": "0"
+              },
+              "przeznaczenie": {
+                "dataOd": "1896-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": null,
+                "kod": null,
+                "wartoscOpisowaSkrocona": null,
+                "wartoscOpisowa": null
+              },
+              "kodRPP": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodRPP": "0302000",
+                "rodzaj": "SAMOCHÓD OSOBOWY",
+                "podrodzaj": "HATCHBACK",
+                "przeznaczenie": "---",
+                "wersja": "1",
+                "kod": "DICT072_43",
+                "zrodlo": "1"
+              },
+              "pochodzeniePojazdu": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT142_0",
+                "wartoscOpisowaSkrocona": "Nowy zakupiony w kraju",
+                "wartoscOpisowa": null
+              },
+              "czyWybityNumerIdentyfikacyjny": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT144_NI",
+                "wartoscOpisowaSkrocona": "Nieokreslony",
+                "wartoscOpisowa": null
+              },
+              "rodzajTabliczkiZnamionowej": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T23:59:59",
+                "status": "A",
+                "kod": "DICT143_O",
+                "wartoscOpisowaSkrocona": "Oryginalna",
+                "wartoscOpisowa": null
+              },
+              "sposobProdukcji": {
+                "zrodlo": null,
+                "oznaczenie": null,
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT046_1",
+                "wartoscOpisowaSkrocona": "FABRYCZNY",
+                "wartoscOpisowa": "FAB"
+              },
+              "numerPodwoziaNadwoziaRamy": "3MZBM64661M131054",
+              "rokProdukcji": 2015,
+              "rodzajKodowaniaRPP": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodRPP": "0302000",
+                "rodzaj": "SAMOCHÓD OSOBOWY",
+                "podrodzaj": "HATCHBACK",
+                "przeznaczenie": "---",
+                "wersja": "1",
+                "kod": "DICT072_43",
+                "zrodlo": "1"
+              }
+            },
+            "homologacjaPojazdu": {
+              "identyfikatorSystemowyHomologacjiPojazdu": "1991196010654067",
+              "identyfikatorPozycjiKatalogowej": "002620023000233",
+              "wersjaPojazdu": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kod": "DICT259_18836",
+                "kodWersji": "0018836",
+                "wersjaHomologacji": "61WX",
+                "kodWariantu": null,
+                "nazwaWariantu": null,
+                "zrodlo": "0"
+              },
+              "wariantPojazdu": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kod": "DICT258_21210",
+                "kodWersji": null,
+                "wersjaHomologacji": null,
+                "kodWariantu": "0021210",
+                "nazwaWariantu": "646",
+                "zrodlo": "0"
+              },
+              "typPojazdu": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kod": "DICT012_21929",
+                "wartoscOpisowa": "BL",
+                "zrodlo": "0"
+              },
+              "numerDokumentuHomologacji": "e11*2001/116*0262*14",
+              "kodKategoriiHomologacji": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kodKatHom": "M1",
+                "wartoscOpisowa": "SAMOCHÓD OSOBOWY",
+                "kod": "DICT038_13"
+              },
+              "homologacjaITS": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "identyfikatorPozycjiKatalogowej": "002620023000233",
+                "numerSwiadectwa": "e11*2001/116*0262*14"
+              },
+              "typWartoscOpisowa": "BL",
+              "wariantWartoscOpisowa": "646",
+              "wersjaWartoscOpisowa": "61WX"
+            },
+            "daneTechnicznePojazdu": {
+              "identyfikatorSystemowyDanychTechnicznych": "1671253544282390",
+              "pojemnoscSilnika": 1998,
+              "mocSilnika": 88,
+              "masaWlasna": 1276,
+              "masaCalkowita": null,
+              "dopuszczalnaMasaCalkowita": 1815,
+              "dopuszczalnaMasaCalkowitaZespoluPojazdow": null,
+              "dopuszczalnaLadownoscCalkowita": null,
+              "maksymalnaMasaCalkowitaCiagnietejPrzyczepyZHamulcem": null,
+              "maksymalnaMasaCalkowitaCiagnietejPrzyczepyBezHamulca": null,
+              "liczbaOsi": 2,
+              "liczbaMiejscOgolem": null,
+              "liczbaMiejscSiedzacych": 5,
+              "reduktorKatalityczny": null,
+              "czyHak": null,
+              "czyKierownicaPoPrawejStronie": null,
+              "maksymalnyDopuszczalnyNaciskOsi": null,
+              "poziomEmisjiSpalinEURODlaGmin": null,
+              "paliwoPodstawowe": null
+            },
+            "stanDokumentu": {
+              "identyfikatorSystemowyStanuOznaczeniaPojazdu": null,
+              "dataPoczatkuObowiazywania": "2020-08-20T08:08:19",
+              "stanOznaczenia": null,
+              "organUstanawiajacyStan": {
+                "dataOd": "1901-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "statusRekordu": "A",
+                "kod": "DICT061_0264",
+                "nazwa": "URZĄD MIEJSKI WROCŁAWIA",
+                "numerEwidencyjny": "0264",
+                "identyfikatorREGON": "1176544",
+                "regon": "931934839",
+                "nazwaOrganuWydajacego": "PREZYDENT WROCŁAWIA",
+                "typ": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "status": "A",
+                  "kod": "DICT077_STAROSTA",
+                  "wartoscOpisowaSkrocona": "Starosta",
+                  "wartoscOpisowa": null
+                }
+              },
+              "dataOdnotowaniaStanu": "2020-08-20T08:08:29"
+            },
+            "czyAktualny": "T",
+            "oznaczenia": [
+              {
+                "identyfikatorSystemowyOznaczenia": "36644522944086",
+                "typOznaczenia": {
+                  "zrodlo": null,
+                  "oznaczenie": null,
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT227_TP",
+                  "wartoscOpisowaSkrocona": "Tablica pojazdu",
+                  "wartoscOpisowa": "Tablica pojazdu"
+                },
+                "numerOznaczenia": "DW5C328",
+                "rodzajTablicyRejestracyjnej": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT115_ZW",
+                  "wartoscOpisowaSkrocona": "Zwyczajne",
+                  "wartoscOpisowa": null
+                },
+                "wzorTablicyRejestracyjnej": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT231_SAM",
+                  "wartoscOpisowaSkrocona": "Samochodowe",
+                  "wartoscOpisowa": null
+                },
+                "kolorTablicyRejestracyjnej": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T00:00:00",
+                  "status": "A",
+                  "kod": "DICT257_B",
+                  "wartoscOpisowaSkrocona": "Białe",
+                  "wartoscOpisowa": "kolor tablicy rejestracyjnej - Biały"
+                },
+                "czyWtornik": "N",
+                "stanOznaczenia": {
+                  "identyfikatorSystemowyStanuOznaczeniaPojazdu": "36644522944086",
+                  "dataPoczatkuObowiazywania": "2016-02-11T12:00:00",
+                  "stanOznaczenia": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T23:59:59",
+                    "status": "A",
+                    "kod": "DICT228_OD",
+                    "wartoscOpisowaSkrocona": "Odebrany",
+                    "wartoscOpisowa": null
+                  },
+                  "organUstanawiajacyStan": {
+                    "dataOd": "1901-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "statusRekordu": "A",
+                    "kod": "DICT061_0264",
+                    "nazwa": "URZĄD MIEJSKI WROCŁAWIA",
+                    "numerEwidencyjny": "0264",
+                    "identyfikatorREGON": "1176544",
+                    "regon": "931934839",
+                    "nazwaOrganuWydajacego": "PREZYDENT WROCŁAWIA",
+                    "typ": {
+                      "dataOd": "1900-01-01T00:00:00",
+                      "dataDo": "9999-12-31T00:00:00",
+                      "status": "A",
+                      "kod": "DICT077_STAROSTA",
+                      "wartoscOpisowaSkrocona": "Starosta",
+                      "wartoscOpisowa": null
+                    }
+                  },
+                  "dataOdnotowaniaStanu": "2017-10-15T21:13:28"
+                }
+              },
+              {
+                "identyfikatorSystemowyOznaczenia": "7622098190451532",
+                "typOznaczenia": {
+                  "zrodlo": null,
+                  "oznaczenie": null,
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:59",
+                  "status": "A",
+                  "kod": "DICT227_ZL",
+                  "wartoscOpisowaSkrocona": "Znak legalizacyjny",
+                  "wartoscOpisowa": "Znak legalizacyjny"
+                },
+                "numerOznaczenia": "AAH7871290",
+                "rodzajTablicyRejestracyjnej": null,
+                "wzorTablicyRejestracyjnej": null,
+                "kolorTablicyRejestracyjnej": null,
+                "czyWtornik": "N",
+                "stanOznaczenia": {
+                  "identyfikatorSystemowyStanuOznaczeniaPojazdu": "4008184278957526",
+                  "dataPoczatkuObowiazywania": "2020-07-22T09:26:20",
+                  "stanOznaczenia": {
+                    "dataOd": "1900-01-01T00:00:00",
+                    "dataDo": "9999-12-31T23:59:59",
+                    "status": "A",
+                    "kod": "DICT228_OD",
+                    "wartoscOpisowaSkrocona": "Odebrany",
+                    "wartoscOpisowa": null
+                  },
+                  "organUstanawiajacyStan": {
+                    "dataOd": "1901-01-01T00:00:00",
+                    "dataDo": "9999-12-31T00:00:00",
+                    "statusRekordu": "A",
+                    "kod": "DICT061_0264",
+                    "nazwa": "URZĄD MIEJSKI WROCŁAWIA",
+                    "numerEwidencyjny": "0264",
+                    "identyfikatorREGON": "1176544",
+                    "regon": "931934839",
+                    "nazwaOrganuWydajacego": "PREZYDENT WROCŁAWIA",
+                    "typ": {
+                      "dataOd": "1900-01-01T00:00:00",
+                      "dataDo": "9999-12-31T00:00:00",
+                      "status": "A",
+                      "kod": "DICT077_STAROSTA",
+                      "wartoscOpisowaSkrocona": "Starosta",
+                      "wartoscOpisowa": null
+                    }
+                  },
+                  "dataOdnotowaniaStanu": "2020-07-22T09:28:59"
+                }
+              }
+            ]
+          }
+        ],
+        "danePojazduSprowadzonego": null,
+        "stanPojazdu": {
+          "identyfikatorSystemowyStanuRejestracjiPojazdu": "24004732638820",
+          "dataPoczatkuObowiazywaniaStanu": "2016-02-11T06:00:00",
+          "stanPojazdu": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT017_Z",
+            "wartoscOpisowaSkrocona": "Zarejestrowany",
+            "wartoscOpisowa": "ZA-R"
+          },
+          "typRejestracji": null
+        },
+        "najnowszyWariantPodmiotu": {
+          "identyfikatorSystemowyWlasnosci": "7891855842647575",
+          "kodWlasnosci": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT118_WL",
+            "wartoscOpisowaSkrocona": "Właściciel",
+            "wartoscOpisowa": null
+          },
+          "dataZmianyPrawWlasnosci": "2020-07-10T00:00:00",
+          "dataOdnotowania": "2020-07-22T09:36:09",
+          "zmianaWlasnosci": {
+            "sposobZmianyPrawWlasnosci": {
+              "zrodlo": null,
+              "oznaczenie": null,
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT117_0",
+              "wartoscOpisowaSkrocona": "Umowa sprzedaży",
+              "wartoscOpisowa": null
+            },
+            "dataOdnotowania": "2020-07-22T09:36:09"
+          },
+          "podmiot": {
+            "identyfikatorSystemowyPodmiotu": "92849756679432",
+            "wariantPodmiotu": "7",
+            "firma": null,
+            "osoba": {
+              "PESEL": "80080310776",
+              "imiePierwsze": "TOMASZ",
+              "nazwisko": "NOWAK",
+              "dataUrodzenia": "1980-08-03",
+              "miejsceUrodzeniaKod": "0984663",
+              "miejsceUrodzenia": "ŚWIEBODZICE",
+              "adres": {
+                "kraj": {
+                  "dataOd": "1900-01-01T00:00:00",
+                  "dataDo": "9999-12-31T23:59:00",
+                  "statusRekordu": "A",
+                  "kodNumeryczny": "616",
+                  "kodIsoAlfa2": "PL",
+                  "kodIsoAlfa3": "POL",
+                  "kodMks": "PL",
+                  "czyNalezyDoUE": true,
+                  "nazwa": "Polska",
+                  "obywatelstwo": "BRAK DANYCH",
+                  "dataAktualizacji": "2017-10-29T00:56:54"
+                },
+                "kodTeryt": "0264011",
+                "kodTerytWojewodztwa": "02",
+                "nazwaWojewodztwaStanu": "DOLNOŚLĄSKIE",
+                "kodTerytPowiatu": "64",
+                "nazwaPowiatuDzielnicy": "WROCŁAW",
+                "kodTerytGminy": "01",
+                "nazwaGminy": "WROCŁAW",
+                "kodRodzajuGminy": "1",
+                "kodPocztowy": "51149",
+                "kodTerytMiejscowosci": "0986283",
+                "nazwaMiejscowosci": "WROCŁAW",
+                "nazwaMiejscowosciPodst": "WROCŁAW",
+                "kodTerytUlicy": null,
+                "ulicaCecha": null,
+                "nazwaUlicy": "KOSZAROWA",
+                "numerDomu": "8T"
+              }
+            }
+          }
+        },
+        "rejestracjePojazdu": [
+          {
+            "identyfikatorSystemowyRejestracji": "3816330323673560",
+            "organRejestrujacy": {
+              "dataOd": "1901-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_0264",
+              "nazwa": "URZĄD MIEJSKI WROCŁAWIA",
+              "numerEwidencyjny": "0264",
+              "identyfikatorREGON": "1176544",
+              "regon": "931934839",
+              "nazwaOrganuWydajacego": "PREZYDENT WROCŁAWIA",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_STAROSTA",
+                "wartoscOpisowaSkrocona": "Starosta",
+                "wartoscOpisowa": null
+              }
+            },
+            "dataRejestracjiPojazdu": "2020-07-22T09:26:20",
+            "typRejestracji": null
+          },
+          {
+            "identyfikatorSystemowyRejestracji": "93159412663523",
+            "organRejestrujacy": {
+              "dataOd": "1901-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_0264",
+              "nazwa": "URZĄD MIEJSKI WROCŁAWIA",
+              "numerEwidencyjny": "0264",
+              "identyfikatorREGON": "1176544",
+              "regon": "931934839",
+              "nazwaOrganuWydajacego": "PREZYDENT WROCŁAWIA",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_STAROSTA",
+                "wartoscOpisowaSkrocona": "Starosta",
+                "wartoscOpisowa": null
+              }
+            },
+            "dataRejestracjiPojazdu": "2016-02-11T12:00:00",
+            "typRejestracji": {
+              "dataOd": "1900-01-01T00:00:00",
+              "dataDo": "9999-12-31T00:00:00",
+              "status": "A",
+              "kod": "DICT437_S",
+              "wartoscOpisowaSkrocona": "Stała",
+              "wartoscOpisowa": null
+            }
+          }
+        ],
+        "danePolisyOC": {
+          "identyfikatorPolisy": "2998177794",
+          "numerPolisy": "920055128033",
+          "dataZawarciaPolisy": "2025-07-02T00:00:00",
+          "dataPoczatkuObowiazywaniaPolisy": "2025-07-23T00:00:00",
+          "dataKoncaObowiazywaniaPolisy": "2026-07-22T23:59:59",
+          "rodzajUbezpieczenia": {
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T00:00:00",
+            "status": "A",
+            "kod": "DICT321_K",
+            "wartoscOpisowaSkrocona": "Krajowa",
+            "wartoscOpisowa": null
+          },
+          "daneZU": {
+            "identyfikatorSystemowyZakladuUbezpieczen": "140",
+            "identyfikatorBiznesowyZakladuUbezpieczen": "-1",
+            "odmowaUdostepnienia": null,
+            "nazwaZakladuUbezpieczen": "TOWARZYSTWO UBEZPIECZEŃ I REASEKURACJI WARTA S.A.",
+            "nazwaHandlowaZakladuUbezpieczeniowego": "WARTA"
+          },
+          "wariantUbezpieczenia": {
+            "dataPoczatkuWariantu": "2025-07-23T00:00:00",
+            "dataKoncaWariantu": "2026-07-22T23:59:59"
+          }
+        },
+        "oznaczenieAktualnyNrRejestracyjny": {
+          "identyfikatorSystemowyOznaczenia": "36644522944086",
+          "typOznaczenia": {
+            "zrodlo": null,
+            "oznaczenie": null,
+            "dataOd": "1900-01-01T00:00:00",
+            "dataDo": "9999-12-31T23:59:59",
+            "status": "A",
+            "kod": "DICT227_TP",
+            "wartoscOpisowaSkrocona": "Tablica pojazdu",
+            "wartoscOpisowa": "Tablica pojazdu"
+          },
+          "numerOznaczenia": "DW5C328"
+        },
+        "aktualnyStanLicznika": {
+          "historiaLicznikaWymagaWeryfikacji": false,
+          "licznikWymieniony": false,
+          "stanLicznika": {
+            "identyfikatorSystemowyStanuLicznika": "3705932927194113",
+            "wartoscStanuLicznika": 94106,
+            "jednostkaStanuLicznika": null,
+            "dataSpisaniaLicznika": "2026-01-31T10:07:26",
+            "podmiotWprowadzajacy": {
+              "dataOd": "2018-11-07T15:32:51",
+              "dataDo": "9999-12-31T00:00:00",
+              "statusRekordu": "A",
+              "kod": "DICT061_10101308",
+              "nazwa": "\"DUNAJSCY AUTO SERWIS\" Zdzisław Dunajski",
+              "numerEwidencyjny": "DW/107/P",
+              "identyfikatorREGON": "2239097500000",
+              "regon": "022390975",
+              "typ": {
+                "dataOd": "1900-01-01T00:00:00",
+                "dataDo": "9999-12-31T00:00:00",
+                "status": "A",
+                "kod": "DICT077_SKP",
+                "wartoscOpisowaSkrocona": "Stacja Kontroli Pojazdów",
+                "wartoscOpisowa": null
+              }
+            },
+            "dataOdnotowania": "2026-01-31T10:07:26"
+          }
+        }
+      }
+    },
+    "status": 0,
+    "message": null,
+    "source": "CEP.Udostepnianie.Test",
+    "sourceStatusCode": "200",
+    "requestId": "4f47c69b9e0247f9aab2ed8597a75bf9"
+  }

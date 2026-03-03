@@ -1053,11 +1053,13 @@ class CepPodmiotDto {
   final String? identyfikatorSystemowyPodmiotu;
   final String? wariantPodmiotu;
   final CepFirmaDto? firma;
+  final CepOsobaDto? osoba;
 
   const CepPodmiotDto({
     this.identyfikatorSystemowyPodmiotu,
     this.wariantPodmiotu,
     this.firma,
+    this.osoba,
   });
 
   factory CepPodmiotDto.fromJson(Map<String, dynamic>? json) {
@@ -1068,6 +1070,43 @@ class CepPodmiotDto {
       identyfikatorSystemowyPodmiotu: s('identyfikatorSystemowyPodmiotu'),
       wariantPodmiotu: s('wariantPodmiotu'),
       firma: CepFirmaDto.fromJson(m('firma')),
+      osoba: CepOsobaDto.fromJson(m('osoba')),
+    );
+  }
+}
+
+/// Osoba fizyczna
+class CepOsobaDto {
+  final String? pesel;
+  final String? imiePierwsze;
+  final String? nazwisko;
+  final String? dataUrodzenia;
+  final String? miejsceUrodzeniaKod;
+  final String? miejsceUrodzenia;
+  final CepAdresDto? adres;
+
+  const CepOsobaDto({
+    this.pesel,
+    this.imiePierwsze,
+    this.nazwisko,
+    this.dataUrodzenia,
+    this.miejsceUrodzeniaKod,
+    this.miejsceUrodzenia,
+    this.adres,
+  });
+
+  factory CepOsobaDto.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return const CepOsobaDto();
+    String? s(String k) => json[k]?.toString();
+    Map<String, dynamic>? m(String k) => json[k] is Map<String, dynamic> ? json[k] as Map<String, dynamic> : null;
+    return CepOsobaDto(
+      pesel: s('PESEL'),
+      imiePierwsze: s('imiePierwsze'),
+      nazwisko: s('nazwisko'),
+      dataUrodzenia: s('dataUrodzenia'),
+      miejsceUrodzeniaKod: s('miejsceUrodzeniaKod'),
+      miejsceUrodzenia: s('miejsceUrodzenia'),
+      adres: CepAdresDto.fromJson(m('adres')),
     );
   }
 }
