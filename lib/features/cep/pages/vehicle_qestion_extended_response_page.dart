@@ -39,12 +39,11 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                   ),
                 ),
 
-              // Sekcje z danymi pojazdu (tylko gdy pojazd istnieje
+              // Sekcje z danymi pojazdu (tylko gdy pojazd istnieje)
               if (hasVehicleData) ...[
                 // Dane opisujące pojazd
                 if (pojazd.daneOpisujacePojazd != null)
                   _section(
-                    context,
                     title: 'Dane opisujące pojazd',
                     children: _buildDaneOpisujacePojazdSection(context, pojazd.daneOpisujacePojazd!),
                   ),
@@ -52,7 +51,6 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                 // Dane techniczne
                 if (pojazd.daneTechnicznePojazdu != null)
                   _section(
-                    context,
                     title: 'Dane techniczne',
                     children: _rows({
                       'Pojemność silnika (cm³)': pojazd.daneTechnicznePojazdu?.pojemnoscSilnika?.toString(),
@@ -66,7 +64,6 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                 // Dokumenty pojazdu
                 if (pojazd.dokumentPojazdu.isNotEmpty)
                   _section(
-                    context,
                     title: 'Dokumenty pojazdu',
                     children: _buildDocumentsSection(context, pojazd.dokumentPojazdu),
                   ),
@@ -74,7 +71,6 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                 // Informacje SKP
                 if (pojazd.informacjeSKP != null)
                   _section(
-                    context,
                     title: 'Informacje SKP',
                     children: _buildInformacjeSKPSection(context, pojazd.informacjeSKP!),
                   ),
@@ -82,7 +78,6 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                 // Polisa OC
                 if (pojazd.danePolisyOC != null)
                   _section(
-                    context,
                     title: 'Polisa OC',
                     children: _buildPolisaOCSection(context, pojazd.danePolisyOC!),
                   ),
@@ -90,7 +85,6 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                 // Rejestracje pojazdu
                 if (pojazd.rejestracjaPojazdu.isNotEmpty || pojazd.danePojazduSprowadzonego != null)
                   _section(
-                    context,
                     title: 'Rejestracje pojazdu',
                     children: _buildRejestracjePojazduSection(context, pojazd),
                   ),
@@ -98,7 +92,6 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
                 // Podmiot (właściciel)
                 if (pojazd.najnowszyWariantPodmiotu != null)
                   _section(
-                    context,
                     title: 'Podmiot (właściciel)',
                     children: _buildPodmiotSection(context, pojazd.najnowszyWariantPodmiotu!),
                   ),
@@ -112,8 +105,7 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
     );
   }
 
-  Widget _section(
-    BuildContext context, {
+  Widget _section({
     required String title,
     required List<Widget> children,
     bool initiallyExpanded = false,
@@ -135,12 +127,12 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
 
   List<Widget> _rows(Map<String, String?> items) {
     final list = <Widget>[];
-    items.forEach((label, value) {
-      final v = (value ?? '').trim();
-      if (v.isNotEmpty) {
-        list.add(_row(label, v));
+    for (final entry in items.entries) {
+      final value = (entry.value ?? '').trim();
+      if (value.isNotEmpty) {
+        list.add(_row(entry.key, value));
       }
-    });
+    }
     return list;
   }
 
@@ -505,7 +497,8 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
     }
     
     // Podmiot
-    if (wlasnosc.podmiot != null) {
+    final podmiot = wlasnosc.podmiot;
+    if (podmiot != null) {
       if (widgets.isNotEmpty) {
         widgets.add(const Divider(height: 16));
       }
@@ -522,8 +515,8 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
       widgets.add(const SizedBox(height: 6));
 
       // Osoba
-      if (wlasnosc.podmiot?.osoba != null) {
-        final osoba = wlasnosc.podmiot!.osoba!;
+      final osoba = podmiot.osoba;
+      if (osoba != null) {
         widgets.add(const SizedBox(height: 8));
         widgets.add(
           Align(
@@ -582,7 +575,8 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
       }
 
       // Firma
-      if (wlasnosc.podmiot?.firma != null) {
+      final firma = podmiot.firma;
+      if (firma != null) {
         widgets.add(const SizedBox(height: 8));
         widgets.add(
           Align(
@@ -596,17 +590,17 @@ class VehicleQuestionExtendedResponsePage extends StatelessWidget {
         widgets.add(const SizedBox(height: 4));
         widgets.addAll(
           _rows({
-            'REGON': wlasnosc.podmiot?.firma?.regon,
-            'Nazwa firmy': wlasnosc.podmiot?.firma?.nazwaFirmy,
-            'Nazwa firmy drukowana': wlasnosc.podmiot?.firma?.nazwaFirmyDrukowana,
-            'Forma własności': wlasnosc.podmiot?.firma?.formaWlasnosci?.wartoscOpisowaSkrocona ??
-                wlasnosc.podmiot?.firma?.formaWlasnosci?.wartoscOpisowa,
-            'Identyfikator systemowy REGON': wlasnosc.podmiot?.firma?.identyfikatorSystemowyREGON,
+            'REGON': firma.regon,
+            'Nazwa firmy': firma.nazwaFirmy,
+            'Nazwa firmy drukowana': firma.nazwaFirmyDrukowana,
+            'Forma własności': firma.formaWlasnosci?.wartoscOpisowaSkrocona ??
+                firma.formaWlasnosci?.wartoscOpisowa,
+            'Identyfikator systemowy REGON': firma.identyfikatorSystemowyREGON,
           }),
         );
 
         // Adres firmy
-        final adres = wlasnosc.podmiot?.firma?.adres;
+        final adres = firma.adres;
         if (adres != null) {
           widgets.add(const SizedBox(height: 8));
           widgets.add(
