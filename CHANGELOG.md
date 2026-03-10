@@ -2,6 +2,14 @@
 
 Wszystkie istotne zmiany w projekcie będą dokumentowane w tym pliku.
 
+## [1.0.22] - 2026-03-04
+
+### Dodane
+- **Ustawienia**: Przełącznik „Zawsze sprawdzaj czy osoba jest poszukiwana” – przy wyszukiwaniu osób automatyczne sprawdzanie dla każdej (wynik pod zdjęciem).
+- **Wyniki wyszukiwania**: Przycisk „Wybierz” – czerwony splash przed wyborem, gdy osoba poszukiwana (wg ustawienia i statusu).
+- **Ikona wybranej osoby**: Czerwona na wszystkich ekranach, gdy `czyPoszukiwana=true`.
+- **Czy posiada broń prywatną?**, **Czy jest żołnierzem?**: Przed sprawdzeniem – weryfikacja „czy poszukiwana” (PESEL ≠ wybrana lub `czyPoszukiwana=null`); przy pozytywnym wyniku czerwony splash.
+
 ## [1.0.21] - 2026-03-03
 
 ### Dodane

@@ -79,7 +79,9 @@ class CommonStateContainer extends StatelessWidget implements PreferredSizeWidge
                   if (hasSelectedPerson) ...[
                     _ChipIcon(
                       bg: cs.surfaceContainerHighest,
-                      fg: cs.onSurfaceVariant,
+                      fg: (personController.selectedPerson?.czyPoszukiwana == true)
+                          ? cs.error
+                          : cs.onSurfaceVariant,
                       icon: Icons.person_outlined,
                       tooltip: 'Wybrana osoba',
                     ),

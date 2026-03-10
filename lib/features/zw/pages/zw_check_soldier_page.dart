@@ -1,10 +1,12 @@
 // lib/features/zw/pages/zw_check_soldier_page.dart
 import 'package:flutter/material.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/features/srp/data/person_controller.dart';
+import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/zw/data/zw_api.dart';
 import 'package:piesp_patrol/features/zw/data/zw_zolnierz_dtos.dart';
-import 'package:piesp_patrol/features/srp/data/person_controller.dart';
 import 'package:piesp_patrol/widgets/input_box.dart';
+import 'package:piesp_patrol/widgets/wanted_splash.dart';
 import 'package:piesp_patrol/widgets/button_search.dart';
 import 'package:piesp_patrol/widgets/common_appbar.dart';
 import 'package:piesp_patrol/widgets/responsive.dart';
@@ -97,8 +99,35 @@ class _ZwCheckSoldierPageState extends State<ZwCheckSoldierPage> {
       return;
     }
 
+    final pesel = _peselCtrl.text.trim();
+    final scope = AppScope.of(context);
+    final personController = scope.personController as PersonController;
+    final selectedPerson = personController.selectedPerson;
+
+    final needWantedCheck = (pesel != (selectedPerson?.pesel ?? '').trim()) ||
+        (selectedPerson?.czyPoszukiwana == null &&
+            pesel == (selectedPerson?.pesel ?? '').trim());
+
+    if (needWantedCheck) {
+      final srpApi = scope.srpApi as SrpApi;
+      final result = await srpApi.checkIfWanted(pesel: pesel);
+      if (!mounted) return;
+
+      if (result.isOk && result.value == true) {
+        await showWantedSplash(context);
+        if (!mounted) return;
+      }
+      if (result.isOk &&
+          selectedPerson != null &&
+          pesel == (selectedPerson.pesel ?? '').trim()) {
+        personController.updateSelectedPerson(
+          (p) => p.copyWith(czyPoszukiwana: result.value),
+        );
+      }
+    }
+    if (!mounted) return;
+
     try {
-      final scope = AppScope.of(context);
       final zwApi = scope.zwApi as ZwApi;
       final req = _buildRequest();
 
@@ -172,7 +201,9 @@ class _ZwCheckSoldierPageState extends State<ZwCheckSoldierPage> {
                                       padding: const EdgeInsets.all(4),
                                       child: Icon(
                                         Icons.person,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: (personController.selectedPerson?.czyPoszukiwana == true)
+                                            ? Theme.of(context).colorScheme.error
+                                            : Theme.of(context).colorScheme.primary,
                                         size: 24,
                                       ),
                                     ),

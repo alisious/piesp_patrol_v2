@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +11,7 @@ class ApiConfig extends ChangeNotifier {
     required this.pemAssetPath,
     required this.allowedHosts,
     required this.pinnedSpki,
+    this.alwaysCheckIfWanted = true,
   });
 
   static const _kBaseUrlKey = 'api_base_url';
@@ -18,8 +19,10 @@ class ApiConfig extends ChangeNotifier {
   static const _kPemAssetKey = 'tls_pem_asset_path';
   static const _kAllowedHostsKey = 'tls_allowed_hosts';
   static const _kPinnedSpkiKey = 'tls_pinned_spki';
+  static const _kAlwaysCheckIfWantedKey = 'always_check_if_wanted';
 
   String baseUrl;
+  bool alwaysCheckIfWanted;
   String tlsMode;      // systemOnly | assetCa | pinOnly | assetCaAndPin | systemThenAssetFallback
   String pemAssetPath; // ścieżka do PEM w assets
   List<String> allowedHosts;
@@ -32,6 +35,7 @@ class ApiConfig extends ChangeNotifier {
     final pemAsset = sp.getString(_kPemAssetKey) ?? 'assets/certs/kacper_ca.pem';
     final allowedHosts = sp.getStringList(_kAllowedHostsKey) ?? <String>['api.trentum.pl','portal.kacper.zw.int'];
     final pinnedSpki = sp.getStringList(_kPinnedSpkiKey) ?? <String>[];
+    final alwaysCheckIfWanted = sp.getBool(_kAlwaysCheckIfWantedKey) ?? true;
 
     return ApiConfig(
       baseUrl: url,
@@ -39,6 +43,7 @@ class ApiConfig extends ChangeNotifier {
       pemAssetPath: pemAsset,
       allowedHosts: allowedHosts,
       pinnedSpki: pinnedSpki,
+      alwaysCheckIfWanted: alwaysCheckIfWanted,
     );
   }
 
@@ -49,6 +54,7 @@ class ApiConfig extends ChangeNotifier {
     await sp.setString(_kPemAssetKey, pemAssetPath);
     await sp.setStringList(_kAllowedHostsKey, allowedHosts);
     await sp.setStringList(_kPinnedSpkiKey, pinnedSpki);
-    notifyListeners(); // teraz OK
+    await sp.setBool(_kAlwaysCheckIfWantedKey, alwaysCheckIfWanted);
+    notifyListeners();
   }
 }

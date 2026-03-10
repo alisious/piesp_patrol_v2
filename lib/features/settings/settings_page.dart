@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:piesp_patrol/core/api_config.dart';
 
@@ -49,6 +49,7 @@ class _SettingsBodyState extends State<SettingsBody> {
   };
 
   late String _tlsMode = widget.config.tlsMode;
+  late bool _alwaysCheckIfWanted = widget.config.alwaysCheckIfWanted;
   bool _saved = false;
   PackageInfo? _packageInfo;
 
@@ -86,6 +87,7 @@ class _SettingsBodyState extends State<SettingsBody> {
       ..baseUrl = _urlCtrl.text.trim()
       ..tlsMode = _tlsMode
       ..pemAssetPath = _pemCtrl.text.trim()
+      ..alwaysCheckIfWanted = _alwaysCheckIfWanted
       ..allowedHosts = _hostsCtrl.text
           .split(',')
           .map((e) => e.trim())
@@ -198,6 +200,17 @@ class _SettingsBodyState extends State<SettingsBody> {
             ),
             const SizedBox(height: 12),
           ],
+        ),
+        const SizedBox(height: 16),
+
+        // Przełącznik: Zawsze sprawdzaj czy osoba jest poszukiwana
+        SwitchListTile(
+          title: const Text('Zawsze sprawdzaj czy osoba jest poszukiwana'),
+          subtitle: const Text(
+            'Po wyszukaniu osób automatycznie sprawdza dla każdej, czy jest poszukiwana',
+          ),
+          value: _alwaysCheckIfWanted,
+          onChanged: (v) => setState(() => _alwaysCheckIfWanted = v),
         ),
         const SizedBox(height: 16),
 

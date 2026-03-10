@@ -251,7 +251,9 @@ class _KsipCheckPersonPageState extends State<KsipCheckPersonPage> {
                                       padding: const EdgeInsets.all(4),
                                       child: Icon(
                                         Icons.person,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: (personController.selectedPerson?.czyPoszukiwana == true)
+                                            ? Theme.of(context).colorScheme.error
+                                            : Theme.of(context).colorScheme.primary,
                                         size: 24,
                                       ),
                                     ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:piesp_patrol/core/routing/routes.dart';
 import 'package:piesp_patrol/core/app_scope.dart';
+import 'package:piesp_patrol/core/api_config.dart';
 import 'package:piesp_patrol/features/srp/data/srp_api.dart';
 import 'package:piesp_patrol/features/srp/data/srp_dtos.dart';
 import 'package:piesp_patrol/widgets/responsive.dart';
@@ -93,11 +94,15 @@ class _PersonsSearchPageState extends State<PersonsSearchPage> {
         _showSnack('Nie znaleziono osób spełniających kryteria.');
         return;
       }
+      final config = AppScope.of(context).apiConfig as ApiConfig;
       Navigator.pushNamed(
-        context, 
+        context,
         AppRoutes.srpPersonsSearchResults,
-        arguments: SrpPersonsSearchResultsArgs(results: list)
-        );
+        arguments: SrpPersonsSearchResultsArgs(
+          results: list,
+          autoCheckWanted: config.alwaysCheckIfWanted,
+        ),
+      );
     } else {
       setState(() => _loading = false);
       _showSnack(

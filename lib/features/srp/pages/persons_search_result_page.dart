@@ -20,9 +20,11 @@ class PersonsSearchResultPage extends StatelessWidget {
   const PersonsSearchResultPage({
     super.key,
     required this.results,
+    this.autoCheckWanted = false,
   });
 
   final List<OsobaZnalezionaDto> results;
+  final bool autoCheckWanted;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,10 @@ class PersonsSearchResultPage extends StatelessWidget {
                 padding: EdgeInsets.zero, // Padding zapewniony przez PageContainer
                 itemCount: results.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (ctx, i) => _PersonCard(person: results[i]),
+                itemBuilder: (ctx, i) => _PersonCard(
+                  person: results[i],
+                  autoCheckWanted: autoCheckWanted,
+                ),
               ),
             ),
     );
@@ -57,15 +62,33 @@ class PersonsSearchResultPage extends StatelessWidget {
 }
 
 class _PersonCard extends StatefulWidget {
-  const _PersonCard({required this.person});
+  const _PersonCard({
+    required this.person,
+    this.autoCheckWanted = false,
+  });
 
   final OsobaZnalezionaDto person;
+  final bool autoCheckWanted;
 
   @override
   State<_PersonCard> createState() => _PersonCardState();
 }
 
 class _PersonCardState extends State<_PersonCard> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.autoCheckWanted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _checkIfWanted(
+          context: context,
+          showAllNotifications: false,
+          showWantedSplash: false,
+        );
+      });
+    }
+  }
+
   Uint8List? _decodeBase64Image(String? raw) {
     if (raw == null) return null;
     final s = raw.trim();
@@ -165,6 +188,20 @@ class _PersonCardState extends State<_PersonCard> {
       }
       return (isWanted: null, splashFuture: null);
     }
+  }
+
+  Future<void> _showWantedSplash(BuildContext context) async {
+    await showGeneralDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'wanted',
+      pageBuilder: (_, __, ___) => const _WantedSplash(),
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: anim,
+        child: child,
+      ),
+      transitionDuration: const Duration(milliseconds: 200),
+    );
   }
 
   Future<void> _checkWantedAndNotify(BuildContext context) async {
@@ -371,25 +408,39 @@ class _PersonCardState extends State<_PersonCard> {
                 ButtonSelect(
                   label: 'Wybierz',
                   onPressedAsync: () async {
+                    // alwaysCheckIfWanted=true i już wiemy że poszukiwana → pokaż splash (bez API)
+                    if (widget.autoCheckWanted && widget.person.czyPoszukiwana == true) {
+                      await _showWantedSplash(context);
+                    }
+                    // alwaysCheckIfWanted=false → sprawdź najpierw, splash jeśli poszukiwana
+                    else if (!widget.autoCheckWanted) {
+                      final result = await _checkIfWanted(
+                        context: context,
+                        showAllNotifications: false,
+                        showWantedSplash: true,
+                      );
+                      if (result.splashFuture != null) {
+                        await result.splashFuture;
+                      }
+                    }
+                    // alwaysCheckIfWanted=true i nie poszukiwana → zwykłe działanie
+                    if (!mounted) return;
+
                     // Zapisz wybraną osobę w PersonController
                     final scope = AppScope.of(context);
                     final personController = scope.personController as PersonController;
-                    
                     final selectedPerson = SelectedPersonDto.fromOsobaZnalezionaDto(
                       widget.person,
-                      // czyZolnierz pozostaje null, może być uzupełnione później
                     );
-                    
                     personController.selectPerson(selectedPerson);
-                    
+
                     // Przejdź do strony Home na services_tab (indeks 1)
                     if (mounted) {
                       final navigator = Navigator.of(context);
-                      // Usuń wszystkie poprzednie strony z historii i przejdź do Home z services_tab
                       navigator.pushNamedAndRemoveUntil(
                         AppRoutes.homePage,
-                        (route) => false, // Usuń wszystkie poprzednie trasy
-                        arguments: 1, // ServicesTab ma indeks 1
+                        (route) => false,
+                        arguments: 1,
                       );
                     }
                   },

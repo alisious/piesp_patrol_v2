@@ -184,7 +184,10 @@ class AppRoutes {
         final args = settings.arguments;
         if (args is SrpPersonsSearchResultsArgs) {
           return MaterialPageRoute(
-            builder: (_) => PersonsSearchResultPage(results: args.results),
+            builder: (_) => PersonsSearchResultPage(
+              results: args.results,
+              autoCheckWanted: args.autoCheckWanted,
+            ),
             settings: settings,
           );
         }
@@ -375,7 +378,11 @@ class AppRoutes {
 
 class SrpPersonsSearchResultsArgs {
   final List<OsobaZnalezionaDto> results;
-  const SrpPersonsSearchResultsArgs({required this.results});
+  final bool autoCheckWanted;
+  const SrpPersonsSearchResultsArgs({
+    required this.results,
+    this.autoCheckWanted = false,
+  });
 }
 
 class PersonDataArgs {
