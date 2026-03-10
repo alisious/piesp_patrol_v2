@@ -6,6 +6,20 @@ Aplikacja mobilna PIESP Patrol dla Flutter.
 
 - [Instrukcja obsługi](docs/INSTRUKCJA_OBSLUGI.md) - szczegółowa instrukcja obsługi aplikacji dla użytkowników końcowych
 
+## Budowanie wersji web (offline)
+
+Aby zbudować aplikację web **działającą w odciętym środowisku** (bez dostępu do internetu):
+
+```bash
+flutter build web --release --no-web-resources-cdn
+```
+
+Flaga `--no-web-resources-cdn` powoduje, że zasoby Flutter (np. CanvasKit) są **wbudowane w build** zamiast pobierane z CDN w czasie działania aplikacji.
+
+**Dodatkowo:**
+- Czcionki: aplikacja używa lokalnych fontów (Roboto z assets) – brak pobierania z Google Fonts.
+- API backendu: adres serwera ustawiasz w Ustawieniach w aplikacji – w środowisku odciętym wskaż adres wewnętrzny (np. `https://api.local.int`).
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
